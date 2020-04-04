@@ -28,7 +28,6 @@ class App extends React.Component {
     Tabletop.init({
       key: "19mUjEoo5DHm5nqzU6UDJAahTIhME1FCUcRkgA1lGwXM",
       callback: googleData => {
-        console.log(googleData);
         this.setState({
           data: preprocessSheetsData(googleData)
         });

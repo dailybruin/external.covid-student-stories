@@ -5,7 +5,7 @@ const Background = styled("div")`
   background-color: white;
 `;
 
-const basic_ques = [
+const ques = [
   {
     question: "What school do you attend?",
     type: "free response",
@@ -149,7 +149,7 @@ class FormPage extends React.Component {
   }
   render() {
     const { index, category, change } = this.state;
-    let button, header, qnum;
+    let button, header, qnum, question;
     // circular button handling
     if (index != 10) {
       button = <button onClick={() => this.incIndex()}>NEXT</button>;
@@ -168,11 +168,23 @@ class FormPage extends React.Component {
     } else {
       qnum = index - 6;
     }
+    // question type
+    if (ques[this.state.index].type == "free response") {
+      question = (
+        <form>
+          <input type="text" id="q" placeholder="type your answer here" />
+        </form>
+      );
+    } else if (ques[this.state.index].type == "multiple choice") {
+    }
     return (
       <Background>
         <h1>{header}</h1>
         <h2>{qnum}</h2>
-        <h2>{basic_ques[this.state.index].question}</h2>
+        <h2>
+          <label htmlFor="q">{ques[this.state.index].question}</label>
+        </h2>
+        {question}
         {button}
       </Background>
     );

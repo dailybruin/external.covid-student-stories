@@ -118,7 +118,7 @@ const ques = [
       "Are you comfortable with us publishing your response on our Stories page?",
       "Are you comfortable with us publishing your response on social media?"
     ],
-    type: "free response",
+    type: "multiple choice",
     choices: 2,
     answers: ["yes", "no"],
     comment: "",
@@ -176,6 +176,9 @@ class FormPage extends React.Component {
         </form>
       );
     } else if (ques[this.state.index].type == "multiple choice") {
+      question = ques[this.state.index].answers.map((choice, index) => (
+        <button>{ques[this.state.index].answers[index]}</button>
+      ));
     }
     return (
       <Background>

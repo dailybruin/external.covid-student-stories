@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { css } from "emotion";
 import FilterDropdown from "../components/FilterDropdown";
 import ReactList from "react-list";
+import { isMatch } from "../utils/preprocess";
+import { MAP_year_to_yearName } from "../utils/mappings";
 import { isElementOfType } from "react-dom/test-utils";
 
 const StoriesContainer = styled("div")`
@@ -36,7 +38,7 @@ const ScrollContainer = styled("div")`
 
 const StoryEntry = styled("div")`
   box-sizing: border-box;
-  width: 100%;
+  /* width: 100%; */
   margin: 20px;
   background-color: #f7f7f7;
   border-radius: 5px;
@@ -73,12 +75,25 @@ const QuestionAndResponsesContainer = styled("div")`
   width: 80%;
 `;
 
-const filterFields = [
-  { field: "School", categories: ["All", "UCLA", "USC"] },
-  { field: "Major", categories: ["All", "CS", "Math", "we should bin these"] },
+const filterfieldNames = [
+  { fieldName: "School", column: "school", categories: ["All", "UCLA", "USC"] },
   {
-    field: "Year",
-    categories: ["All", "High School", "First-year", "Second-year"]
+    fieldName: "Major",
+    column: "major",
+    categories: ["All", "CS", "Math", "we should bin these"]
+  },
+  {
+    fieldName: "Year",
+    column: "year",
+    categories: [
+      "All",
+      "High School",
+      "First-year",
+      "Second-year",
+      "Third-year",
+      "Fourth-year+",
+      "Graduate"
+    ]
   }
 ];
 
@@ -102,12 +117,12 @@ const responseTypes = [
   }
 ];
 
-function showData(selectedFields, row) {
+function showData(selectedFieldNames, row) {
   if (row.testimony == "") return false;
   // this code is terrible
-  for (let i = 0; i < selectedFields.length; i++) {
-    let e = selectedFields[i];
-    if (e.selection != "All" && row[e.field.toLowerCase()] != e.selection)
+  for (let i = 0; i < selectedFieldNames.length; i++) {
+    let e = selectedFieldNames[i];
+    if (e.selection != "All" && !isMatch(e.column, e.selection, row[e.column]))
       return false;
   }
   return true;
@@ -117,8 +132,8 @@ export default class StoriesPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedFields: filterFields.map((element, key) => ({
-        field: element.field,
+      selectedFieldNames: filterfieldNames.map((element, key) => ({
+        column: element.column,
         selection: "All",
         key: key
       })),
@@ -132,24 +147,24 @@ export default class StoriesPage extends React.Component {
     this.onFilterClick = this.onFilterClick.bind(this);
   }
 
-  onFilterClick(field, selection) {
-    let newSelectedFields = this.state.selectedFields;
-    let selectedField = newSelectedFields.find(
-      element => element.field == field
+  onFilterClick(column, selection) {
+    let newSelectedFieldNames = this.state.selectedFieldNames;
+    let selectedfieldName = newSelectedFieldNames.find(
+      element => element.column == column
     );
-    selectedField.selection = selection;
-    this.setState({ selectedFields: newSelectedFields });
+    selectedfieldName.selection = selection;
+    this.setState({ selectedFieldNames: newSelectedFieldNames });
   }
 
   render() {
     let { data } = this.props;
-    const { selectedFields, responseSelections } = this.state;
-    data = data.filter(row => showData(selectedFields, row));
+    const { selectedFieldNames, responseSelections } = this.state;
+    data = data.filter(row => showData(selectedFieldNames, row));
     return (
       <>
         <StoriesContainer>
           <FiltersContainer>
-            {filterFields.map(element => (
+            {filterfieldNames.map(element => (
               <FilterDropdown {...element} onClick={this.onFilterClick} />
             ))}
           </FiltersContainer>
@@ -185,7 +200,13 @@ export default class StoriesPage extends React.Component {
               })}
             </Questions>
             <ScrollContainer>
-              <div style={{ height: "100%", overflow: "auto" }}>
+              <div
+                className={css`
+                  height: 100%;
+                  width: 50%;
+                  overflow: auto;
+                `}
+              >
                 <ReactList
                   axis="y"
                   threshold={50}
@@ -197,24 +218,20 @@ export default class StoriesPage extends React.Component {
                         className={css`
                           display: flex;
                           flex-direction: column;
+                          width: 100%;
                         `}
                       >
                         <b>
-                          {row.year} {row.major} major at {row.school}
+                          {MAP_year_to_yearName[row.year]} {row.major} major at{" "}
+                          {row.school}
                         </b>
-                        <div
-                          className={css`
-                            display: flex;
-                            flex-direction: row;
-                          `}
-                        >
-                          {responseSelections.map(
-                            response =>
-                              response.selected && (
-                                <StoryEntry>{row[response.type]}</StoryEntry>
-                              )
-                          )}
-                        </div>
+
+                        {responseSelections.map(
+                          response =>
+                            response.selected && (
+                              <StoryEntry>{row[response.type]}</StoryEntry>
+                            )
+                        )}
                       </div>
                     );
                   }}

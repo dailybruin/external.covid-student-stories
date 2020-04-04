@@ -18,3 +18,16 @@ export function preprocessSheetsData(rawData) {
   //   return newData
   return rawData;
 }
+
+export function isMatch(field, selection, entry) {
+  console.log([selection, entry]);
+  if (selection === entry) return true;
+  switch (field) {
+    case "year":
+      if (selection === "Fourth-year+" && entry == "Fourth-year and higher")
+        return true;
+      if (selection === "Graduate" && entry == "Graduate") return true;
+      break;
+  }
+  return false;
+}

@@ -2,7 +2,7 @@ import React from "react";
 import { css } from "emotion";
 
 /*
-field: string
+fieldName: string
 elements: string[]
 */
 export default class FilterDropdown extends React.Component {
@@ -15,12 +15,12 @@ export default class FilterDropdown extends React.Component {
   }
   render() {
     const { expanded, selected } = this.state;
-    const { field, categories, onClick } = this.props;
+    const { fieldName, column, categories, onClick } = this.props;
     return (
       <>
         <div onClick={() => this.setState({ expanded: !expanded })}>
           <b>
-            {field} ({selected})
+            {fieldName} ({selected})
           </b>
         </div>
         {expanded &&
@@ -31,7 +31,7 @@ export default class FilterDropdown extends React.Component {
                   color: ${selected == category ? "red" : "black"};
                 `}
                 onClick={() => {
-                  onClick(field, category);
+                  onClick(column, category);
                   this.setState({ selected: category });
                 }}
               >

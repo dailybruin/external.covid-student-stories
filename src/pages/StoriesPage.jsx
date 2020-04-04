@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { css } from "emotion";
 import FilterDropdown from "../components/FilterDropdown";
 import ReactList from "react-list";
+import { isElementOfType } from "react-dom/test-utils";
 
 const StoriesContainer = styled("div")`
   /* height: 90vh; */
@@ -25,8 +26,8 @@ const FiltersContainer = styled("div")`
 `;
 
 const ScrollContainer = styled("div")`
-  height: 100%;
-  /* width: 80%; */
+  height: 90vh;
+  width: 100%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -35,10 +36,11 @@ const ScrollContainer = styled("div")`
 
 const StoryEntry = styled("div")`
   box-sizing: border-box;
+  width: 100%;
   margin: 20px;
-  width: 30%;
   background-color: #f7f7f7;
   border-radius: 5px;
+  flex: 1;
 `;
 
 const StoryProfile = styled("div")`
@@ -73,7 +75,31 @@ const QuestionAndResponsesContainer = styled("div")`
 
 const filterFields = [
   { field: "School", categories: ["All", "UCLA", "USC"] },
-  { field: "Major", categories: ["All", "CS", "Math", "we should bin these"] }
+  { field: "Major", categories: ["All", "CS", "Math", "we should bin these"] },
+  {
+    field: "Year",
+    categories: ["All", "High School", "First-year", "Second-year"]
+  }
+];
+
+const responseTypes = [
+  {
+    type: "responseCommunity",
+    question: "How has your community responded to the Covid-19 pandemic?"
+  },
+  {
+    type: "responseAffected",
+    question: "How has Covid-19 affected you?"
+  },
+  // {
+  //   type: "responseElse",
+  //   question: "Is there anything we didn't ask that you would like to share?"
+  // },
+  {
+    type: "responseDoneDifferently",
+    question:
+      "Is there anything you think your school or community could/should have done differently regarding this situation?"
+  }
 ];
 
 function showData(selectedFields, row) {
@@ -86,6 +112,7 @@ function showData(selectedFields, row) {
   }
   return true;
 }
+
 export default class StoriesPage extends React.Component {
   constructor(props) {
     super(props);
@@ -94,6 +121,12 @@ export default class StoriesPage extends React.Component {
         field: element.field,
         selection: "All",
         key: key
+      })),
+      responseSelections: responseTypes.map((element, key) => ({
+        type: element.type,
+        question: element.question,
+        selected: true,
+        key: element.key
       }))
     };
     this.onFilterClick = this.onFilterClick.bind(this);
@@ -110,7 +143,7 @@ export default class StoriesPage extends React.Component {
 
   render() {
     let { data } = this.props;
-    const { selectedFields } = this.state;
+    const { selectedFields, responseSelections } = this.state;
     data = data.filter(row => showData(selectedFields, row));
     return (
       <>
@@ -120,14 +153,36 @@ export default class StoriesPage extends React.Component {
               <FilterDropdown {...element} onClick={this.onFilterClick} />
             ))}
           </FiltersContainer>
-        
-         <QuestionAndResponsesContainer>
+
+          <QuestionAndResponsesContainer>
             <Questions>
-              <div>How has Covid-19 affected you?</div>
-              <div>
-                What do you think your school, country, or community could have
-                done differently regarding this situation?
-              </div>
+              {responseTypes.map(element => {
+                let newResponseSelections = responseSelections;
+                let responseSelected = newResponseSelections.find(
+                  e => e.type == element.type
+                );
+                return (
+                  <div
+                    className={css`
+                      color: ${responseSelected.selected ? "red" : "black"};
+                      cursor: pointer;
+                    `}
+                    onClick={() => {
+                      let newResponseSelections = responseSelections;
+                      let responseSelected = newResponseSelections.find(
+                        e => e.type == element.type
+                      );
+                      console.log(responseSelected.question);
+                      responseSelected.selected = !responseSelected.selected;
+                      this.setState({
+                        responseSelections: newResponseSelections
+                      });
+                    }}
+                  >
+                    {element.question}
+                  </div>
+                );
+              })}
             </Questions>
             <ScrollContainer>
               <div style={{ height: "100%", overflow: "auto" }}>
@@ -138,13 +193,29 @@ export default class StoriesPage extends React.Component {
                   itemRenderer={idx => {
                     let row = data[idx];
                     return (
-                      <StoryEntry>
+                      <div
+                        className={css`
+                          display: flex;
+                          flex-direction: column;
+                        `}
+                      >
                         <b>
-                          {row.major} at {row.school}:
-                        </b>{" "}
-                        {console.log(row)}
-                        {row.testimony}
-                      </StoryEntry>
+                          {row.year} {row.major} major at {row.school}
+                        </b>
+                        <div
+                          className={css`
+                            display: flex;
+                            flex-direction: row;
+                          `}
+                        >
+                          {responseSelections.map(
+                            response =>
+                              response.selected && (
+                                <StoryEntry>{row[response.type]}</StoryEntry>
+                              )
+                          )}
+                        </div>
+                      </div>
                     );
                   }}
                   type="variable"

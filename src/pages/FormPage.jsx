@@ -96,27 +96,29 @@ class FormPage extends React.Component {
   }
   incIndex() {
     const { index, category, change } = this.state;
-    if (index < 6) {
-      this.setState({ index: index + 1 });
-    } else {
-      this.setState({ change: true });
+    this.setState({ index: index + 1 });
+    if (index >= 6) {
+      this.setState({ category: true });
     }
-  }
-  changeCategory() {
-    const { index, category } = this.state;
-    this.setState({ category: true, index: 0, change: false });
   }
   render() {
     const { index, category, change } = this.state;
-    let button;
+    let button, header;
+    // circular button handling
     if (!change) {
       button = <button onClick={() => this.incIndex()}>NEXT</button>;
     } else {
-      button = <button onClick={() => this.changeCategory()}>FINISH</button>;
+      button = <button>FINISH</button>;
+    }
+    // category
+    if (!category) {
+      header = "the basics";
+    } else {
+      header = "tell us more";
     }
     return (
       <Background>
-        <h1>{this.state.category}</h1>
+        <h1>{header}</h1>
         <h2>{basic_ques[this.state.index].question}</h2>
         {button}
       </Background>

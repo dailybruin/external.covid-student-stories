@@ -1,5 +1,5 @@
 import React from "react";
-import { StoriesPage, FormPage } from "./pages";
+import { StoriesPage, FormPage, DataPage } from "./pages";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import { Link as ScrollLink, scroller } from "react-scroll";
 import Navbar from "./components/Navbar";
@@ -73,6 +73,9 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/">
               <StoriesPage data={this.state.data}></StoriesPage>
+            </Route>
+            <Route exact path="/data">
+              <DataPage data={this.state.data}></DataPage>
             </Route>
             <Route exact path="/form">
               <FormPage></FormPage>

@@ -12,7 +12,8 @@ export function preprocessSheetsData(rawData) {
       anythingElse:
         element[
           "Anything else? Feel free to share anything you have on your mind."
-        ]
+        ],
+      sharePermission: element["Are you comfortable with us publishing your responses on our Stories page?"],
     });
   });
   return newData;

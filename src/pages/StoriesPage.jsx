@@ -2,10 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import { css } from "emotion";
 import FilterDropdown from "../components/FilterDropdown";
+import Masonry from "react-masonry-css";
 import ReactList from "react-list";
-import { isMatch } from "../utils/preprocess";
+import { filterAllowsShow, selectionMatchesEntry } from "../utils/functions";
 import { MAP_year_to_yearName } from "../utils/mappings";
+import { filterfieldNames, responseColumns } from "../utils/properties";
 import { isElementOfType } from "react-dom/test-utils";
+import "./masonry.css";
 
 const StoriesContainer = styled("div")`
   /* height: 90vh; */
@@ -36,13 +39,20 @@ const ScrollContainer = styled("div")`
   background-color: #ffffff;
 `;
 
-const StoryEntry = styled("div")`
+const ResponseEntry = styled("div")`
+  margin-top: 20px;
   box-sizing: border-box;
   /* width: 100%; */
-  margin: 20px;
-  background-color: #f7f7f7;
+  /* background-color: #f7f7f7; */
   border-radius: 5px;
   flex: 1;
+`;
+
+const PersonEntry = styled("div")`
+  background-color: white;
+  padding: 20px;
+  border: 2px solid lightgreen;
+  /* margin: 10px; */
 `;
 
 const StoryProfile = styled("div")`
@@ -75,59 +85,6 @@ const QuestionAndResponsesContainer = styled("div")`
   width: 80%;
 `;
 
-const filterfieldNames = [
-  { fieldName: "School", column: "school", categories: ["All", "UCLA", "USC"] },
-  {
-    fieldName: "Major",
-    column: "major",
-    categories: ["All", "CS", "Math", "we should bin these"]
-  },
-  {
-    fieldName: "Year",
-    column: "year",
-    categories: [
-      "All",
-      "High School",
-      "First-year",
-      "Second-year",
-      "Third-year",
-      "Fourth-year+",
-      "Graduate"
-    ]
-  }
-];
-
-const responseTypes = [
-  {
-    type: "responseCommunity",
-    question: "How has your community responded to the Covid-19 pandemic?"
-  },
-  {
-    type: "responseAffected",
-    question: "How has Covid-19 affected you?"
-  },
-  // {
-  //   type: "responseElse",
-  //   question: "Is there anything we didn't ask that you would like to share?"
-  // },
-  {
-    type: "responseDoneDifferently",
-    question:
-      "Is there anything you think your school or community could/should have done differently regarding this situation?"
-  }
-];
-
-function showData(selectedFieldNames, row) {
-  if (row.testimony == "") return false;
-  // this code is terrible
-  for (let i = 0; i < selectedFieldNames.length; i++) {
-    let e = selectedFieldNames[i];
-    if (e.selection != "All" && !isMatch(e.column, e.selection, row[e.column]))
-      return false;
-  }
-  return true;
-}
-
 export default class StoriesPage extends React.Component {
   constructor(props) {
     super(props);
@@ -137,16 +94,21 @@ export default class StoriesPage extends React.Component {
         selection: "All",
         key: key
       })),
-      responseSelections: responseTypes.map((element, key) => ({
-        type: element.type,
+      responseSelections: responseColumns.map((element, key) => ({
+        column: element.column,
         question: element.question,
         selected: true,
         key: element.key
       }))
     };
     this.onFilterClick = this.onFilterClick.bind(this);
+    this.onQuestionClick = this.onQuestionClick.bind(this);
   }
 
+  /*
+   * what to do when the filter is clicked.
+   * (this passed in as a callback into the filter buttons)
+   */
   onFilterClick(column, selection) {
     let newSelectedFieldNames = this.state.selectedFieldNames;
     let selectedfieldName = newSelectedFieldNames.find(
@@ -156,10 +118,25 @@ export default class StoriesPage extends React.Component {
     this.setState({ selectedFieldNames: newSelectedFieldNames });
   }
 
+  /*
+   * what to do when the question is clicked.
+   */
+  onQuestionClick(element) {
+    let newResponseSelections = this.state.responseSelections;
+    let responseSelected = newResponseSelections.find(
+      e => e.column == element.column
+    );
+    console.log(responseSelected.question);
+    responseSelected.selected = !responseSelected.selected;
+    this.setState({
+      responseSelections: newResponseSelections
+    });
+  }
+
   render() {
     let { data } = this.props;
     const { selectedFieldNames, responseSelections } = this.state;
-    data = data.filter(row => showData(selectedFieldNames, row));
+    data = data.filter(row => filterAllowsShow(selectedFieldNames, row));
     return (
       <>
         <StoriesContainer>
@@ -171,10 +148,10 @@ export default class StoriesPage extends React.Component {
 
           <QuestionAndResponsesContainer>
             <Questions>
-              {responseTypes.map(element => {
+              {responseColumns.map(element => {
                 let newResponseSelections = responseSelections;
                 let responseSelected = newResponseSelections.find(
-                  e => e.type == element.type
+                  e => e.column == element.column
                 );
                 return (
                   <div
@@ -182,17 +159,7 @@ export default class StoriesPage extends React.Component {
                       color: ${responseSelected.selected ? "red" : "black"};
                       cursor: pointer;
                     `}
-                    onClick={() => {
-                      let newResponseSelections = responseSelections;
-                      let responseSelected = newResponseSelections.find(
-                        e => e.type == element.type
-                      );
-                      console.log(responseSelected.question);
-                      responseSelected.selected = !responseSelected.selected;
-                      this.setState({
-                        responseSelections: newResponseSelections
-                      });
-                    }}
+                    onClick={() => this.onQuestionClick(element)}
                   >
                     {element.question}
                   </div>
@@ -203,40 +170,60 @@ export default class StoriesPage extends React.Component {
               <div
                 className={css`
                   height: 100%;
-                  width: 50%;
+                  width: 100%;
                   overflow: auto;
                 `}
               >
-                <ReactList
+                {/* <ReactList
                   axis="y"
                   threshold={50}
                   length={data.length}
                   itemRenderer={idx => {
                     let row = data[idx];
-                    return (
-                      <div
-                        className={css`
-                          display: flex;
-                          flex-direction: column;
-                          width: 100%;
-                        `}
-                      >
-                        <b>
+                    return ( */}
+                <Masonry
+                  breakpointCols={2}
+                  className="my-masonry-grid"
+                  columnClassName="my-masonry-grid_column"
+                >
+                  {data.map(row => (
+                    <div
+                      className={css`
+                        display: flex;
+                        flex-direction: column;
+                        width: 100%;
+                      `}
+                    >
+                      <PersonEntry>
+                        <b
+                          className={css`
+                            font-size: 20px;
+                          `}
+                        >
                           {MAP_year_to_yearName[row.year]} {row.major} major at{" "}
                           {row.school}
                         </b>
-
                         {responseSelections.map(
                           response =>
-                            response.selected && (
-                              <StoryEntry>{row[response.type]}</StoryEntry>
+                            response.selected &&
+                            row[response.column].length != "" && (
+                              <ResponseEntry>
+                                <div>
+                                  <b>{response.question}</b>
+                                </div>
+                                <div>{row[response.column]}</div>
+                              </ResponseEntry>
                             )
                         )}
-                      </div>
-                    );
+                      </PersonEntry>
+                    </div>
+                  ))}
+                </Masonry>
+
+                {/* );
                   }}
                   type="variable"
-                />
+                /> */}
               </div>
             </ScrollContainer>
           </QuestionAndResponsesContainer>

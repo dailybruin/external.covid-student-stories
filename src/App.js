@@ -6,7 +6,7 @@ import Navbar from "./components/Navbar";
 import styled from "styled-components";
 import { css } from "emotion";
 import Tabletop from "tabletop";
-import { preprocessSheetsData } from "./utils/preprocess";
+import { preprocessSheetsData } from "./utils/functions";
 
 const Title = styled("div")`
   height: 100vh;

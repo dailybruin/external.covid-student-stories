@@ -1,3 +1,7 @@
+/*
+ * This file is used to store maps.
+ */
+
 export const MAP_year_to_yearName = {
   "First-year": "First-year",
   "Second-year": "Second-year",

@@ -6,7 +6,7 @@ import Navbar from "./components/Navbar";
 import styled from "styled-components";
 import { css } from "emotion";
 import Tabletop from "tabletop";
-import { preprocessSheetsData } from "./utils/preprocess";
+import { preprocessSheetsData } from "./utils/functions";
 
 const Title = styled("div")`
   height: 100vh;
@@ -23,10 +23,19 @@ const AddStoryLink = styled(Link)`
   font-size: 36px;
 `;
 
+/*
+school	
+major	
+year	
+ethnicity	
+hometown	worryFinancial	worryHousing	worryAcademic	worryGovernment	worryPhysical	worryMental	
+responseCommunity	responseAffected	responseElse responseDoneDifferently
+comfortablePublish	knowPositive	currentLocation
+*/
 class App extends React.Component {
   componentDidMount() {
     Tabletop.init({
-      key: "19mUjEoo5DHm5nqzU6UDJAahTIhME1FCUcRkgA1lGwXM",
+      key: "1iVHXhygVYOPzm7lRWSFrEVOquX3X7gTV-Ixu1Gy1fh4",
       callback: googleData => {
         this.setState({
           data: preprocessSheetsData(googleData)

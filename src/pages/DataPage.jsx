@@ -38,6 +38,13 @@ const StoryEntry = styled("div")`
   padding: 5px;
 `;
 
+const NumberContainer = styled("div")`
+  width: 200px;
+  height: 200px;
+  background-color: grey;
+  font-size: 15px;
+`;
+
 const filterFields = [
   { field: "School", categories: ["All", "UCLA", "USC"] },
   { field: "Major", categories: ["All", "CS", "Math", "we should bin these"] }
@@ -79,6 +86,13 @@ export default class DataPage extends React.Component {
     let { data } = this.props;
     const { selectedFields } = this.state;
     data = data.filter(row => showData(selectedFields, row));
+    var count = 0;
+    for(var i = 0; i < data.length; i++){
+      console.log(data[i].comfortablePublish);
+      if(data[i].knowPositive === "Yes")
+        count += 1;
+    }
+
     return (
       <>
         <StoriesContainer>
@@ -92,24 +106,10 @@ export default class DataPage extends React.Component {
 
             </div>
             <div style={{ height: "100%", overflow: "auto" }}>
-              <ReactList
-                axis="y"
-                threshold={50}
-                length={data.length}
-                itemRenderer={idx => {
-                  let row = data[idx];
-                  return (
-                    <StoryEntry>
-                      <b>
-                        {row.sharePermission} at {row.school}:
-                      </b>{" "}
-                      {console.log(row)}
-                      {row.testimony}
-                    </StoryEntry>
-                  );
-                }}
-                type="variable"
-              />
+            <NumberContainer>
+              <div style={{fontSize: 60}}> {count} </div>
+              students know someone who has tested positive for Covid-19
+            </NumberContainer>
             </div>
           </ScrollContainer>
         </StoriesContainer>

@@ -36,9 +36,7 @@ class App extends React.Component {
       <div className="App">
         <Router>
           <Title />
-
           <Navbar />
-
           <Switch>
             <Route exact path="/">
               <StoriesPage data={this.state.data}></StoriesPage>

@@ -9,6 +9,7 @@ import { MAP_year_to_yearName } from "../utils/mappings";
 import { filterfieldNames, responseColumns } from "../utils/properties";
 import { isElementOfType } from "react-dom/test-utils";
 import SwipeableViews from "react-swipeable-views";
+import WordCloud from "../components/WordCloud";
 
 import "./masonry.css";
 
@@ -153,6 +154,7 @@ export default class StoriesPage extends React.Component {
     data = data.filter((row) => filterAllowsShow(selectedFieldNames, row));
     return (
       <>
+        <WordCloud></WordCloud>
         <div>
           <Tab onClick={() => this.switchTab(0)}>Words</Tab>
           <Tab onClick={() => this.switchTab(1)}>Stats</Tab>

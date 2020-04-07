@@ -100,15 +100,15 @@ export default class StoriesPage extends React.Component {
       selectedFieldNames: filterfieldNames.map((element, key) => ({
         column: element.column,
         selection: "All",
-        key: key,
+        key: key
       })),
       responseSelections: responseColumns.map((element, key) => ({
         column: element.column,
         question: element.question,
         selected: true,
-        key: element.key,
+        key: element.key
       })),
-      tab: 0,
+      tab: 0
     };
     this.onFilterClick = this.onFilterClick.bind(this);
     this.onQuestionClick = this.onQuestionClick.bind(this);
@@ -121,7 +121,7 @@ export default class StoriesPage extends React.Component {
   onFilterClick(column, selection) {
     let newSelectedFieldNames = this.state.selectedFieldNames;
     let selectedfieldName = newSelectedFieldNames.find(
-      (element) => element.column == column
+      element => element.column == column
     );
     selectedfieldName.selection = selection;
     this.setState({ selectedFieldNames: newSelectedFieldNames });
@@ -133,12 +133,12 @@ export default class StoriesPage extends React.Component {
   onQuestionClick(element) {
     let newResponseSelections = this.state.responseSelections;
     let responseSelected = newResponseSelections.find(
-      (e) => e.column == element.column
+      e => e.column == element.column
     );
     console.log(responseSelected.question);
     responseSelected.selected = !responseSelected.selected;
     this.setState({
-      responseSelections: newResponseSelections,
+      responseSelections: newResponseSelections
     });
   }
 
@@ -150,7 +150,7 @@ export default class StoriesPage extends React.Component {
     let { data } = this.props;
     let { tab } = this.state;
     const { selectedFieldNames, responseSelections } = this.state;
-    data = data.filter((row) => filterAllowsShow(selectedFieldNames, row));
+    data = data.filter(row => filterAllowsShow(selectedFieldNames, row));
     return (
       <>
         <div>
@@ -160,17 +160,16 @@ export default class StoriesPage extends React.Component {
         <SwipeableViews index={tab} onChangeIndex={() => this.switchTab(tab)}>
           <StoriesContainer>
             <FiltersContainer>
-              {filterfieldNames.map((element) => (
+              {filterfieldNames.map(element => (
                 <FilterDropdown {...element} onClick={this.onFilterClick} />
               ))}
             </FiltersContainer>
-
             <QuestionAndResponsesContainer>
               <Questions>
-                {responseColumns.map((element) => {
+                {responseColumns.map(element => {
                   let newResponseSelections = responseSelections;
                   let responseSelected = newResponseSelections.find(
-                    (e) => e.column == element.column
+                    e => e.column == element.column
                   );
                   return (
                     <div
@@ -205,7 +204,7 @@ export default class StoriesPage extends React.Component {
                     className="my-masonry-grid"
                     columnClassName="my-masonry-grid_column"
                   >
-                    {data.map((row) => (
+                    {data.map(row => (
                       <div
                         className={css`
                           display: flex;
@@ -223,7 +222,7 @@ export default class StoriesPage extends React.Component {
                             at {row.school}
                           </b>
                           {responseSelections.map(
-                            (response) =>
+                            response =>
                               response.selected &&
                               row[response.column].length != "" && (
                                 <ResponseEntry>
@@ -251,7 +250,7 @@ export default class StoriesPage extends React.Component {
             style={{
               backgroundColor: "red",
               width: "100",
-              height: "400px",
+              height: "400px"
             }}
           >
             lol this be stats and shit

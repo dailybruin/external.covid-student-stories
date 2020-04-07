@@ -6,11 +6,11 @@
  */
 export const filterfieldNames = [
   { fieldName: "School", column: "school", categories: ["All", "UCLA", "USC"] },
-  {
-    fieldName: "Major",
-    column: "major",
-    categories: ["All", "CS", "Math", "we should bin these"]
-  },
+  // {
+  //   fieldName: "Major",
+  //   column: "major",
+  //   categories: ["All", "CS", "Math", "we should bin these"]
+  // },
   {
     fieldName: "Year",
     column: "year",
@@ -23,6 +23,11 @@ export const filterfieldNames = [
       "Fourth-year+",
       "Graduate"
     ]
+  },
+  {
+    fieldName: "Hometown",
+    column: "home",
+    categories: ["All", "California", "Out of State", "International"]
   }
 ];
 

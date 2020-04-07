@@ -10,7 +10,10 @@
     "emotion": "^10.0.27",
     "lodash.debounce": "^4.0.8",
     "node-fetch": "^2.6.0",
+    "chart.js": "^2.9.3",
+    "re-resizable": "^6.3.2",
     "react": "^16.13.1",
+    "react-chartjs-2": "^2.9.0",
     "react-dom": "^16.13.1",
     "react-infinite-scroll-component": "^5.0.4",
     "react-infinite-scroller": "^1.2.4",
@@ -21,6 +24,7 @@
     "react-scripts": "3.4.1",
     "react-scroll": "^1.7.16",
     "react-swipeable-views": "^0.13.9",
+    "react-wordcloud": "^1.2.2",
     "styled-components": "^5.0.1",
     "superagent": "^5.2.2",
     "tabletop": "^1.6.2"

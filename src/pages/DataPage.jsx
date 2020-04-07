@@ -9,7 +9,7 @@ const StoriesContainer = styled("div")`
   height: 90vh;
   width: 100%;
   display: flex;
-  background-color: #93A3A4;
+  background-color: white;
 `;
 
 const ScrollContainer = styled("div")`
@@ -18,7 +18,7 @@ const ScrollContainer = styled("div")`
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background-color: #93A3A4;
+  background-color: white;
 `;
 
 const StoryEntry = styled("div")`
@@ -33,19 +33,19 @@ const NumberContainer = styled("div")`
   height: 200px;
   color: white;
   font-size: 15px;
-  background-color: #636F71;
+  color: white;
+  background-color: #B7C0C0;
   text-align: center;
   padding: 30px;
   margin: 30px;
-
 `;
 
 const GraphContainer = styled("div")`
   width: 400px;
   height: 400px;
-  background-color: #636F71;
   padding: 30px;
   margin: 30px;
+  background-color: #B7C0C0
 `;
 
 const filterFields = [
@@ -105,7 +105,7 @@ export default class DataPage extends React.Component {
                 labels: ['On Campus', 'Off Campus', 'Home', 'Other'],
                 datasets: [{
                     label: 'My First dataset',
-                    backgroundColor: ['#93A3A4','#93A3A4','#93A3A4','#93A3A4'],
+                    backgroundColor: ['#D0D8D9', '#D0D8D9', '#D0D8D9', '#D0D8D9'],
                     data: [10, 15, 60, 15],
                 }]
             }}

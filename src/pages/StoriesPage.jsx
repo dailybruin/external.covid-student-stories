@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import styled from "styled-components";
 import { css } from "emotion";
 import FilterDropdown from "../components/FilterDropdown";
@@ -9,6 +9,10 @@ import { MAP_year_to_yearName } from "../utils/mappings";
 import { filterfieldNames, responseColumns } from "../utils/properties";
 import { isElementOfType } from "react-dom/test-utils";
 import SwipeableViews from "react-swipeable-views";
+import request from "superagent";
+import debounce from "lodash.debounce";
+
+import InfiniteUsers from "./Test";
 
 import "./masonry.css";
 
@@ -108,10 +112,37 @@ export default class StoriesPage extends React.Component {
         selected: true,
         key: element.key,
       })),
+      users: [],
+      lazyload: {
+        error: false,
+        hasMore: true,
+        isLoading: false,
+      },
       tab: 0,
     };
     this.onFilterClick = this.onFilterClick.bind(this);
     this.onQuestionClick = this.onQuestionClick.bind(this);
+    this.storiesInfiniteScroll = React.createRef();
+
+    // Binds our scroll event handler
+    window.onscroll = debounce(() => {
+      const { loadUsers } = this;
+      const { error, isLoading, hasMore } = this.state.lazyload;
+      const node = this.storiesInfiniteScroll.current;
+      console.log(node);
+
+      // Bails early if:
+      // * there's an error
+      // * it's already loading
+      // * there's nothing left to load
+      if (error || isLoading || !hasMore) return;
+
+      // Checks that the page has scrolled to the bottom
+
+      if (node.scrollTop === node.scrollHeight - node.offsetHeight) {
+        loadUsers();
+      }
+    }, 100);
   }
 
   /*
@@ -146,9 +177,48 @@ export default class StoriesPage extends React.Component {
     this.setState({ tab: index });
   }
 
+  loadUsers = () => {
+    this.setState({ isLoading: true }, () => {
+      request
+        .get("https://randomuser.me/api/?results=10")
+        .then((results) => {
+          // Creates a massaged array of user data
+          const nextUsers = results.body.results.map((user) => ({
+            email: user.email,
+            name: Object.values(user.name).join(" "),
+            photo: user.picture.medium,
+            username: user.login.username,
+            uuid: user.login.uuid,
+          }));
+
+          // Merges the next users into our existing users
+          this.setState({
+            // Note: Depending on the API you're using, this value may
+            // be returned as part of the payload to indicate that there
+            // is no additional data to be loaded
+            hasMore: this.state.users.length < 100,
+            isLoading: false,
+            users: [...this.state.users, ...nextUsers],
+          });
+        })
+        .catch((err) => {
+          this.setState({
+            error: err.message,
+            isLoading: false,
+          });
+        });
+    });
+  };
+
+  componentWillMount() {
+    // Loads some users on initial load
+    this.loadUsers();
+  }
+
   render() {
     let { data } = this.props;
-    let { tab } = this.state;
+    let { tab, users } = this.state;
+    let { error, hasMore, isLoading } = this.state.lazyload;
     const { selectedFieldNames, responseSelections } = this.state;
     data = data.filter((row) => filterAllowsShow(selectedFieldNames, row));
     return (
@@ -204,8 +274,32 @@ export default class StoriesPage extends React.Component {
                     breakpointCols={2}
                     className="my-masonry-grid"
                     columnClassName="my-masonry-grid_column"
+                    ref={this.storiesInfiniteScroll}
                   >
-                    {data.map((row) => (
+                    {users.map((user) => (
+                      <Fragment key={user.username}>
+                        <hr />
+                        <div style={{ display: "flex" }}>
+                          <img
+                            alt={user.username}
+                            src={user.photo}
+                            style={{
+                              borderRadius: "50%",
+                              height: 72,
+                              marginRight: 20,
+                              width: 72,
+                            }}
+                          />
+                          <div>
+                            <h2 style={{ marginTop: 0 }}>@{user.username}</h2>
+                            <p>Name: {user.name}</p>
+                            <p>Email: {user.email}</p>
+                          </div>
+                        </div>
+                        <div>{isLoading && "loading..."}</div>
+                      </Fragment>
+                    ))}
+                    {/* {data.map((row) => (
                       <div
                         className={css`
                           display: flex;
@@ -236,7 +330,7 @@ export default class StoriesPage extends React.Component {
                           )}
                         </PersonEntry>
                       </div>
-                    ))}
+                    ))} */}
                   </Masonry>
 
                   {/* );

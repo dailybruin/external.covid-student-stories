@@ -6,7 +6,10 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "axios": "^0.19.2",
     "emotion": "^10.0.27",
+    "lodash.debounce": "^4.0.8",
+    "node-fetch": "^2.6.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-infinite-scroll-component": "^5.0.4",
@@ -19,6 +22,7 @@
     "react-scroll": "^1.7.16",
     "react-swipeable-views": "^0.13.9",
     "styled-components": "^5.0.1",
+    "superagent": "^5.2.2",
     "tabletop": "^1.6.2"
   },
   "scripts": {

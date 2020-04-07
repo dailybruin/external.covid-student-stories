@@ -9,6 +9,7 @@ import { MAP_year_to_yearName } from "../utils/mappings";
 import { filterfieldNames, responseColumns } from "../utils/properties";
 import { isElementOfType } from "react-dom/test-utils";
 import SwipeableViews from "react-swipeable-views";
+import DataPage from "./DataPage";
 
 import "./masonry.css";
 
@@ -17,12 +18,12 @@ const StoriesContainer = styled("div")`
   height: 100%;
   width: 100%;
   display: flex;
-  /* background-color: #636f71; */
+  /*background-color: #636f71;*/
 `;
 
 const FiltersContainer = styled("div")`
   height: 100%;
-  width: 20%;
+  width: 500px;
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
@@ -84,7 +85,7 @@ const Questions = styled("div")`
 const QuestionAndResponsesContainer = styled("div")`
   display: flex;
   flex-direction: column;
-  width: 80%;
+  width: 100%;
 `;
 
 const Tab = styled("div")`
@@ -157,14 +158,14 @@ export default class StoriesPage extends React.Component {
           <Tab onClick={() => this.switchTab(0)}>Words</Tab>
           <Tab onClick={() => this.switchTab(1)}>Stats</Tab>
         </div>
+        <StoriesContainer>
+          <FiltersContainer>
+            {filterfieldNames.map((element) => (
+              <FilterDropdown {...element} onClick={this.onFilterClick} />
+            ))}
+          </FiltersContainer>
+          <div style={{width: "80%"}}>
         <SwipeableViews index={tab} onChangeIndex={() => this.switchTab(tab)}>
-          <StoriesContainer>
-            <FiltersContainer>
-              {filterfieldNames.map((element) => (
-                <FilterDropdown {...element} onClick={this.onFilterClick} />
-              ))}
-            </FiltersContainer>
-
             <QuestionAndResponsesContainer>
               <Questions>
                 {responseColumns.map((element) => {
@@ -246,17 +247,12 @@ export default class StoriesPage extends React.Component {
                 </div>
               </ScrollContainer>
             </QuestionAndResponsesContainer>
-          </StoriesContainer>
-          <div
-            style={{
-              backgroundColor: "red",
-              width: "100",
-              height: "400px",
-            }}
-          >
-            lol this be stats and shit
-          </div>
-        </SwipeableViews>
+            <DataPage data={data}> </DataPage>
+            </SwipeableViews>
+            </div>
+            </StoriesContainer>
+
+
       </>
     );
   }

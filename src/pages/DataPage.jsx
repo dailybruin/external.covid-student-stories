@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { css } from "emotion";
 import FilterDropdown from "../components/FilterDropdown";
 import ReactList from "react-list";
+import { Pie } from 'react-chartjs-2'
 
 const StoriesContainer = styled("div")`
   height: 90vh;
@@ -11,23 +12,13 @@ const StoriesContainer = styled("div")`
   background-color: #93A3A4;
 `;
 
-const FiltersContainer = styled("div")`
-height: 100%;
-width: 20%;
-display: flex;
-flex-direction: column;
-box-sizing: border-box;
-padding: 30px;
-line-height: 30px;
-cursor: pointer;
-`;
-
 const ScrollContainer = styled("div")`
   height: 100%;
-  width: 70%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  background-color: #93A3A4;
 `;
 
 const StoryEntry = styled("div")`
@@ -45,7 +36,16 @@ const NumberContainer = styled("div")`
   background-color: #636F71;
   text-align: center;
   padding: 30px;
+  margin: 30px;
 
+`;
+
+const GraphContainer = styled("div")`
+  width: 400px;
+  height: 400px;
+  background-color: #636F71;
+  padding: 30px;
+  margin: 30px;
 `;
 
 const filterFields = [
@@ -98,24 +98,43 @@ export default class DataPage extends React.Component {
 
     return (
       <>
-        <StoriesContainer>
-          <FiltersContainer>
-            {filterFields.map(element => (
-              <FilterDropdown {...element} onClick={this.onFilterClick} />
-            ))}
-          </FiltersContainer>
           <ScrollContainer>
-            <div>
-
-            </div>
             <div style={{ height: "100%", overflow: "auto" }}>
+              <GraphContainer>
+                    <Pie data = {{
+                labels: ['On Campus', 'Off Campus', 'Home', 'Other'],
+                datasets: [{
+                    label: 'My First dataset',
+                    backgroundColor: ['#93A3A4','#93A3A4','#93A3A4','#93A3A4'],
+                    data: [10, 15, 60, 15],
+                }]
+            }}
+            options={{
+
+              maintainAspectRatio: false,
+              title: {
+                display: true,
+                text: 'Where are students?',
+                fontFamily: "Calibri",
+                fontSize: 30,
+                fontColor: 'white',
+              },
+              legend: {
+                position: "bottom",
+                labels: {
+               // This more specific font property overrides the global property
+               fontColor: 'white',
+           }
+              }
+            }}
+            />
+            </GraphContainer>
             <NumberContainer>
               <div style={{fontSize: 100, fontWeight: "bold"}}> {count} </div>
-              students know someone who has tested positive for Covid-19
+              students know someone who has tested positive for Covid-19.
             </NumberContainer>
             </div>
           </ScrollContainer>
-        </StoriesContainer>
       </>
     );
   }

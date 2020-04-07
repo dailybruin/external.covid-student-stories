@@ -1,7 +1,9 @@
 import React from "react";
 import { css } from "emotion";
 import styled from "styled-components";
+import Cookies from "universal-cookie";
 
+const cookies = new Cookies();
 var images = [
   { key: "like", img: "http://i.imgur.com/LwCYmcM.gif" },
   { key: "love", img: "http://i.imgur.com/k5jMsaH.gif" },
@@ -58,42 +60,54 @@ const Image = styled.img`
 export default class Upvote extends React.Component {
   constructor(props) {
     super(props);
+    var id = "";
+    if (typeof cookies.get(this.props.id) !== undefined)
+      id = cookies.get(this.props.id);
+    var value = cookies.get(this.props.id);
+    console.log("value: " + value);
     this.state = {
-      selected: "",
+      selected: id,
       open: false,
-      displayIcon: "Like",
     };
     this.emotionChosen = this.emotionChosen.bind(this);
     this.renderLikeButton = this.renderLikeButton.bind(this);
     this.likeHandler = this.likeHandler.bind(this);
   }
   emotionChosen(emotion) {
-    for (var i = 0; i < images.length; i++) {
-      if (images[i].key == emotion) {
-        this.setState({ displayIcon: images[i].img });
-      }
-    }
-    this.setState({
-      selected: emotion,
-    });
+    this.setState({ selected: emotion });
+    cookies.set(this.props.id, emotion);
   }
   renderLikeButton() {
-    if (this.state.displayIcon === "Like") {
+    if (this.state.selected === "") {
       return <div>Like</div>;
-    } else
-      return (
-        <img
-          className={css`
-            max-width: 15px;
-          `}
-          src={this.state.displayIcon}
-        />
-      );
+    } else {
+      var url = "Like";
+      for (var i = 0; i < images.length; i++) {
+        if (images[i].key == this.state.selected) {
+          url = images[i].img;
+        }
+      }
+      if (url === "Like") {
+        return url;
+      } else
+        return (
+          <img
+            className={css`
+              max-width: 15px;
+            `}
+            src={url}
+          />
+        );
+    }
   }
   likeHandler() {
-    if (this.state.displayIcon === "Like") {
-      this.setState({ displayIcon: "http://i.imgur.com/LwCYmcM.gif" });
-    } else this.setState({ displayIcon: "Like", selected: "" });
+    if (this.state.selected === "") {
+      this.setState({ selected: "like" });
+      cookies.set(this.props.id, "like");
+    } else {
+      this.setState({ selected: "" });
+      cookies.set(this.props.id, "");
+    }
   }
   render() {
     var img = images.map((image) => (
@@ -106,6 +120,7 @@ export default class Upvote extends React.Component {
     return (
       <>
         <div>
+          <div>Reaction Count</div>
           <div>
             <Like>
               <ImageContainer>{img}</ImageContainer>

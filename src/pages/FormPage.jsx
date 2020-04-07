@@ -1,5 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import { colleges } from './colleges';
+import Select from 'react-select';
+
 
 const Background = styled("div")`
   background-color: white;
@@ -20,6 +23,14 @@ const Header = styled("div")`
 
 const Comment = styled("div")`
   font-size: 24px;
+`;
+
+const SearchableDropDown = styled("div")`
+
+`;
+
+const OptionsList = styled("datalist")`
+  height: 100px;
 `;
 
 const ShortResponse = styled("input")`
@@ -50,6 +61,7 @@ const LongResponse = styled("textarea")`
 
 `;
 
+const SEARCHABLE_DROPDOWN = 0;
 const SHORT_RESPONSE = 1;
 const LONG_RESPONSE = 2;
 const MCQ = 3;
@@ -59,8 +71,8 @@ const MULTIPLE_MCQ = 4;
 const ques = [
   {
     question: "What school do you attend?",
-    type: SHORT_RESPONSE,
-    choices: [],
+    type: SEARCHABLE_DROPDOWN,
+    choices: colleges,
     comment: "",
     required: true,
     id: 0,
@@ -193,59 +205,35 @@ class FormPage extends React.Component {
     this.state = {
       index: 0,
       category: false,
-      change: false
+      change: false,
+      college: null
     };
   }
-  incIndex() {
-    const { index, category, change } = this.state;
-    if (index < 10) {
-      this.setState({ index: index + 1 });
-    }
-    if (index == 6) {
-      this.setState({ category: true });
-    }
-    console.log(index);
-  }
-  render() {
-    const { index, category, change } = this.state;
-    let button, header, qnum, question;
-    // circular button handling
-    if (index != 10) {
-      button = <button onClick={() => this.incIndex()}>NEXT</button>;
-    } else {
-      button = <button>FINISH</button>;
-    }
-    // category
-    if (!category) {
-      header = "the basics";
-    } else {
-      header = "tell us more";
-    }
-    // question number
-    if (!category) {
-      qnum = index + 1;
-    } else {
-      qnum = index - 6;
-    }
-    // question type
-    if (ques[this.state.index].type == "free response") {
-      question = (
-        <form>
-          <input type="text" id="q" placeholder="type your answer here" />
-        </form>
-      );
-    } else if (ques[this.state.index].type == "multiple choice") {
-      question = ques[this.state.index].answers.map((choice, index) => (
-        <button>{ques[this.state.index].answers[index]}</button>
-      ));
-    }
 
+  handleChange = (selectedOption) => {
+    this.setState({college : selectedOption.value});
+    console.log(`Option selected:`, selectedOption, this.state.college);
+  };
+  render() {
     const questions = ques.map((question) => {
       const title = (
         <div>{question.question}</div>
       );
       let type = null;
-      if (question.type == SHORT_RESPONSE)
+      if (question.type == SEARCHABLE_DROPDOWN)
+      {
+        const optionsList = question.choices.map((option) => ({value: option, label: option}));
+        type = (
+          <SearchableDropDown>
+            <Select
+              onChange={this.handleChange}
+              options={optionsList}
+            />
+            <input type="hidden" name={question.name} value={this.state.college} />
+          </SearchableDropDown>
+        );
+      }
+      else if (question.type == SHORT_RESPONSE)
       {
         type = (
           <ShortResponse type="text" name={question.name} id={question.id}/>

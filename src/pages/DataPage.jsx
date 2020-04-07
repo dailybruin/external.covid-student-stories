@@ -8,19 +8,18 @@ const StoriesContainer = styled("div")`
   height: 90vh;
   width: 100%;
   display: flex;
-  background-color: lightcoral;
+  background-color: #93A3A4;
 `;
 
 const FiltersContainer = styled("div")`
-  height: 100%;
-  width: 30%;
-  display: flex;
-  flex-direction: column;
-  background-color: lightblue;
-  box-sizing: border-box;
-  padding: 30px;
-  line-height: 30px;
-  cursor: pointer;
+height: 100%;
+width: 20%;
+display: flex;
+flex-direction: column;
+box-sizing: border-box;
+padding: 30px;
+line-height: 30px;
+cursor: pointer;
 `;
 
 const ScrollContainer = styled("div")`
@@ -41,8 +40,12 @@ const StoryEntry = styled("div")`
 const NumberContainer = styled("div")`
   width: 200px;
   height: 200px;
-  background-color: grey;
+  color: white;
   font-size: 15px;
+  background-color: #636F71;
+  text-align: center;
+  padding: 30px;
+
 `;
 
 const filterFields = [
@@ -107,7 +110,7 @@ export default class DataPage extends React.Component {
             </div>
             <div style={{ height: "100%", overflow: "auto" }}>
             <NumberContainer>
-              <div style={{fontSize: 60}}> {count} </div>
+              <div style={{fontSize: 100, fontWeight: "bold"}}> {count} </div>
               students know someone who has tested positive for Covid-19
             </NumberContainer>
             </div>

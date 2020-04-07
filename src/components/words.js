@@ -1,4 +1,6 @@
-export default [
+var stories = "";
+
+const words = [
   {
     text: "told",
     value: 64,
@@ -500,3 +502,12 @@ export default [
     value: 10,
   },
 ];
+
+// sort object by value using key
+// const keysSorted = Object.keys(words).sort(function (a, b) {
+//   return words[a].value - words[b].value;
+// });
+
+// console.log(keysSorted);
+
+export default words;

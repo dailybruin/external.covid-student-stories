@@ -4,6 +4,7 @@ import { css } from "emotion";
 import FilterDropdown from "../components/FilterDropdown";
 import ReactList from "react-list";
 import { isElementOfType } from "react-dom/test-utils";
+import Upvote from "../components/Upvote.js";
 
 const StoriesContainer = styled("div")`
   /* height: 90vh; */
@@ -78,18 +79,18 @@ const filterFields = [
   { field: "Major", categories: ["All", "CS", "Math", "we should bin these"] },
   {
     field: "Year",
-    categories: ["All", "High School", "First-year", "Second-year"]
-  }
+    categories: ["All", "High School", "First-year", "Second-year"],
+  },
 ];
 
 const responseTypes = [
   {
     type: "responseCommunity",
-    question: "How has your community responded to the Covid-19 pandemic?"
+    question: "How has your community responded to the Covid-19 pandemic?",
   },
   {
     type: "responseAffected",
-    question: "How has Covid-19 affected you?"
+    question: "How has Covid-19 affected you?",
   },
   // {
   //   type: "responseElse",
@@ -98,8 +99,8 @@ const responseTypes = [
   {
     type: "responseDoneDifferently",
     question:
-      "Is there anything you think your school or community could/should have done differently regarding this situation?"
-  }
+      "Is there anything you think your school or community could/should have done differently regarding this situation?",
+  },
 ];
 
 function showData(selectedFields, row) {
@@ -120,14 +121,14 @@ export default class StoriesPage extends React.Component {
       selectedFields: filterFields.map((element, key) => ({
         field: element.field,
         selection: "All",
-        key: key
+        key: key,
       })),
       responseSelections: responseTypes.map((element, key) => ({
         type: element.type,
         question: element.question,
         selected: true,
-        key: element.key
-      }))
+        key: element.key,
+      })),
     };
     this.onFilterClick = this.onFilterClick.bind(this);
   }
@@ -135,7 +136,7 @@ export default class StoriesPage extends React.Component {
   onFilterClick(field, selection) {
     let newSelectedFields = this.state.selectedFields;
     let selectedField = newSelectedFields.find(
-      element => element.field == field
+      (element) => element.field == field
     );
     selectedField.selection = selection;
     this.setState({ selectedFields: newSelectedFields });
@@ -144,22 +145,22 @@ export default class StoriesPage extends React.Component {
   render() {
     let { data } = this.props;
     const { selectedFields, responseSelections } = this.state;
-    data = data.filter(row => showData(selectedFields, row));
+    data = data.filter((row) => showData(selectedFields, row));
     return (
       <>
         <StoriesContainer>
           <FiltersContainer>
-            {filterFields.map(element => (
+            {filterFields.map((element) => (
               <FilterDropdown {...element} onClick={this.onFilterClick} />
             ))}
           </FiltersContainer>
 
           <QuestionAndResponsesContainer>
             <Questions>
-              {responseTypes.map(element => {
+              {responseTypes.map((element) => {
                 let newResponseSelections = responseSelections;
                 let responseSelected = newResponseSelections.find(
-                  e => e.type == element.type
+                  (e) => e.type == element.type
                 );
                 return (
                   <div
@@ -170,12 +171,12 @@ export default class StoriesPage extends React.Component {
                     onClick={() => {
                       let newResponseSelections = responseSelections;
                       let responseSelected = newResponseSelections.find(
-                        e => e.type == element.type
+                        (e) => e.type == element.type
                       );
                       console.log(responseSelected.question);
                       responseSelected.selected = !responseSelected.selected;
                       this.setState({
-                        responseSelections: newResponseSelections
+                        responseSelections: newResponseSelections,
                       });
                     }}
                   >
@@ -190,7 +191,7 @@ export default class StoriesPage extends React.Component {
                   axis="y"
                   threshold={50}
                   length={data.length}
-                  itemRenderer={idx => {
+                  itemRenderer={(idx) => {
                     let row = data[idx];
                     return (
                       <div
@@ -209,12 +210,15 @@ export default class StoriesPage extends React.Component {
                           `}
                         >
                           {responseSelections.map(
-                            response =>
+                            (response) =>
                               response.selected && (
-                                <StoryEntry>{row[response.type]}</StoryEntry>
+                                <>
+                                  <StoryEntry>{row[response.type]}</StoryEntry>
+                                </>
                               )
                           )}
                         </div>
+                        <Upvote />
                       </div>
                     );
                   }}

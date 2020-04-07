@@ -49,6 +49,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <Router>
+          {/*
           <Title>
             <div>COVID STORIES</div>
             <AddStoryLink
@@ -78,7 +79,6 @@ class App extends React.Component {
           {/* someone make this into a component in the components folder plz */}
 
           <Navbar />
-
           <Switch>
             <Route exact path="/">
               <StoriesPage data={this.state.data}></StoriesPage>

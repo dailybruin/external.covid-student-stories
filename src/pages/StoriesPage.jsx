@@ -10,25 +10,31 @@ import { filterfieldNames, responseColumns } from "../utils/properties";
 import { isElementOfType } from "react-dom/test-utils";
 import SwipeableViews from "react-swipeable-views";
 import SearchableDropdown from "../components/Searchable";
-
 import "./masonry.css";
+
+const Container = styled("div")`
+  width: 90%;
+  margin: 0 auto;
+`;
 
 const StoriesContainer = styled("div")`
   /* height: 90vh; */
   height: 100%;
   width: 100%;
   display: flex;
+
   /* background-color: #636f71; */
 `;
 
 const FiltersContainer = styled("div")`
   height: 100%;
-  width: 20%;
+  width: 15%;
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
   box-sizing: border-box;
   padding: 30px;
+  padding-top: 6.5em;
   line-height: 30px;
   cursor: pointer;
 `;
@@ -40,6 +46,7 @@ const ScrollContainer = styled("div")`
   flex-direction: row;
   flex-wrap: wrap;
   background-color: #ffffff;
+  box-sizing: border-box;
 `;
 
 const ResponseEntry = styled("div")`
@@ -49,12 +56,13 @@ const ResponseEntry = styled("div")`
   /* background-color: #f7f7f7; */
   border-radius: 5px;
   flex: 1;
+  color: #919999;
 `;
 
 const PersonEntry = styled("div")`
   background-color: white;
   padding: 20px;
-  border: 2px solid lightgreen;
+  border: 2px solid #b7c0c0;
   /* margin: 10px; */
 `;
 
@@ -74,10 +82,9 @@ const StoryResponse = styled("div")`
 
 const Questions = styled("div")`
   box-sizing: border-box;
-  font-weight: 600;
+  font-weight: 400;
   /* background-color: #ebebeb; */
-  font-family: "Avenir";
-  font-size: 20px;
+  font-size: 18px;
   padding: 20px;
   text-align: center;
 `;
@@ -153,18 +160,21 @@ export default class StoriesPage extends React.Component {
     const { selectedFieldNames, responseSelections } = this.state;
     data = data.filter((row) => filterAllowsShow(selectedFieldNames, row));
     return (
-      <>
+      <Container>
+        {/*
         <div>
           <Tab onClick={() => this.switchTab(0)}>Words</Tab>
           <Tab onClick={() => this.switchTab(1)}>Stats</Tab>
         </div>
+        */}
         <SwipeableViews index={tab} onChangeIndex={() => this.switchTab(tab)}>
           <StoriesContainer>
             <FiltersContainer>
+              School
+              <SearchableDropdown />
               {filterfieldNames.map((element) => (
                 <FilterDropdown {...element} onClick={this.onFilterClick} />
               ))}
-              <SearchableDropdown />
             </FiltersContainer>
             <QuestionAndResponsesContainer>
               <Questions>
@@ -176,7 +186,9 @@ export default class StoriesPage extends React.Component {
                   return (
                     <div
                       className={css`
-                        color: ${responseSelected.selected ? "red" : "black"};
+                        color: ${responseSelected.selected
+                          ? "#606666"
+                          : "#282b2b"};
                         cursor: pointer;
                       `}
                       onClick={() => this.onQuestionClick(element)}
@@ -217,7 +229,9 @@ export default class StoriesPage extends React.Component {
                         <PersonEntry>
                           <b
                             className={css`
-                              font-size: 20px;
+                              font-size: 17px;
+                              font-weight: 500;
+                              color: #282b2b;
                             `}
                           >
                             {MAP_year_to_yearName[row.year]} {row.major} major
@@ -229,7 +243,14 @@ export default class StoriesPage extends React.Component {
                               row[response.column].length != "" && (
                                 <ResponseEntry>
                                   <div>
-                                    <b>{response.question}</b>
+                                    <b
+                                      className={css`
+                                        font-weight: 500;
+                                        color: #606666;
+                                      `}
+                                    >
+                                      {response.question}
+                                    </b>
                                   </div>
                                   <div>{row[response.column]}</div>
                                 </ResponseEntry>
@@ -258,7 +279,7 @@ export default class StoriesPage extends React.Component {
             lol this be stats and shit
           </div>
         </SwipeableViews>
-      </>
+      </Container>
     );
   }
 }

@@ -4,18 +4,32 @@ import { Link } from "react-router-dom";
 import { Element } from "react-scroll";
 
 const NavbarStyled = styled("div")`
-  height: 10vh;
+  height: 6vh;
   position: sticky;
   display: flex;
-  align-items: center;
   top: 0;
-  background-color: lightyellow;
+  justify-content: space-between;
+  background-color: #586572;
+  box-sizing: border-box;
+  padding: 0 3em;
+  align-items: center;
 `;
 
 const StyledLink = styled(Link)`
   font-size: 16px;
   margin: 30px;
   box-sizing: border-box;
+  text-decoration: none;
+  color: white;
+
+  &:hover {
+  }
+`;
+
+const Header = styled("div")`
+  font-size: 20px;
+  color: white;
+  font-weight: 400;
 `;
 
 export default class Navbar extends React.Component {
@@ -23,9 +37,12 @@ export default class Navbar extends React.Component {
     return (
       <Element name="navbar">
         <NavbarStyled>
-          <StyledLink to="/">Stories</StyledLink>
-
-          <StyledLink to="/form">Form</StyledLink>
+          <Header>Unfinished Stories</Header>
+          <div>
+            <StyledLink to="/">stories</StyledLink>
+            <StyledLink to="/data">data</StyledLink>
+            <StyledLink to="/form">form</StyledLink>
+          </div>
         </NavbarStyled>
       </Element>
     );

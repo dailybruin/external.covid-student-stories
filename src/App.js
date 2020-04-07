@@ -1,13 +1,13 @@
 import React from "react";
-import { StoriesPage, FormPage } from "./pages";
+import { StoriesPage, FormPage, DataPage } from "./pages";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import { Link as ScrollLink, scroller } from "react-scroll";
 import Navbar from "./components/Navbar";
 import styled from "styled-components";
 import { css } from "emotion";
 import Tabletop from "tabletop";
-import { preprocessSheetsData } from "./utils/preprocess";
-import Map from "./components/MapV2";
+import { preprocessSheetsData } from "./utils/functions";
+
 const Title = styled("div")`
   height: 100vh;
   width: 100%;
@@ -23,11 +23,20 @@ const AddStoryLink = styled(Link)`
   font-size: 36px;
 `;
 
+/*
+school	
+major	
+year	
+ethnicity	
+hometown	worryFinancial	worryHousing	worryAcademic	worryGovernment	worryPhysical	worryMental	
+responseCommunity	responseAffected	responseElse responseDoneDifferently
+comfortablePublish	knowPositive	currentLocation
+*/
 class App extends React.Component {
   componentDidMount() {
     Tabletop.init({
-      key: "19mUjEoo5DHm5nqzU6UDJAahTIhME1FCUcRkgA1lGwXM",
-      callback: (googleData) => {
+      key: "1iVHXhygVYOPzm7lRWSFrEVOquX3X7gTV-Ixu1Gy1fh4",
+      callback: googleData => {
         this.setState({
           data: preprocessSheetsData(googleData),
         });
@@ -73,6 +82,9 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/">
               <StoriesPage data={this.state.data}></StoriesPage>
+            </Route>
+            <Route exact path="/data">
+              <DataPage data={this.state.data}></DataPage>
             </Route>
             <Route exact path="/form">
               <FormPage></FormPage>

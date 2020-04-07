@@ -24,7 +24,7 @@ export default class Navbar extends React.Component {
       <Element name="navbar">
         <NavbarStyled>
           <StyledLink to="/">Stories</StyledLink>
-
+          <StyledLink to="/data">Data</StyledLink>
           <StyledLink to="/form">Form</StyledLink>
         </NavbarStyled>
       </Element>

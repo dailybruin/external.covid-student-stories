@@ -9,6 +9,7 @@ import { MAP_year_to_yearName } from "../utils/mappings";
 import { filterfieldNames, responseColumns } from "../utils/properties";
 import { isElementOfType } from "react-dom/test-utils";
 import "./masonry.css";
+import { CheckBox } from "react-native-elements";
 
 const StoriesContainer = styled("div")`
   /* height: 90vh; */
@@ -51,7 +52,7 @@ const ResponseEntry = styled("div")`
 const PersonEntry = styled("div")`
   background-color: white;
   padding: 20px;
-  border: 2px solid lightgreen;
+  border: 2px solid grey;
   /* margin: 10px; */
 `;
 
@@ -144,8 +145,8 @@ export default class StoriesPage extends React.Component {
             {filterfieldNames.map(element => (
               <FilterDropdown {...element} onClick={this.onFilterClick} />
             ))}
+            <CheckBox title="click here" onClick={this.onFilterClick} />
           </FiltersContainer>
-
           <QuestionAndResponsesContainer>
             <Questions>
               {responseColumns.map(element => {

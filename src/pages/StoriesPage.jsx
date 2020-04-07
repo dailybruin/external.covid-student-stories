@@ -8,6 +8,8 @@ import { filterAllowsShow, selectionMatchesEntry } from "../utils/functions";
 import { MAP_year_to_yearName } from "../utils/mappings";
 import { filterfieldNames, responseColumns } from "../utils/properties";
 import { isElementOfType } from "react-dom/test-utils";
+import SwipeableViews from "react-swipeable-views";
+
 import "./masonry.css";
 
 const StoriesContainer = styled("div")`
@@ -85,6 +87,12 @@ const QuestionAndResponsesContainer = styled("div")`
   width: 80%;
 `;
 
+const Tab = styled("div")`
+  display: inline-block;
+  text-align: center;
+  width: 50%;
+`;
+
 export default class StoriesPage extends React.Component {
   constructor(props) {
     super(props);
@@ -92,14 +100,15 @@ export default class StoriesPage extends React.Component {
       selectedFieldNames: filterfieldNames.map((element, key) => ({
         column: element.column,
         selection: "All",
-        key: key
+        key: key,
       })),
       responseSelections: responseColumns.map((element, key) => ({
         column: element.column,
         question: element.question,
         selected: true,
-        key: element.key
-      }))
+        key: element.key,
+      })),
+      tab: 0,
     };
     this.onFilterClick = this.onFilterClick.bind(this);
     this.onQuestionClick = this.onQuestionClick.bind(this);
@@ -112,7 +121,7 @@ export default class StoriesPage extends React.Component {
   onFilterClick(column, selection) {
     let newSelectedFieldNames = this.state.selectedFieldNames;
     let selectedfieldName = newSelectedFieldNames.find(
-      element => element.column == column
+      (element) => element.column == column
     );
     selectedfieldName.selection = selection;
     this.setState({ selectedFieldNames: newSelectedFieldNames });
@@ -124,110 +133,130 @@ export default class StoriesPage extends React.Component {
   onQuestionClick(element) {
     let newResponseSelections = this.state.responseSelections;
     let responseSelected = newResponseSelections.find(
-      e => e.column == element.column
+      (e) => e.column == element.column
     );
     console.log(responseSelected.question);
     responseSelected.selected = !responseSelected.selected;
     this.setState({
-      responseSelections: newResponseSelections
+      responseSelections: newResponseSelections,
     });
+  }
+
+  switchTab(index) {
+    this.setState({ tab: index });
   }
 
   render() {
     let { data } = this.props;
+    let { tab } = this.state;
     const { selectedFieldNames, responseSelections } = this.state;
-    data = data.filter(row => filterAllowsShow(selectedFieldNames, row));
+    data = data.filter((row) => filterAllowsShow(selectedFieldNames, row));
     return (
       <>
-        <StoriesContainer>
-          <FiltersContainer>
-            {filterfieldNames.map(element => (
-              <FilterDropdown {...element} onClick={this.onFilterClick} />
-            ))}
-          </FiltersContainer>
+        <div>
+          <Tab onClick={() => this.switchTab(0)}>Words</Tab>
+          <Tab onClick={() => this.switchTab(1)}>Stats</Tab>
+        </div>
+        <SwipeableViews index={tab} onChangeIndex={() => this.switchTab(tab)}>
+          <StoriesContainer>
+            <FiltersContainer>
+              {filterfieldNames.map((element) => (
+                <FilterDropdown {...element} onClick={this.onFilterClick} />
+              ))}
+            </FiltersContainer>
 
-          <QuestionAndResponsesContainer>
-            <Questions>
-              {responseColumns.map(element => {
-                let newResponseSelections = responseSelections;
-                let responseSelected = newResponseSelections.find(
-                  e => e.column == element.column
-                );
-                return (
-                  <div
-                    className={css`
-                      color: ${responseSelected.selected ? "red" : "black"};
-                      cursor: pointer;
-                    `}
-                    onClick={() => this.onQuestionClick(element)}
-                  >
-                    {element.question}
-                  </div>
-                );
-              })}
-            </Questions>
-            <ScrollContainer>
-              <div
-                className={css`
-                  height: 100%;
-                  width: 100%;
-                  overflow: auto;
-                `}
-              >
-                {/* <ReactList
+            <QuestionAndResponsesContainer>
+              <Questions>
+                {responseColumns.map((element) => {
+                  let newResponseSelections = responseSelections;
+                  let responseSelected = newResponseSelections.find(
+                    (e) => e.column == element.column
+                  );
+                  return (
+                    <div
+                      className={css`
+                        color: ${responseSelected.selected ? "red" : "black"};
+                        cursor: pointer;
+                      `}
+                      onClick={() => this.onQuestionClick(element)}
+                    >
+                      {element.question}
+                    </div>
+                  );
+                })}
+              </Questions>
+              <ScrollContainer>
+                <div
+                  className={css`
+                    height: 100%;
+                    width: 100%;
+                    overflow: auto;
+                  `}
+                >
+                  {/* <ReactList
                   axis="y"
                   threshold={50}
                   length={data.length}
                   itemRenderer={idx => {
                     let row = data[idx];
                     return ( */}
-                <Masonry
-                  breakpointCols={2}
-                  className="my-masonry-grid"
-                  columnClassName="my-masonry-grid_column"
-                >
-                  {data.map(row => (
-                    <div
-                      className={css`
-                        display: flex;
-                        flex-direction: column;
-                        width: 100%;
-                      `}
-                    >
-                      <PersonEntry>
-                        <b
-                          className={css`
-                            font-size: 20px;
-                          `}
-                        >
-                          {MAP_year_to_yearName[row.year]} {row.major} major at{" "}
-                          {row.school}
-                        </b>
-                        {responseSelections.map(
-                          response =>
-                            response.selected &&
-                            row[response.column].length != "" && (
-                              <ResponseEntry>
-                                <div>
-                                  <b>{response.question}</b>
-                                </div>
-                                <div>{row[response.column]}</div>
-                              </ResponseEntry>
-                            )
-                        )}
-                      </PersonEntry>
-                    </div>
-                  ))}
-                </Masonry>
+                  <Masonry
+                    breakpointCols={2}
+                    className="my-masonry-grid"
+                    columnClassName="my-masonry-grid_column"
+                  >
+                    {data.map((row) => (
+                      <div
+                        className={css`
+                          display: flex;
+                          flex-direction: column;
+                          width: 100%;
+                        `}
+                      >
+                        <PersonEntry>
+                          <b
+                            className={css`
+                              font-size: 20px;
+                            `}
+                          >
+                            {MAP_year_to_yearName[row.year]} {row.major} major
+                            at {row.school}
+                          </b>
+                          {responseSelections.map(
+                            (response) =>
+                              response.selected &&
+                              row[response.column].length != "" && (
+                                <ResponseEntry>
+                                  <div>
+                                    <b>{response.question}</b>
+                                  </div>
+                                  <div>{row[response.column]}</div>
+                                </ResponseEntry>
+                              )
+                          )}
+                        </PersonEntry>
+                      </div>
+                    ))}
+                  </Masonry>
 
-                {/* );
+                  {/* );
                   }}
                   type="variable"
                 /> */}
-              </div>
-            </ScrollContainer>
-          </QuestionAndResponsesContainer>
-        </StoriesContainer>
+                </div>
+              </ScrollContainer>
+            </QuestionAndResponsesContainer>
+          </StoriesContainer>
+          <div
+            style={{
+              backgroundColor: "red",
+              width: "100",
+              height: "400px",
+            }}
+          >
+            lol this be stats and shit
+          </div>
+        </SwipeableViews>
       </>
     );
   }

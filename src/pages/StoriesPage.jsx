@@ -3,7 +3,11 @@ import styled from "styled-components";
 import { css } from "emotion";
 import FilterDropdown from "../components/FilterDropdown";
 import Masonry from "react-masonry-css";
-import { filterAllowsShow, selectionMatchesEntry } from "../utils/functions";
+import {
+  filterAllowsShow,
+  selectionMatchesEntry,
+  getQueryString,
+} from "../utils/functions";
 import { MAP_year_to_yearName } from "../utils/mappings";
 import { filterfieldNames, responseColumns } from "../utils/properties";
 import { isElementOfType } from "react-dom/test-utils";
@@ -135,15 +139,20 @@ export default class StoriesPage extends React.Component {
 
   componentWillMount() {
     // Loads some users on initial load
-    this.loadStories();
+    this.loadStories(getQueryString(this.state.selectedFieldNames));
   }
 
-  loadStories() {
+  loadStories(queryString) {
     this.setState({ isLoading: true }, () => {
       axios(
-        `https://covidstories.dailybruin.com/stories/?i=${this.state.currPage}`
+        `https://covidstories.dailybruin.com/stories/?${queryString}&i=${this.state.currPage}`
       )
         .then((results) => {
+          console.log(
+            `https://covidstories.dailybruin.com/stories/?${queryString}&i=${this.state.currPage}`
+          );
+          console.log(queryString);
+          console.log("lol");
           const newStories = results.data.map((d) => d.fields);
           console.log(newStories);
           console.log(this.state);
@@ -169,7 +178,7 @@ export default class StoriesPage extends React.Component {
     if (error || isLoading || !hasMore) return;
     const element = this.refs.scrollview;
     if (element.scrollHeight - element.scrollTop === element.clientHeight) {
-      loadStories();
+      loadStories(getQueryString(this.state.selectedFieldNames));
     }
   }, 50);
 
@@ -183,7 +192,10 @@ export default class StoriesPage extends React.Component {
       (element) => element.column == column
     );
     selectedfieldName.selection = selection;
-    this.setState({ selectedFieldNames: newSelectedFieldNames });
+    this.setState(
+      { selectedFieldNames: newSelectedFieldNames, stories: [], currPage: 1 },
+      () => this.loadStories(getQueryString(newSelectedFieldNames))
+    );
   }
 
   /*
@@ -213,15 +225,19 @@ export default class StoriesPage extends React.Component {
     data = data.filter((row) => filterAllowsShow(selectedFieldNames, row));
     return (
       <>
-        <WordCloud></WordCloud>
+        {/* <WordCloud></WordCloud> */}
         <Container>
-          {/*
-        <div>
-          <Tab onClick={() => this.switchTab(0)}>Words</Tab>
-          <Tab onClick={() => this.switchTab(1)}>Stats</Tab>
-        </div>
-        */}
-          <SwipeableViews index={tab} onChangeIndex={() => this.switchTab(tab)}>
+          <div>
+            <Tab onClick={() => this.switchTab(0)}>Words</Tab>
+            <Tab onClick={() => this.switchTab(1)}>Stats</Tab>
+          </div>
+          <SwipeableViews
+            index={tab}
+            onChangeIndex={() => this.switchTab(tab)}
+            className={css`
+              width: 100%;
+            `}
+          >
             <StoriesContainer>
               <FiltersContainer>
                 School

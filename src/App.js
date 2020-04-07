@@ -36,12 +36,12 @@ class App extends React.Component {
   componentDidMount() {
     Tabletop.init({
       key: "1iVHXhygVYOPzm7lRWSFrEVOquX3X7gTV-Ixu1Gy1fh4",
-      callback: googleData => {
+      callback: (googleData) => {
         this.setState({
-          data: preprocessSheetsData(googleData)
+          data: preprocessSheetsData(googleData),
         });
       },
-      simpleSheet: true
+      simpleSheet: true,
     });
   }
   render() {
@@ -57,7 +57,7 @@ class App extends React.Component {
                 scroller.scrollTo("navbar", {
                   duration: 500,
                   delay: 0,
-                  smooth: "easeInOutQuint"
+                  smooth: "easeInOutQuint",
                 });
               }}
             >

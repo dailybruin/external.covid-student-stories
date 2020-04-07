@@ -9,6 +9,7 @@ import { MAP_year_to_yearName } from "../utils/mappings";
 import { filterfieldNames, responseColumns } from "../utils/properties";
 import { isElementOfType } from "react-dom/test-utils";
 import SwipeableViews from "react-swipeable-views";
+import SearchableDropdown from "../components/Searchable";
 
 import "./masonry.css";
 
@@ -163,8 +164,8 @@ export default class StoriesPage extends React.Component {
               {filterfieldNames.map((element) => (
                 <FilterDropdown {...element} onClick={this.onFilterClick} />
               ))}
+              <SearchableDropdown />
             </FiltersContainer>
-
             <QuestionAndResponsesContainer>
               <Questions>
                 {responseColumns.map((element) => {

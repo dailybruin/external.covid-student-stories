@@ -7,7 +7,7 @@ import styled from "styled-components";
 import { css } from "emotion";
 import Tabletop from "tabletop";
 import { preprocessSheetsData } from "./utils/preprocess";
-
+import Map from "./components/MapV2";
 const Title = styled("div")`
   height: 100vh;
   width: 100%;
@@ -27,12 +27,12 @@ class App extends React.Component {
   componentDidMount() {
     Tabletop.init({
       key: "19mUjEoo5DHm5nqzU6UDJAahTIhME1FCUcRkgA1lGwXM",
-      callback: googleData => {
+      callback: (googleData) => {
         this.setState({
-          data: preprocessSheetsData(googleData)
+          data: preprocessSheetsData(googleData),
         });
       },
-      simpleSheet: true
+      simpleSheet: true,
     });
   }
   render() {
@@ -48,7 +48,7 @@ class App extends React.Component {
                 scroller.scrollTo("navbar", {
                   duration: 500,
                   delay: 0,
-                  smooth: "easeInOutQuint"
+                  smooth: "easeInOutQuint",
                 });
               }}
             >
@@ -79,6 +79,7 @@ class App extends React.Component {
             </Route>
           </Switch>
         </Router>
+        <Map component={Map} />
       </div>
     );
   }

@@ -114,16 +114,16 @@ export default class StoriesPage extends React.Component {
     this.state = {
       selectedFieldNames: filterfieldNames.map((element, key) => ({
         column: element.column,
-        selection: "All",
-        key: key
+        selections: ["All"],
+        key: key,
       })),
       responseSelections: responseColumns.map((element, key) => ({
         column: element.column,
         question: element.question,
         selected: true,
-        key: element.key
+        key: element.key,
       })),
-      tab: 0
+      tab: 0,
       stories: [],
       currPage: 1,
       lazyload: {
@@ -148,14 +148,7 @@ export default class StoriesPage extends React.Component {
         `https://covidstories.dailybruin.com/stories/?${queryString}&i=${this.state.currPage}`
       )
         .then((results) => {
-          console.log(
-            `https://covidstories.dailybruin.com/stories/?${queryString}&i=${this.state.currPage}`
-          );
-          console.log(queryString);
-          console.log("lol");
           const newStories = results.data.map((d) => d.fields);
-          console.log(newStories);
-          console.log(this.state);
           this.setState({
             hasMore: true,
             isLoading: false,
@@ -186,12 +179,12 @@ export default class StoriesPage extends React.Component {
    * what to do when the filter is clicked.
    * (this passed in as a callback into the filter buttons)
    */
-  onFilterClick(column, selection) {
+  onFilterClick(column, selections) {
     let newSelectedFieldNames = this.state.selectedFieldNames;
     let selectedfieldName = newSelectedFieldNames.find(
-      element => element.column == column
+      (element) => element.column == column
     );
-    selectedfieldName.selection = selection;
+    selectedfieldName.selections = selections;
     this.setState(
       { selectedFieldNames: newSelectedFieldNames, stories: [], currPage: 1 },
       () => this.loadStories(getQueryString(newSelectedFieldNames))
@@ -204,12 +197,11 @@ export default class StoriesPage extends React.Component {
   onQuestionClick(element) {
     let newResponseSelections = this.state.responseSelections;
     let responseSelected = newResponseSelections.find(
-      e => e.column == element.column
+      (e) => e.column == element.column
     );
-    console.log(responseSelected.question);
     responseSelected.selected = !responseSelected.selected;
     this.setState({
-      responseSelections: newResponseSelections
+      responseSelections: newResponseSelections,
     });
   }
 
@@ -222,7 +214,7 @@ export default class StoriesPage extends React.Component {
     let { tab, stories } = this.state;
     let { error, hasMore, isLoading } = this.state.lazyload;
     const { selectedFieldNames, responseSelections } = this.state;
-    data = data.filter(row => filterAllowsShow(selectedFieldNames, row));
+    data = data.filter((row) => filterAllowsShow(selectedFieldNames, row));
     return (
       <>
         {/* <WordCloud></WordCloud> */}

@@ -15,7 +15,7 @@ export default class FilterDropdown extends React.Component {
     super(props);
     this.state = {
       expanded: false,
-      selected: ["All"]
+      selected: ["All"],
     };
   }
 
@@ -42,19 +42,22 @@ export default class FilterDropdown extends React.Component {
             <div key={idx}>
               <div
                 onClick={() => {
-                  onClick(column, category);
                   if (category === "All") {
                     this.setState({ selected: ["All"] });
+                    onClick(column, ["All"]);
                   } else if (!selected.includes(category)) {
                     if (selected.includes("All")) {
                       this.setState({ selected: [category] });
+                      onClick(column, [category]);
                     } else {
                       var joined = selected.concat(category);
                       this.setState({ selected: joined });
+                      onClick(column, joined);
                     }
                   } else {
-                    var newState = selected.filter(x => x != category);
+                    var newState = selected.filter((x) => x != category);
                     this.setState({ selected: newState });
+                    onClick(column, newState);
                   }
                 }}
               >

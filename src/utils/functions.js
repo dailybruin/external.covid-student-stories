@@ -70,7 +70,11 @@ export function getQueryString(responseSelections) {
   const yearObject = responseSelections.find((e) => e.column == "year");
   console.log(yearObject);
   if (yearObject.selection != "All") {
-    queryString += "year=" + MAP_SELECTION_YEAR[yearObject.selection];
+    console.log("yearobject");
+    console.log(yearObject);
+    queryString +=
+      "year=" +
+      yearObject.selections.map((sel) => MAP_SELECTION_YEAR[sel]).join("+");
   }
   console.log(queryString);
   return queryString;

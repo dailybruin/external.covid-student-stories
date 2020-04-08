@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { css } from "emotion";
-import FilterDropdown from "../components/FilterDropdown";
-import ReactList from "react-list";
-import { Pie } from 'react-chartjs-2'
+import axios from "axios";
+import PieChart from "../components/graphs/Pie";
+import StackedBar from "../components/graphs/StackedBar";
 
 const StoriesContainer = styled("div")`
   height: 90vh;
@@ -34,7 +34,7 @@ const NumberContainer = styled("div")`
   color: white;
   font-size: 15px;
   color: white;
-  background-color: #B7C0C0;
+  background-color: #b7c0c0;
   text-align: center;
   padding: 30px;
   margin: 30px;
@@ -45,7 +45,7 @@ const GraphContainer = styled("div")`
   height: 400px;
   padding: 30px;
   margin: 30px;
-  background-color: #B7C0C0
+  background-color: #b7c0c0;
 `;
 
 const filterFields = [
@@ -70,10 +70,35 @@ export default class DataPage extends React.Component {
       selectedFields: filterFields.map((element, key) => ({
         field: element.field,
         selection: "All",
-        key: key
-      }))
+        key: key,
+        isLoading: true
+      })),
+      data: {}
     };
     this.onFilterClick = this.onFilterClick.bind(this);
+  }
+
+  componentWillMount() {
+    // Loads some users on initial load
+    this.loadStories();
+  }
+
+  loadStories() {
+    this.setState({ isLoading: true }, () => {
+      axios(`https://covidstories.dailybruin.com/stories/stats`)
+        .then(results => {
+          const newStories = results.data;
+          this.setState({
+            data: newStories
+          });
+          this.setState({
+            isLoading: false
+          });
+        })
+        .catch(err => {
+          this.setState({});
+        });
+    });
   }
 
   onFilterClick(field, selection) {
@@ -89,52 +114,32 @@ export default class DataPage extends React.Component {
     let { data } = this.props;
     const { selectedFields } = this.state;
     data = data.filter(row => showData(selectedFields, row));
-    var count = 0;
-    for(var i = 0; i < data.length; i++){
-      console.log(data[i].comfortablePublish);
-      if(data[i].knowPositive === "Yes")
-        count += 1;
-    }
 
     return (
       <>
+        {!this.state.isLoading ? (
           <ScrollContainer>
             <div style={{ height: "100%", overflow: "auto" }}>
               <GraphContainer>
-                    <Pie data = {{
-                labels: ['On Campus', 'Off Campus', 'Home', 'Other'],
-                datasets: [{
-                    label: 'My First dataset',
-                    backgroundColor: ['#D0D8D9', '#D0D8D9', '#D0D8D9', '#D0D8D9'],
-                    data: [10, 15, 60, 15],
-                }]
-            }}
-            options={{
-
-              maintainAspectRatio: false,
-              title: {
-                display: true,
-                text: 'Where are students?',
-                fontFamily: "Calibri",
-                fontSize: 30,
-                fontColor: 'white',
-              },
-              legend: {
-                position: "bottom",
-                labels: {
-               // This more specific font property overrides the global property
-               fontColor: 'white',
-           }
-              }
-            }}
-            />
-            </GraphContainer>
-            <NumberContainer>
-              <div style={{fontSize: 100, fontWeight: "bold"}}> {count} </div>
-              students know someone who has tested positive for Covid-19.
-            </NumberContainer>
+                <PieChart data={this.state.data.curr_location_breakdown} />
+              </GraphContainer>
+              <GraphContainer>
+                <StackedBar
+                  data={this.state.data.curr_location_breakdown}
+                ></StackedBar>
+              </GraphContainer>
+              <NumberContainer>
+                <div style={{ fontSize: 100, fontWeight: "bold" }}>
+                  {" "}
+                  {this.state.data.numKnowPositives}{" "}
+                </div>
+                students know someone who has tested positive for Covid-19.
+              </NumberContainer>
             </div>
           </ScrollContainer>
+        ) : (
+          <></>
+        )}
       </>
     );
   }

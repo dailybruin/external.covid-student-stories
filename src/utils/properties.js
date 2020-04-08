@@ -39,11 +39,11 @@ export const filterfieldNames = [
 export const responseColumns = [
   {
     column: "responseCommunity",
-    question: "How has your community responded to the Covid-19 pandemic?"
+    question: "How has your community responded to the Covid-19 pandemic?",
   },
   {
     column: "responseAffected",
-    question: "How has Covid-19 affected you?"
+    question: "How has Covid-19 affected you?",
   },
   // {
   //   type: "responseElse",
@@ -52,6 +52,6 @@ export const responseColumns = [
   {
     column: "responseDoneDifferently",
     question:
-      "Is there anything you think your school or community could/should have done differently regarding this situation?"
-  }
+      "Is there anything you think your school or community could/should have done differently regarding this situation?",
+  },
 ];

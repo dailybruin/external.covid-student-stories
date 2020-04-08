@@ -3,32 +3,23 @@ import styled from "styled-components";
 import { css } from "emotion";
 import FilterDropdown from "../components/FilterDropdown";
 import ReactList from "react-list";
+import { Pie } from "react-chartjs-2";
+import Map from "../components/MapV2.js";
 
 const StoriesContainer = styled("div")`
   height: 90vh;
   width: 100%;
   display: flex;
-  background-color: lightcoral;
-`;
-
-const FiltersContainer = styled("div")`
-  height: 100%;
-  width: 30%;
-  display: flex;
-  flex-direction: column;
-  background-color: lightblue;
-  box-sizing: border-box;
-  padding: 30px;
-  line-height: 30px;
-  cursor: pointer;
+  background-color: white;
 `;
 
 const ScrollContainer = styled("div")`
   height: 100%;
-  width: 70%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  background-color: white;
 `;
 
 const StoryEntry = styled("div")`
@@ -38,9 +29,29 @@ const StoryEntry = styled("div")`
   padding: 5px;
 `;
 
+const NumberContainer = styled("div")`
+  width: 200px;
+  height: 200px;
+  color: white;
+  font-size: 15px;
+  color: white;
+  background-color: #b7c0c0;
+  text-align: center;
+  padding: 30px;
+  margin: 30px;
+`;
+
+const GraphContainer = styled("div")`
+  width: 400px;
+  height: 400px;
+  padding: 30px;
+  margin: 30px;
+  background-color: #b7c0c0;
+`;
+
 const filterFields = [
   { field: "School", categories: ["All", "UCLA", "USC"] },
-  { field: "Major", categories: ["All", "CS", "Math", "we should bin these"] }
+  { field: "Major", categories: ["All", "CS", "Math", "we should bin these"] },
 ];
 
 function showData(selectedFields, row) {
@@ -60,16 +71,18 @@ export default class DataPage extends React.Component {
       selectedFields: filterFields.map((element, key) => ({
         field: element.field,
         selection: "All",
-        key: key
-      }))
+        key: key,
+      })),
     };
+
     this.onFilterClick = this.onFilterClick.bind(this);
   }
 
   onFilterClick(field, selection) {
     let newSelectedFields = this.state.selectedFields;
+
     let selectedField = newSelectedFields.find(
-      element => element.field == field
+      (element) => element.field == field
     );
     selectedField.selection = selection;
     this.setState({ selectedFields: newSelectedFields });
@@ -77,42 +90,71 @@ export default class DataPage extends React.Component {
 
   render() {
     let { data } = this.props;
+    var cities = [];
     const { selectedFields } = this.state;
-    data = data.filter(row => showData(selectedFields, row));
+
+    data = data.filter((row) => showData(selectedFields, row));
+    var count = 0;
+    for (var i = 0; i < data.length; i++) {
+      console.log(data[i].comfortablePublish);
+      if (data[i].knowPositive === "Yes") {
+        count += 1;
+        // cities.push([data[i].hometown]);
+      }
+    }
+    for (var i = 0; i < data.length; i++) {
+      if (data[i].hometown.indexOf(",") > -1) {
+        cities.push(data[i].hometown);
+      }
+    }
+
     return (
       <>
-        <StoriesContainer>
-          <FiltersContainer>
-            {filterFields.map(element => (
-              <FilterDropdown {...element} onClick={this.onFilterClick} />
-            ))}
-          </FiltersContainer>
-          <ScrollContainer>
-            <div>
-
-            </div>
-            <div style={{ height: "100%", overflow: "auto" }}>
-              <ReactList
-                axis="y"
-                threshold={50}
-                length={data.length}
-                itemRenderer={idx => {
-                  let row = data[idx];
-                  return (
-                    <StoryEntry>
-                      <b>
-                        {row.sharePermission} at {row.school}:
-                      </b>{" "}
-                      {console.log(row)}
-                      {row.testimony}
-                    </StoryEntry>
-                  );
+        <ScrollContainer>
+          <div style={{ height: "100%", overflow: "auto" }}>
+            <GraphContainer>
+              <Pie
+                data={{
+                  labels: ["On Campus", "Off Campus", "Home", "Other"],
+                  datasets: [
+                    {
+                      label: "My First dataset",
+                      backgroundColor: [
+                        "#D0D8D9",
+                        "#D0D8D9",
+                        "#D0D8D9",
+                        "#D0D8D9",
+                      ],
+                      data: [10, 15, 60, 15],
+                    },
+                  ],
                 }}
-                type="variable"
+                options={{
+                  maintainAspectRatio: false,
+                  title: {
+                    display: true,
+                    text: "Where are students?",
+                    fontFamily: "Calibri",
+                    fontSize: 30,
+                    fontColor: "white",
+                  },
+                  legend: {
+                    position: "bottom",
+                    labels: {
+                      // This more specific font property overrides the global property
+                      fontColor: "white",
+                    },
+                  },
+                }}
               />
-            </div>
-          </ScrollContainer>
-        </StoriesContainer>
+            </GraphContainer>
+            <NumberContainer>
+              <div style={{ fontSize: 100, fontWeight: "bold" }}> {count} </div>
+              students know someone who has tested positive for Covid-19.
+            </NumberContainer>
+          </div>
+          <Map component={Map} count={count} citiesList={cities} />
+        </ScrollContainer>
       </>
     );
   }

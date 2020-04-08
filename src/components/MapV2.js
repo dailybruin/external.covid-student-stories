@@ -4,10 +4,11 @@ import { randomPoint } from "@turf/random";
 import MapGL, { Marker } from "@urbica/react-map-gl";
 import Cluster from "@urbica/react-map-gl-cluster";
 import "mapbox-gl/dist/mapbox-gl.css";
+import cityPointsUS from "city-points-us";
+import states from "us-state-converter";
 
 const bbox = [-160, -70, 160, 70];
-const points = randomPoint(50, { bbox }).features;
-points.forEach((point, index) => (point.id = index));
+
 const MAPBOX_TOKEN =
   "pk.eyJ1IjoiaHVhbmdrYTk3IiwiYSI6ImNrMmw4c2V2YzA0bWUzZG83M2EzN2NjZ2wifQ.ICymOqR-bnQFjDcFtS3xCA"; // Set your mapbox token here
 const style = {
@@ -31,12 +32,12 @@ class ClusterMarker extends React.PureComponent {
   }
 
   render() {
-    const { longitude, latitude, pointCount } = this.props;
+    const { longitude, latitude } = this.props;
 
     return (
       <Marker longitude={longitude} latitude={latitude}>
         <div onClick={this.onClick} style={{ ...style, background: "#f28a25" }}>
-          {pointCount}
+          {this.props.count}
         </div>
       </Marker>
     );
@@ -49,9 +50,9 @@ class Map extends React.PureComponent {
 
     this.state = {
       viewport: {
-        latitude: 0,
-        longitude: 0,
-        zoom: 0,
+        latitude: 37.785164,
+        longitude: -100,
+        zoom: 2.8,
       },
     };
 
@@ -83,9 +84,37 @@ class Map extends React.PureComponent {
     });
   }
 
+  getStateTwoDigitCode(stateFullName) {
+    return states.fullName(stateFullName);
+  }
+
+  matchLocation(locations) {
+    var location = locations[0].split(",");
+    var output = null;
+    console.log("THIS IS LOCATION1OFARRYA ", location[1]);
+    var city = states.abbr(location[1].trim());
+
+    // var location = ["San Diego, CA"];
+
+    return cityPointsUS.features.find(
+      (point) =>
+        point.properties.state === city &&
+        point.properties.city.toLowerCase().trim() ===
+          location[0].toLowerCase().trim()
+    );
+  }
+
   render() {
     const { viewport } = this.state;
+    let temp = this.props.citiesList;
 
+    let raw_points = temp.map(this.matchLocation);
+    var points = raw_points.filter(function (x) {
+      return x !== undefined;
+    });
+
+    console.log("THIS IS POINTS ", points);
+    // points.map((point, index) => (point.id = index));
     return (
       <MapGL
         style={{ width: "100%", height: "400px" }}

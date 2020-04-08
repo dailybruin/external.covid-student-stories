@@ -10,7 +10,7 @@ export default class FilterDropdown extends React.Component {
     super(props);
     this.state = {
       expanded: false,
-      selected: "All"
+      selected: "All",
     };
   }
   render() {

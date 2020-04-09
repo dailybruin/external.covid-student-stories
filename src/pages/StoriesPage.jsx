@@ -39,11 +39,12 @@ const FiltersContainer = styled("div")`
   width: 15%;
   display: flex;
   flex-direction: column;
-  background-color: #ffffff;
   box-sizing: border-box;
   padding: 30px;
+  padding-top: 12.5vh;
   line-height: 30px;
   cursor: pointer;
+  color: #626969;
 `;
 
 const ScrollContainer = styled("div")`
@@ -61,13 +62,13 @@ const ResponseEntry = styled("div")`
   /* background-color: #f7f7f7; */
   border-radius: 5px;
   flex: 1;
-  color: #919999;
+  color: #858c8c;
 `;
 
 const PersonEntry = styled("div")`
   background-color: white;
   padding: 20px;
-  border: 2px solid #b7c0c0;
+  border: 2px solid #c3c9c9;
   border-radius: 10px;
   /* margin: 10px; */
 `;
@@ -197,6 +198,7 @@ export default class StoriesPage extends React.Component {
     );
   }
 
+  // I based it off the previous two functions, but I'm not sure if I'm using "getQueryString" correctly.
   onSortClick(selectedSort) {
     this.setState({ selectedSort });
     /*this.loadStories(getQueryString(selection));*/
@@ -243,15 +245,16 @@ export default class StoriesPage extends React.Component {
           >
             <StoriesContainer>
               <FiltersContainer>
+                {" "}
+                {filterfieldNames.map((element) => (
+                  <FilterDropdown {...element} onClick={this.onFilterClick} />
+                ))}
                 <Select
                   options={this.state.sortOptions}
                   placeholder="sort by..."
                   value={this.state.selectedSort}
                   onChange={this.onSortClick}
-                />{" "}
-                {filterfieldNames.map((element) => (
-                  <FilterDropdown {...element} onClick={this.onFilterClick} />
-                ))}
+                />
               </FiltersContainer>
               <QuestionAndResponsesContainer>
                 <Questions>
@@ -302,6 +305,8 @@ export default class StoriesPage extends React.Component {
                             <b
                               className={css`
                                 font-size: 20px;
+                                color: #5e6363;
+                                font-weight: 700;
                               `}
                             >
                               {MAP_year_to_yearName[row.year]} {row.major} major
@@ -313,7 +318,14 @@ export default class StoriesPage extends React.Component {
                                 row[response.column] != "" && (
                                   <ResponseEntry>
                                     <div>
-                                      <b>{response.question}</b>
+                                      <b
+                                        className={css`
+                                          font-weight: 600;
+                                          color: #5e6363;
+                                        `}
+                                      >
+                                        {response.question}
+                                      </b>
                                     </div>
                                     <div>{row[response.column]}</div>
                                   </ResponseEntry>

@@ -17,7 +17,7 @@ const NavbarStyled = styled("div")`
 `;
 
 const StyledLink = styled(Link)`
-  font-size: 16px;
+  font-size: 18px;
   margin: 30px;
   box-sizing: border-box;
   text-decoration: none;
@@ -28,7 +28,7 @@ const StyledLink = styled(Link)`
 `;
 
 const Header = styled("div")`
-  font-size: 20px;
+  font-size: 24px;
   color: white;
   font-weight: 400;
 `;

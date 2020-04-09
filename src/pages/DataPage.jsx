@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { css } from "emotion";
 import axios from "axios";
 import PieChart from "../components/graphs/Pie";
+import WordCloud from "../components/WordCloud";
 import StackedBar from "../components/graphs/StackedBar";
 
 const StoriesContainer = styled("div")`
@@ -13,7 +14,7 @@ const StoriesContainer = styled("div")`
 `;
 
 const ScrollContainer = styled("div")`
-  height: 100%;
+  height: 92.5vh;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -111,35 +112,37 @@ export default class DataPage extends React.Component {
   }
 
   render() {
-    let { data } = this.props;
-    const { selectedFields } = this.state;
-    data = data.filter((row) => showData(selectedFields, row));
-
+    const { selectedFields, data } = this.state;
     return (
       <>
-        {!this.state.isLoading ? (
-          <ScrollContainer>
+        <ScrollContainer>
+          {!this.state.isLoading && (
             <div style={{ height: "100%", overflow: "auto" }}>
-              <GraphContainer>
-                <PieChart data={this.state.data.curr_location_breakdown} />
-              </GraphContainer>
-              <GraphContainer>
-                <StackedBar
-                  data={this.state.data.curr_location_breakdown}
-                ></StackedBar>
-              </GraphContainer>
-              <NumberContainer>
-                <div style={{ fontSize: 100, fontWeight: "bold" }}>
-                  {" "}
-                  {this.state.data.numKnowPositives}{" "}
-                </div>
-                students know someone who has tested positive for Covid-19.
-              </NumberContainer>
+              <WordCloud />
+              <div
+                className={css`
+                  display: flex;
+                `}
+              >
+                <GraphContainer>
+                  <PieChart data={this.state.data.curr_location_breakdown} />
+                </GraphContainer>
+                <GraphContainer>
+                  <StackedBar
+                    data={this.state.data.curr_location_breakdown}
+                  ></StackedBar>
+                </GraphContainer>
+                <NumberContainer>
+                  <div style={{ fontSize: 100, fontWeight: "bold" }}>
+                    {" "}
+                    {this.state.data.numKnowPositives}{" "}
+                  </div>
+                  students know someone who has tested positive for Covid-19.
+                </NumberContainer>
+              </div>
             </div>
-          </ScrollContainer>
-        ) : (
-          <></>
-        )}
+          )}
+        </ScrollContainer>
       </>
     );
   }

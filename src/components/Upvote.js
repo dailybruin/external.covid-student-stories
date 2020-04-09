@@ -119,22 +119,22 @@ export default class Upvote extends React.Component {
     ));
     return (
       <>
-        <div>
-          <div>Reaction Count</div>
-          <div>
-            <Like>
-              <ImageContainer>{img}</ImageContainer>
-              <div
-                onClick={this.likeHandler}
-                className={css`
-                  text-align: center;
-                `}
-              >
-                {this.renderLikeButton()}
-              </div>
-            </Like>
-            <div>You selected:{this.state.selected}</div>
-          </div>
+        <div
+          className={css`
+            display: flex;
+          `}
+        >
+          <Like>
+            <ImageContainer>{img}</ImageContainer>
+            <div
+              onClick={this.likeHandler}
+              className={css`
+                text-align: center;
+              `}
+            >
+              {this.renderLikeButton()}
+            </div>
+          </Like>
         </div>
       </>
     );

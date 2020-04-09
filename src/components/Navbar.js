@@ -2,11 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Element } from "react-scroll";
+import { css } from "emotion";
 
 const NavbarStyled = styled("div")`
-  position: sticky;
-  top: 0;
-
   height: 7.5vh;
   display: flex;
   justify-content: space-between;
@@ -36,7 +34,14 @@ const Header = styled("div")`
 export default class Navbar extends React.Component {
   render() {
     return (
-      <Element name="navbar">
+      <Element
+        name="navbar"
+        className={css`
+          position: sticky;
+          top: 0;
+          z-index: 100000;
+        `}
+      >
         <NavbarStyled>
           <Header>Unfinished Stories</Header>
           <div>

@@ -9,7 +9,7 @@ const Wrapper = styled("div")`
 `;
 
 const options = {
-  colors: ["#4c5f7a", "#393e6f", "#3d2e4f", "#321d2f", "#9467bd", "#8c564b"],
+  colors: ["#B5CACA", "#96B6D5", "#8084AE", "#5B7995", "#6D6B67", "#BE9188"],
   enableTooltip: true,
   deterministic: false,
   fontFamily: "impact",

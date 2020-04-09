@@ -309,7 +309,7 @@ export default class StoriesPage extends React.Component {
                       className="my-masonry-grid"
                       columnClassName="my-masonry-grid_column"
                     >
-                      {stories.map((row) => (
+                      {stories.map((row, i) => (
                         <div
                           className={css`
                             display: flex;
@@ -471,6 +471,13 @@ export default class StoriesPage extends React.Component {
                                   </ResponseEntry>
                                 )
                             )}
+                            <div
+                              className={css`
+                                float: left;
+                              `}
+                            >
+                              <Upvote id={i}></Upvote>
+                            </div>
                           </PersonEntry>
                         </div>
                       ))}

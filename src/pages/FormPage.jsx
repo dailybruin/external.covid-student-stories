@@ -1,18 +1,18 @@
 import React from "react";
 import styled from "styled-components";
-import { colleges } from './colleges';
-import Select from 'react-select';
-import CreatableSelect from 'react-select/creatable';
+import { colleges } from "./colleges";
+import Select from "react-select";
+import CreatableSelect from "react-select/creatable";
 
 const desktopSizes = {
-  question: '21px',
+  question: "21px",
   comment: "14px",
   choice: "18px",
   short_response: "18px",
   long_response: "14px",
   requirement: "12px",
   choices_header: "18px",
-  other_option: "16px"
+  other_option: "16px",
 };
 
 const Top = styled("div")`
@@ -36,13 +36,12 @@ const Background = styled("div")`
   margin: auto auto 50px auto;
   font-family: "Roboto";
   hr {
-    border: .5px solid #ddd;
+    border: 0.5px solid #ddd;
     margin: 25px auto;
   }
 `;
 
 const Question = styled("div")`
-  
   width: 100%;
 `;
 
@@ -60,9 +59,7 @@ const Comment = styled("div")`
   margin-bottom: 15px;
 `;
 
-const SearchableDropDown = styled("div")`
-
-`;
+const SearchableDropDown = styled("div")``;
 
 const ShortResponse = styled("input")`
   font-size: ${desktopSizes.short_response};
@@ -102,7 +99,6 @@ const SubQuestionRow = styled("div")`
   flex-direction: row;
   border-bottom: 1px solid #eee;
   min-height: 50px;
-  text
 `;
 
 const SubQuestionCell = styled("div")`
@@ -130,7 +126,7 @@ const LongResponse = styled("textarea")`
   resize: none;
   width: 100%;
   height: 200px;
-  font-size: ${desktopSizes.long_response};;
+  font-size: ${desktopSizes.long_response};
   padding: 2px;
 `;
 
@@ -150,7 +146,7 @@ const ques = [
     comment: "",
     required: true,
     id: 0,
-    name: "entry.1220080233"
+    name: "entry.1220080233",
   },
   {
     question: "What is your major?",
@@ -160,7 +156,7 @@ const ques = [
     comment: "If not applicable, put N/A.",
     required: true,
     id: 1,
-    name: "entry.1853942599"
+    name: "entry.1853942599",
   },
   {
     question: "What is your school year?",
@@ -171,13 +167,13 @@ const ques = [
       "Second Year",
       "Third Year",
       "Fourth Year or higher",
-      "Grad Student"
+      "Grad Student",
     ],
     other_option: false,
     comment: "",
     required: true,
     id: 2,
-    name: "entry.839894665"
+    name: "entry.839894665",
   },
 
   {
@@ -189,27 +185,33 @@ const ques = [
       "The place you grew up. If your hometown is not in the USA, type in 'City, Country'",
     required: true,
     id: 3,
-    name: "entry.1167345863"
+    name: "entry.1167345863",
   },
   {
     question: "What is your ethnicity?",
     type: SHORT_RESPONSE,
     choices: [],
     other_option: false,
-    comment: '',
+    comment: "",
     required: false,
     id: 4,
-    name: "entry.77328821"
+    name: "entry.77328821",
   },
   {
     question: "Where are you staying right now?",
     type: MCQ,
-    choices: ["School (On-campus)", "School (Off-campus)", "Home", "Friend's place", "Prefer not to answer"],
+    choices: [
+      "School (On-campus)",
+      "School (Off-campus)",
+      "Home",
+      "Friend's place",
+      "Prefer not to answer",
+    ],
     other_option: true,
     comment: "",
     required: true,
     id: 5,
-    name: "entry.342592833"
+    name: "entry.342592833",
   },
   {
     question: "Have you or someone you know tested positive for COVID-19?",
@@ -219,7 +221,7 @@ const ques = [
     comment: "",
     required: true,
     id: 5,
-    name: "entry.342592833"
+    name: "entry.342592833",
   },
   {
     question: "How has COVID-19 affected the way you feel about the following?",
@@ -228,14 +230,9 @@ const ques = [
       "Not worried",
       "Somewhat worried",
       "Very worried",
-      "Prefer not to share"
+      "Prefer not to share",
     ],
-    values: [
-      "NW",
-      "SW",
-      "VW",
-      "Prefer not to share"
-    ],
+    values: ["NW", "SW", "VW", "Prefer not to share"],
     other_option: false,
     subquestions: [
       "Financial status",
@@ -243,11 +240,11 @@ const ques = [
       "Academic situation",
       "Your government's response",
       "Physical well-being",
-      "Mental/social well-being"
+      "Mental/social well-being",
     ],
     comment: "",
     required: true,
-    id: 6
+    id: 6,
   },
   {
     question:
@@ -256,7 +253,7 @@ const ques = [
     choices: [],
     comment: "",
     required: false,
-    id: 7
+    id: 7,
   },
   {
     question: "How has COVID-19 affected you?",
@@ -264,7 +261,7 @@ const ques = [
     choices: [],
     comment: "",
     required: false,
-    id: 8
+    id: 8,
   },
   {
     question:
@@ -275,26 +272,28 @@ const ques = [
     comment:
       "Also, feel free to drop any links to photos, videos, or art that could help tell your story.",
     required: false,
-    id: 9
+    id: 9,
   },
   {
-    question: "Are you comfortable with us publishing your response on our Stories page?",
+    question:
+      "Are you comfortable with us publishing your response on our Stories page?",
     type: MCQ,
     choices: ["Yes", "No"],
     other_option: false,
     comment: "",
     required: true,
-    id: 10
+    id: 10,
   },
   {
-    question: "Are you comfortable with us publishing your response on social media?",
+    question:
+      "Are you comfortable with us publishing your response on social media?",
     type: MCQ,
     choices: ["Yes", "No"],
     other_option: false,
     comment: "",
     required: true,
-    id: 10
-  }
+    id: 10,
+  },
 ];
 class FormPage extends React.Component {
   constructor(props) {
@@ -305,23 +304,23 @@ class FormPage extends React.Component {
       index: 0,
       category: false,
       change: false,
-      college: null
+      college: null,
     };
   }
 
   handleChange = (selectedOption) => {
-    this.setState({college : selectedOption.value});
+    this.setState({ college: selectedOption.value });
     console.log(`Option selected:`, selectedOption, this.state.college);
   };
   render() {
     const questions = ques.map((question) => {
-      const title = (
-        <div>{question.question}</div>
-      );
+      const title = <div>{question.question}</div>;
       let type = null;
-      if (question.type == SEARCHABLE_DROPDOWN)
-      {
-        const optionsList = question.choices.map((option) => ({value: option, label: option}));
+      if (question.type == SEARCHABLE_DROPDOWN) {
+        const optionsList = question.choices.map((option) => ({
+          value: option,
+          label: option,
+        }));
         type = (
           <SearchableDropDown>
             <CreatableSelect
@@ -329,34 +328,58 @@ class FormPage extends React.Component {
               onInputChange={this.handleInputChange}
               options={optionsList}
             />
-            <input type="hidden" name={question.name} value={this.state.college} required={question.required} />
+            <input
+              type="hidden"
+              name={question.name}
+              value={this.state.college}
+              required={question.required}
+            />
           </SearchableDropDown>
         );
-      }
-      else if (question.type == SHORT_RESPONSE)
-      {
+      } else if (question.type == SHORT_RESPONSE) {
         type = (
-          <ShortResponse type="text" name={question.name} id={question.id} placeholder='Your Answer' required={question.required}/>
+          <ShortResponse
+            type="text"
+            name={question.name}
+            id={question.id}
+            placeholder="Your Answer"
+            required={question.required}
+          />
         );
-      }
-      else if (question.type == MCQ)
-      {
+      } else if (question.type == MCQ) {
         const choices = question.choices.map((choice, index) => {
           const choiceId = question.id + "_choice_" + index;
           return (
             <Choice>
-              <input type="radio" id={choiceId} name={question.name} value={choice} required={question.required}/>
+              <input
+                type="radio"
+                id={choiceId}
+                name={question.name}
+                value={choice}
+                required={question.required}
+              />
               <label for={choiceId}>{choice}</label>
             </Choice>
           );
         });
-        const other_choice = (!question.other_option) ? null : (
+        const other_choice = !question.other_option ? null : (
           <Choice>
-              <input type="radio" id={question.id + '_other_option'} name={question.name} value="" required={question.required}/>
-              <label for={question.id + '_other_option'}>
-                Other: 
-                <input type="text" name={question.name} id={question.name+'_other'} placeholder='Your Answer'/>
-              </label>
+            <input
+              type="radio"
+              id={question.id + "_other_option"}
+              name={question.name}
+              value=""
+              required={question.required}
+            />
+            <label for={question.id + "_other_option"}>
+              Other:
+              <input
+                type="text"
+                name={question.name}
+                id={question.name + "_other"}
+                placeholder="Your Answer"
+              />
+            </label>
           </Choice>
         );
         type = (
@@ -365,26 +388,29 @@ class FormPage extends React.Component {
             {other_choice}
           </MultipleChoice>
         );
-      }
-      else if (question.type == MULTIPLE_MCQ)
-      {
+      } else if (question.type == MULTIPLE_MCQ) {
         const choices = question.choices.map((choice) => {
-          return (
-            <SubQuestionCell>{choice}</SubQuestionCell>
-          );
+          return <SubQuestionCell>{choice}</SubQuestionCell>;
         });
         const choicesRow = (
           <SubQuestionRow>
-            <SubQuestionHeader/>
+            <SubQuestionHeader />
             {choices}
           </SubQuestionRow>
         );
         const rows = question.subquestions.map((subquestion, rowIndex) => {
           const inputs = question.choices.map((choice, choiceIndex) => {
-            const choiceId = question.id + "_choice_" + rowIndex + '_' + choiceIndex;
+            const choiceId =
+              question.id + "_choice_" + rowIndex + "_" + choiceIndex;
             return (
               <SubQuestionCell>
-                <input type="radio" id={choiceId} name={question.name + "_" + rowIndex} value={question.values[choiceIndex]} required={question.required} />
+                <input
+                  type="radio"
+                  id={choiceId}
+                  name={question.name + "_" + rowIndex}
+                  value={question.values[choiceIndex]}
+                  required={question.required}
+                />
               </SubQuestionCell>
             );
           });
@@ -402,43 +428,52 @@ class FormPage extends React.Component {
             {rows}
           </MultipleChoice>
         );
-      }
-      else if (question.type == LONG_RESPONSE)
-      {
+      } else if (question.type == LONG_RESPONSE) {
         type = (
-          <LongResponse name={question.name} id={question.id} placeholder='Your Answer' maxlength={2000} required={question.required} />
+          <LongResponse
+            name={question.name}
+            id={question.id}
+            placeholder="Your Answer"
+            maxlength={2000}
+            required={question.required}
+          />
         );
       }
 
       return (
         <Question id={question.id}>
           <Header>
-            <Title>
-              {title}
-            </Title>
-            <Requirement>
-              {question.required ? ' *Required' : null}
-            </Requirement>
+            <Title>{title}</Title>
+            <Requirement>{question.required ? " *Required" : null}</Requirement>
           </Header>
-          {question.comment != "" ? <Comment>{question.comment}</Comment> : <Comment></Comment>}
+          {question.comment != "" ? (
+            <Comment>{question.comment}</Comment>
+          ) : (
+            <Comment></Comment>
+          )}
           {type}
-          <hr/>
+          <hr />
         </Question>
-      )
+      );
     });
     return (
       <Background>
         <Top>
           <h1>Covid-19 Student Stories</h1>
           <p>
-          The Daily Bruin is collecting student stories related to the Covid-19 pandemic to help students learn more about each others' experiences.<br/><br/>
-          Leave a response below to share your stories with us and let others know how you are doing.
+            The Daily Bruin is collecting student stories related to the
+            Covid-19 pandemic to help students learn more about each others'
+            experiences.
+            <br />
+            <br />
+            Leave a response below to share your stories with us and let others
+            know how you are doing.
           </p>
         </Top>
-        <hr/>
+        <hr />
         <form>
           {questions}
-          <input type="submit" value="Submit"/>
+          <input type="submit" value="Submit" />
         </form>
       </Background>
     );

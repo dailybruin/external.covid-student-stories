@@ -4,10 +4,11 @@ import { Link } from "react-router-dom";
 import { Element } from "react-scroll";
 
 const NavbarStyled = styled("div")`
-  height: 6vh;
   position: sticky;
-  display: flex;
   top: 0;
+
+  height: 7.5vh;
+  display: flex;
   justify-content: space-between;
   background-color: #586572;
   box-sizing: border-box;
@@ -16,7 +17,7 @@ const NavbarStyled = styled("div")`
 `;
 
 const StyledLink = styled(Link)`
-  font-size: 16px;
+  font-size: 18px;
   margin: 30px;
   box-sizing: border-box;
   text-decoration: none;
@@ -27,7 +28,7 @@ const StyledLink = styled(Link)`
 `;
 
 const Header = styled("div")`
-  font-size: 20px;
+  font-size: 24px;
   color: white;
   font-weight: 400;
 `;

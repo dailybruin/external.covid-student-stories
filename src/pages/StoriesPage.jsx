@@ -69,6 +69,12 @@ const PersonEntry = styled("div")`
   /* margin: 10px; */
 `;
 
+const InteractionContainer = styled("div")`
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+`;
+
 export default class StoriesPage extends React.Component {
   constructor(props) {
     super(props);
@@ -135,7 +141,7 @@ export default class StoriesPage extends React.Component {
       element.clientHeight,
     ]);
     if (
-      element.scrollHeight - element.scrollTop - 100 <=
+      element.scrollHeight - element.scrollTop - 200 <=
       element.clientHeight
     ) {
       loadStories(getQueryString(this.state.selectedFieldNames));
@@ -202,60 +208,53 @@ export default class StoriesPage extends React.Component {
                 className="my-masonry-grid"
                 columnClassName="my-masonry-grid_column"
               >
-                {stories.map((row, i) => (
-                  <div
-                    className={css`
-                      display: flex;
-                      flex-direction: column;
-                      width: 100%;
-                    `}
-                  >
-                    <PersonEntry>
-                      <b
-                        className={css`
-                          font-size: 20px;
-                          color: #5e6363;
-                          font-weight: 700;
-                        `}
-                      >
-                        {MAP_year_to_yearName[row.year]} {row.major} major at{" "}
-                        {row.school}
-                      </b>
-                      {responseColumns.map(
-                        (response) =>
-                          row[response.column] != "" && (
-                            <ResponseEntry>
-                              <div>
-                                <b
-                                  className={css`
-                                    font-weight: 600;
-                                    color: #5e6363;
-                                  `}
-                                >
-                                  {response.question}
-                                </b>
-                              </div>
-                              <div>{row[response.column]}</div>
-                            </ResponseEntry>
-                          )
-                      )}
+                {stories.map(
+                  (row, i) =>
+                    row.year && (
                       <div
                         className={css`
-                          float: left;
+                          display: flex;
+                          flex-direction: column;
+                          width: 100%;
                         `}
                       >
-                        <Upvote id={i}></Upvote>
+                        <PersonEntry>
+                          <b
+                            className={css`
+                              font-size: 20px;
+                              color: #5e6363;
+                              font-weight: 700;
+                            `}
+                          >
+                            {MAP_year_to_yearName[row.year]} {row.major} major
+                            at {row.school}
+                          </b>
+                          {responseColumns.map(
+                            (response) =>
+                              row[response.column] != "" && (
+                                <ResponseEntry>
+                                  <div>
+                                    <b
+                                      className={css`
+                                        font-weight: 600;
+                                        color: #5e6363;
+                                      `}
+                                    >
+                                      {response.question}
+                                    </b>
+                                  </div>
+                                  <div>{row[response.column]}</div>
+                                </ResponseEntry>
+                              )
+                          )}
+                          <InteractionContainer>
+                            <Upvote id={i}></Upvote>
+                            <SharePost row={row} />
+                          </InteractionContainer>
+                        </PersonEntry>
                       </div>
-                      <div
-                        className={css`
-                          float: right;
-                        `}
-                      >
-                        <SharePost row={row} />
-                      </div>
-                    </PersonEntry>
-                  </div>
-                ))}
+                    )
+                )}
               </Masonry>
             </div>
           </ResponsesContainer>

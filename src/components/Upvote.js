@@ -19,7 +19,7 @@ const ImageContainer = styled.div`
   height: 30px;
   position: absolute;
   left: -15px;
-  bottom: 15px;
+  bottom: 30px;
   background: white;
   border-radius: 28px;
   border-style: outset;
@@ -34,7 +34,7 @@ const ImageContainer = styled.div`
   }
 `;
 
-const Like = styled.button`
+const Like = styled.div`
   position: relative;
   :hover ${ImageContainer} {
     transition-delay: 0.6s;
@@ -46,7 +46,6 @@ const Like = styled.button`
   }
   width: 30px;
   left: 30px;
-  border-style: solid;
   outline: none;
 `;
 const Image = styled.img`
@@ -124,6 +123,7 @@ export default class Upvote extends React.Component {
             display: flex;
           `}
         >
+          <b>Reacc:</b>
           <Like>
             <ImageContainer>{img}</ImageContainer>
             <div

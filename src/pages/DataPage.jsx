@@ -5,13 +5,8 @@ import axios from "axios";
 import PieChart from "../components/graphs/Pie";
 import WordCloud from "../components/WordCloud";
 import StackedBar from "../components/graphs/StackedBar";
-
-const StoriesContainer = styled("div")`
-  height: 90vh;
-  width: 100%;
-  display: flex;
-  background-color: white;
-`;
+import { Pie } from "react-chartjs-2";
+import Map from "../components/MapV2.js";
 
 const ScrollContainer = styled("div")`
   height: 92.5vh;
@@ -20,13 +15,6 @@ const ScrollContainer = styled("div")`
   flex-direction: column;
   overflow: hidden;
   background-color: white;
-`;
-
-const StoryEntry = styled("div")`
-  box-sizing: border-box;
-  border: 2px solid lightgreen;
-  margin: 5px;
-  padding: 5px;
 `;
 
 const NumberContainer = styled("div")`
@@ -76,7 +64,6 @@ export default class DataPage extends React.Component {
       })),
       data: {},
     };
-    this.onFilterClick = this.onFilterClick.bind(this);
   }
 
   componentWillMount() {
@@ -102,17 +89,21 @@ export default class DataPage extends React.Component {
     });
   }
 
-  onFilterClick(field, selection) {
-    let newSelectedFields = this.state.selectedFields;
-    let selectedField = newSelectedFields.find(
-      (element) => element.field == field
-    );
-    selectedField.selection = selection;
-    this.setState({ selectedFields: newSelectedFields });
-  }
-
   render() {
-    const { selectedFields, data } = this.state;
+    const { data } = this.state;
+    var cities = [];
+    var count = 0;
+    for (var i = 0; i < data.length; i++) {
+      console.log(data[i].comfortablePublish);
+      if (data[i].knowPositive === "Yes") {
+        count += 1;
+      }
+    }
+    for (var i = 0; i < data.length; i++) {
+      if (data[i].hometown.indexOf(",") > -1) {
+        cities.push(data[i].hometown);
+      }
+    }
     return (
       <>
         <ScrollContainer>
@@ -140,6 +131,7 @@ export default class DataPage extends React.Component {
                   students know someone who has tested positive for Covid-19.
                 </NumberContainer>
               </div>
+              <Map component={Map} count={count} citiesList={cities} />
             </div>
           )}
         </ScrollContainer>

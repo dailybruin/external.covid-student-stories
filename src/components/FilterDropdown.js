@@ -33,9 +33,7 @@ export default class FilterDropdown extends React.Component {
     return (
       <>
         <div onClick={() => this.setState({ expanded: !expanded })}>
-          <b>
-            {fieldName} ({selected})
-          </b>
+          <b>{fieldName}</b>
         </div>
         {expanded &&
           categories.map((category, idx) => (

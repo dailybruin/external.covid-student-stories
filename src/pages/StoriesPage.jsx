@@ -21,6 +21,20 @@ import SearchableDropdown from "../components/Searchable";
 import Select from "react-select";
 
 import "./masonry.css";
+import {
+  FacebookShareButton,
+  FacebookIcon,
+  RedditShareButton,
+  RedditIcon,
+  TwitterShareButton,
+  TwitterIcon,
+  WhatsappShareButton,
+  WhatsappIcon,
+  WeiboShareButton,
+  WeiboIcon,
+} from "react-share";
+import Dropdown from "react-bootstrap/Dropdown";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Container = styled("div")`
   width: 90%;
@@ -230,7 +244,6 @@ export default class StoriesPage extends React.Component {
     data = data.filter((row) => filterAllowsShow(selectedFieldNames, row));
     return (
       <>
-        {/* <WordCloud></WordCloud> */}
         <Container>
           {/*<div>
             <Tab onClick={() => this.switchTab(0)}>Words</Tab>
@@ -288,6 +301,8 @@ export default class StoriesPage extends React.Component {
                     onScroll={this.handleStoriesScroll}
                     ref="scrollview"
                   >
+                    <WordCloud />
+
                     <Masonry
                       breakpointCols={2}
                       className="my-masonry-grid"
@@ -328,6 +343,130 @@ export default class StoriesPage extends React.Component {
                                       </b>
                                     </div>
                                     <div>{row[response.column]}</div>
+                                    <div
+                                      className={css`
+                                        float: right;
+                                      `}
+                                    >
+                                      <Dropdown>
+                                        <Dropdown.Toggle
+                                          variant="secondary"
+                                          id="dropdown-basic"
+                                          size="sm"
+                                        >
+                                          Share
+                                        </Dropdown.Toggle>
+                                        <Dropdown.Menu>
+                                          <Dropdown.Item>
+                                            <FacebookShareButton
+                                              url={"https://dailybruin.com/"}
+                                              quote={
+                                                '"' + row[response.column] + '"'
+                                              }
+                                              hashtag={"UnifhsedStories"}
+                                            >
+                                              <FacebookIcon
+                                                size={24}
+                                                round={true}
+                                              />
+                                              <div
+                                                className={css`
+                                                  font-size: 18px;
+                                                  float: right;
+                                                `}
+                                              >
+                                                Facebook
+                                              </div>
+                                            </FacebookShareButton>
+                                          </Dropdown.Item>
+                                          <Dropdown.Item>
+                                            <RedditShareButton
+                                              url={"https://dailybruin.com/"}
+                                              title={
+                                                "Unfinished Stories: COVID"
+                                              }
+                                            >
+                                              <RedditIcon
+                                                size={24}
+                                                round={true}
+                                              />
+                                              <div
+                                                className={css`
+                                                  font-size: 18px;
+                                                  float: right;
+                                                `}
+                                              >
+                                                Reddit
+                                              </div>
+                                            </RedditShareButton>
+                                          </Dropdown.Item>
+                                          <Dropdown.Item>
+                                            <TwitterShareButton
+                                              url={"https://dailybruin.com/"}
+                                              title={
+                                                '"' + row[response.column] + '"'
+                                              }
+                                              hashtags={["UnfinishedStories"]}
+                                            >
+                                              <TwitterIcon
+                                                size={24}
+                                                round={true}
+                                              />
+                                              <div
+                                                className={css`
+                                                  font-size: 18px;
+                                                  float: right;
+                                                `}
+                                              >
+                                                Twitter
+                                              </div>
+                                            </TwitterShareButton>
+                                          </Dropdown.Item>
+                                          <Dropdown.Item>
+                                            <WhatsappShareButton
+                                              url={"https://dailybruin.com/"}
+                                              title={
+                                                '"' + row[response.column] + '"'
+                                              }
+                                            >
+                                              <WhatsappIcon
+                                                size={24}
+                                                round={true}
+                                              />
+                                              <div
+                                                className={css`
+                                                  font-size: 18px;
+                                                  float: right;
+                                                `}
+                                              >
+                                                Whatsapp
+                                              </div>
+                                            </WhatsappShareButton>
+                                          </Dropdown.Item>
+                                          <Dropdown.Item>
+                                            <WeiboShareButton
+                                              url={"https://dailybruin.com/"}
+                                              title={
+                                                "'" + row[response.column] + "'"
+                                              }
+                                            >
+                                              <WeiboIcon
+                                                size={24}
+                                                round={true}
+                                              />
+                                              <div
+                                                className={css`
+                                                  font-size: 18px;
+                                                  float: right;
+                                                `}
+                                              >
+                                                Weibo
+                                              </div>
+                                            </WeiboShareButton>
+                                          </Dropdown.Item>
+                                        </Dropdown.Menu>
+                                      </Dropdown>
+                                    </div>
                                   </ResponseEntry>
                                 )
                             )}

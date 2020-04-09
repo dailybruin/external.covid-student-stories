@@ -18,37 +18,35 @@ import DataPage from "./DataPage";
 import WordCloud from "../components/WordCloud";
 import axios from "axios";
 import SearchableDropdown from "../components/Searchable";
+import Select from "react-select";
+
 import "./masonry.css";
 
 const Container = styled("div")`
   width: 90%;
+  max-height: 92.5vh;
   margin: 0 auto;
 `;
 
 const StoriesContainer = styled("div")`
-  /* height: 90vh; */
-  height: 100%;
+  max-height: 92.5vh;
   width: 100%;
   display: flex;
   /* background-color: #636f71; */
 `;
 
 const FiltersContainer = styled("div")`
-  height: 100%;
   width: 15%;
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
   box-sizing: border-box;
   padding: 30px;
-  padding-top: 6.5em;
   line-height: 30px;
   cursor: pointer;
 `;
 
 const ScrollContainer = styled("div")`
-  height: 90vh;
-  width: 100%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -70,6 +68,7 @@ const PersonEntry = styled("div")`
   background-color: white;
   padding: 20px;
   border: 2px solid #b7c0c0;
+  border-radius: 10px;
   /* margin: 10px; */
 `;
 
@@ -94,6 +93,7 @@ const Questions = styled("div")`
   font-size: 18px;
   padding: 20px;
   text-align: center;
+  height: 12.5vh;
 `;
 
 const QuestionAndResponsesContainer = styled("div")`
@@ -123,7 +123,12 @@ export default class StoriesPage extends React.Component {
         selected: true,
         key: element.key,
       })),
-      tab: 0,
+      sortOptions: [
+        { value: "recent", label: "most recent" },
+        { value: "reacted", label: "most reacted" },
+        { value: "random", label: "random" },
+      ],
+      selectedSort: null,
       stories: [],
       currPage: 1,
       lazyload: {
@@ -134,6 +139,7 @@ export default class StoriesPage extends React.Component {
     };
     this.onFilterClick = this.onFilterClick.bind(this);
     this.onQuestionClick = this.onQuestionClick.bind(this);
+    this.onSortClick = this.onSortClick.bind(this);
     this.loadStories = this.loadStories.bind(this);
   }
 
@@ -191,6 +197,11 @@ export default class StoriesPage extends React.Component {
     );
   }
 
+  onSortClick(selectedSort) {
+    this.setState({ selectedSort });
+    /*this.loadStories(getQueryString(selection));*/
+  }
+
   /*
    * what to do when the question is clicked.
    */
@@ -219,10 +230,10 @@ export default class StoriesPage extends React.Component {
       <>
         {/* <WordCloud></WordCloud> */}
         <Container>
-          <div>
+          {/*<div>
             <Tab onClick={() => this.switchTab(0)}>Words</Tab>
             <Tab onClick={() => this.switchTab(1)}>Stats</Tab>
-          </div>
+          </div>*/}
           <SwipeableViews
             index={tab}
             onChangeIndex={() => this.switchTab(tab)}
@@ -232,8 +243,12 @@ export default class StoriesPage extends React.Component {
           >
             <StoriesContainer>
               <FiltersContainer>
-                School
-                <SearchableDropdown />
+                <Select
+                  options={this.state.sortOptions}
+                  placeholder="sort by..."
+                  value={this.state.selectedSort}
+                  onChange={this.onSortClick}
+                />{" "}
                 {filterfieldNames.map((element) => (
                   <FilterDropdown {...element} onClick={this.onFilterClick} />
                 ))}
@@ -263,7 +278,7 @@ export default class StoriesPage extends React.Component {
                 <ScrollContainer>
                   <div
                     className={css`
-                      height: 100%;
+                      max-height: 80vh;
                       width: 100%;
                       overflow: auto;
                     `}

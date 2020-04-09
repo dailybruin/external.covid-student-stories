@@ -4,10 +4,11 @@ import { Link } from "react-router-dom";
 import { Element } from "react-scroll";
 
 const NavbarStyled = styled("div")`
-  height: 6vh;
   position: sticky;
-  display: flex;
   top: 0;
+
+  height: 7.5vh;
+  display: flex;
   justify-content: space-between;
   background-color: #586572;
   box-sizing: border-box;

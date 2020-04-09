@@ -19,6 +19,14 @@ import WordCloud from "../components/WordCloud";
 import axios from "axios";
 import SearchableDropdown from "../components/Searchable";
 import "./masonry.css";
+import {
+  FacebookShareButton,
+  FacebookIcon,
+  RedditShareButton,
+  RedditIcon,
+  TwitterShareButton,
+  TwitterIcon,
+} from "react-share";
 
 const Container = styled("div")`
   width: 90%;
@@ -217,7 +225,6 @@ export default class StoriesPage extends React.Component {
     data = data.filter((row) => filterAllowsShow(selectedFieldNames, row));
     return (
       <>
-        {/* <WordCloud></WordCloud> */}
         <Container>
           <div>
             <Tab onClick={() => this.switchTab(0)}>Words</Tab>
@@ -270,6 +277,8 @@ export default class StoriesPage extends React.Component {
                     onScroll={this.handleStoriesScroll}
                     ref="scrollview"
                   >
+                    <WordCloud />
+
                     <Masonry
                       breakpointCols={2}
                       className="my-masonry-grid"
@@ -301,6 +310,32 @@ export default class StoriesPage extends React.Component {
                                       <b>{response.question}</b>
                                     </div>
                                     <div>{row[response.column]}</div>
+                                    <div
+                                      className={css`
+                                        float: right;
+                                      `}
+                                    >
+                                      <FacebookShareButton
+                                        url={"https://dailybruin.com/"}
+                                        quote={"'" + row[response.column] + "'"}
+                                        hashtag={"UnifhsedStories"}
+                                      >
+                                        <FacebookIcon size={24} round={true} />
+                                      </FacebookShareButton>
+                                      <RedditShareButton
+                                        url={"https://dailybruin.com/"}
+                                        title={"Unfinished Stories: COVID"}
+                                      >
+                                        <RedditIcon size={24} round={true} />
+                                      </RedditShareButton>
+                                      <TwitterShareButton
+                                        url={"https://dailybruin.com/"}
+                                        title={"'" + row[response.column] + "'"}
+                                        hashtags={["UnfinishedStories"]}
+                                      >
+                                        <TwitterIcon size={24} round={true} />
+                                      </TwitterShareButton>
+                                    </div>
                                   </ResponseEntry>
                                 )
                             )}

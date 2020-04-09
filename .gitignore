@@ -1,10 +1,16 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+node_modules
+=======
+>>>>>>> remotes/origin/james/upvote
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
 node_modules/
 yarn.lock
 
+<<<<<<< HEAD
 =======
 # Logs
 logs
@@ -122,3 +128,6 @@ dist
 .yarn/build-state.yml
 .pnp.*
 >>>>>>> remotes/origin/Sarthak/form
+=======
+>>>>>>> master
+>>>>>>> remotes/origin/james/upvote

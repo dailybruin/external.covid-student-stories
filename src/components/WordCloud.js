@@ -18,7 +18,7 @@ const options = {
   fontWeight: "normal",
   padding: 1,
   rotations: 3,
-  rotationAngles: [0, 90],
+  rotationAngles: [0],
   scale: "sqrt",
   spiral: "archimedean",
   transitionDuration: 1000,

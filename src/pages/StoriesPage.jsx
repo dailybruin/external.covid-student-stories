@@ -11,6 +11,7 @@ import {
 import { MAP_year_to_yearName } from "../utils/mappings";
 import { filterfieldNames, responseColumns } from "../utils/properties";
 import { isElementOfType } from "react-dom/test-utils";
+import Upvote from "../components/Upvote.js";
 import SwipeableViews from "react-swipeable-views";
 import request from "superagent";
 import debounce from "lodash.debounce";

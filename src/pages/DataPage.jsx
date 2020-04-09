@@ -124,9 +124,7 @@ export default class DataPage extends React.Component {
                 <PieChart data={this.state.data.curr_location_breakdown} />
               </GraphContainer>
               <GraphContainer>
-                <StackedBar
-                  data={this.state.data.curr_location_breakdown}
-                ></StackedBar>
+                <StackedBar data={this.state.data.feelings}></StackedBar>
               </GraphContainer>
               <NumberContainer>
                 <div style={{ fontSize: 100, fontWeight: "bold" }}>

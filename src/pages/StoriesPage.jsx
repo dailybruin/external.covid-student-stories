@@ -114,7 +114,7 @@ export default class StoriesPage extends React.Component {
     this.state = {
       selectedFieldNames: filterfieldNames.map((element, key) => ({
         column: element.column,
-        selection: "All",
+        selections: ["All"],
         key: key,
       })),
       responseSelections: responseColumns.map((element, key) => ({
@@ -123,6 +123,7 @@ export default class StoriesPage extends React.Component {
         selected: true,
         key: element.key,
       })),
+      tab: 0,
       stories: [],
       currPage: 1,
       lazyload: {
@@ -130,7 +131,6 @@ export default class StoriesPage extends React.Component {
         hasMore: true,
         isLoading: false,
       },
-      tab: 0,
     };
     this.onFilterClick = this.onFilterClick.bind(this);
     this.onQuestionClick = this.onQuestionClick.bind(this);
@@ -148,14 +148,7 @@ export default class StoriesPage extends React.Component {
         `https://covidstories.dailybruin.com/stories/?${queryString}&i=${this.state.currPage}`
       )
         .then((results) => {
-          console.log(
-            `https://covidstories.dailybruin.com/stories/?${queryString}&i=${this.state.currPage}`
-          );
-          console.log(queryString);
-          console.log("lol");
           const newStories = results.data.map((d) => d.fields);
-          console.log(newStories);
-          console.log(this.state);
           this.setState({
             hasMore: true,
             isLoading: false,
@@ -186,12 +179,12 @@ export default class StoriesPage extends React.Component {
    * what to do when the filter is clicked.
    * (this passed in as a callback into the filter buttons)
    */
-  onFilterClick(column, selection) {
+  onFilterClick(column, selections) {
     let newSelectedFieldNames = this.state.selectedFieldNames;
     let selectedfieldName = newSelectedFieldNames.find(
       (element) => element.column == column
     );
-    selectedfieldName.selection = selection;
+    selectedfieldName.selections = selections;
     this.setState(
       { selectedFieldNames: newSelectedFieldNames, stories: [], currPage: 1 },
       () => this.loadStories(getQueryString(newSelectedFieldNames))
@@ -206,7 +199,6 @@ export default class StoriesPage extends React.Component {
     let responseSelected = newResponseSelections.find(
       (e) => e.column == element.column
     );
-    console.log(responseSelected.question);
     responseSelected.selected = !responseSelected.selected;
     this.setState({
       responseSelections: newResponseSelections,

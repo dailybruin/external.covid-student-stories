@@ -21,13 +21,13 @@ var images = [
 
 const ImageContainer = styled.div`
   width: 200px;
-  height: 30px;
+  height: 40px;
   position: absolute;
   left: -15px;
-  bottom: 15px;
+  bottom: 30px;
   background: white;
-  border-radius: 28px;
-  border-style: outset;
+  border-radius: 25px;
+  box-shadow: 0 7px 10px rgba(0, 0, 0, 0.4);
   text-align: center;
   transition: opacity 0.2s ease-in-out;
   opacity: 0;
@@ -39,7 +39,7 @@ const ImageContainer = styled.div`
   }
 `;
 
-const Like = styled.button`
+const Like = styled.div`
   position: relative;
   :hover ${ImageContainer} {
     transition-delay: 0.6s;
@@ -49,17 +49,18 @@ const Like = styled.button`
   :hover {
     background: #d3d3d3;
   }
-  width: 30px;
-  left: 30px;
-  border-style: solid;
+  width: 40px;
+  left: 10px;
   outline: none;
+  border-radius: 10px;
 `;
 const Image = styled.img`
-  max-width: 20px;
+  max-width: 25px;
   margin: 2px;
   &:hover {
     transform: scale(1.5);
   }
+  z-index: 1000;
 `;
 
 export default class Upvote extends React.Component {
@@ -98,7 +99,7 @@ export default class Upvote extends React.Component {
         return (
           <img
             className={css`
-              max-width: 15px;
+              max-width: 20px;
             `}
             src={url}
           />
@@ -124,22 +125,23 @@ export default class Upvote extends React.Component {
     ));
     return (
       <>
-        <div>
-          <div>Reaction Count</div>
-          <div>
-            <Like>
-              <ImageContainer>{img}</ImageContainer>
-              <div
-                onClick={this.likeHandler}
-                className={css`
-                  text-align: center;
-                `}
-              >
-                {this.renderLikeButton()}
-              </div>
-            </Like>
-            <div>You selected:{this.state.selected}</div>
-          </div>
+        <div
+          className={css`
+            display: flex;
+          `}
+        >
+          <b>Reacc:</b>
+          <Like>
+            <ImageContainer>{img}</ImageContainer>
+            <div
+              onClick={this.likeHandler}
+              className={css`
+                text-align: center;
+              `}
+            >
+              {this.renderLikeButton()}
+            </div>
+          </Like>
         </div>
       </>
     );

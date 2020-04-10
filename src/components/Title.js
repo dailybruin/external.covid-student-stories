@@ -75,9 +75,10 @@ const Caption = styled("div")`
 const Coloring = styled("div")`
   overflow: hidden;
   background-color: black;
-  opacity: 0.5;
+  opacity: 0.7;
   width: 800px;
   height: 220px;
+  z-index: 1000000;
   position: absolute;
   text-align: center;
   bottom: 75%;
@@ -112,31 +113,6 @@ export default class Title extends React.Component {
         >
           <Slideshow />
         </div>
-        <Wrapping>
-          Unfinished Stories Unfinished Stories Unfinished Stories Unfinished
-          Stories Unfinished Stories
-        </Wrapping>
-        <Background>
-          Unfinished Stories Unfinished Stories Unfinished Stories Unfinished
-          Stories Unfinished Stories Unfinished Stories
-        </Background>
-        <SameLine>
-          Unfinished Stories <Hidden> Unfinished Stories </Hidden> Unfinished
-          Stories
-        </SameLine>
-        <TitleMessage>COVID STORIES</TitleMessage>
-        <AddStoryLink
-          to="/form"
-          onClick={() => {
-            scroller.scrollTo("navbar", {
-              duration: 500,
-              delay: 0,
-              smooth: "easeInOutQuint",
-            });
-          }}
-        >
-          SHARE YOUR STORY
-        </AddStoryLink>
         <ScrollTo>
           {({ scroll }) => (
             <button onClick={() => scroll({ y: 750, smooth: true })}>

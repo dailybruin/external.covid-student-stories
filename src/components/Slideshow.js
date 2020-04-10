@@ -37,7 +37,7 @@ const Slideshow = () => {
     config: config.molasses,
   });
   useEffect(
-    () => void setInterval(() => set((state) => (state + 1) % 4), 4000),
+    () => void setInterval(() => set((state) => (state + 1) % 4), 6000),
     []
   );
   return transitions.map(({ item, props, key }) => (
@@ -48,7 +48,7 @@ const Slideshow = () => {
           position: absolute;
           top: 0;
           left: 0;
-          width: 100vw;
+          width: 100%;
           height: 100vh;
           background-size: cover;
           background-position: center;

@@ -54,13 +54,13 @@ const TitlePage = styled("div")`
   font-family: Avenir;
 `;
 
-const TitleMessage = styled("div")`
-  overflow: hidden;
-  font-size: 70px;
-  font-weight: 900;
-  color: white;
-  padding-top: 20px;
-`;
+// const TitleMessage = styled("div")`
+//   overflow: hidden;
+//   font-size: 70px;
+//   font-weight: 900;
+//   color: white;
+//   padding-top: 20px;
+// `;
 
 const Caption = styled("div")`
   overflow: hidden;
@@ -79,18 +79,18 @@ const Coloring = styled("div")`
   bottom: 75%;
 `;
 
-const ScrollMessage = styled("div")`
-  overflow: hidden;
-  position: absolute;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  bottom: 0;
-  font-size: 20px;
-  padding: 50px;
-  box-sizing: border-box;
-  color: black;
-`;
+// const ScrollMessage = styled("div")`
+//   overflow: hidden;
+//   position: absolute;
+//   justify-content: center;
+//   align-items: center;
+//   text-align: center;
+//   bottom: 0;
+//   font-size: 20px;
+//   padding: 50px;
+//   box-sizing: border-box;
+//   color: black;
+// `;
 
 export default class Title extends React.Component {
   render() {

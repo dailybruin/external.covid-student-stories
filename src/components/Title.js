@@ -47,7 +47,6 @@ const TitlePage = styled("div")`
   height: 100vh;
   overflow: hidden !important;
   text-overflow: clip;
-  background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -55,87 +54,66 @@ const TitlePage = styled("div")`
   font-family: Avenir;
 `;
 
-const Background = styled("div")`
-  width: 100%;
-  box-sizing: border-box;
+const TitleMessage = styled("div")`
   overflow: hidden;
-  position: absolute;
-  padding-bottom: 500px;
-  padding-right: 50px;
-  font-size: 96px;
+  font-size: 70px;
   font-weight: 900;
-  color: #ecedee;
-  white-space: nowrap;
+  color: white;
+  padding-top: 20px;
 `;
 
-const Wrapping = styled("div")`
-  width: 100%;
-  box-sizing: border-box;
+const Caption = styled("div")`
   overflow: hidden;
-  position: absolute;
-  padding-bottom: 800px;
-  padding-right: 50px;
-  font-size: 96px;
-  font-weight: 900;
-  color: #ecedee;
-  white-space: nowrap;
-  padding-right: 30px;
+  font-size: 18px;
+  color: white;
 `;
 
-const SameLine = styled("div")`
-  width: 100%;
-  box-sizing: border-box;
+const Coloring = styled("div")`
   overflow: hidden;
+  background-color: black;
+  opacity: 0.5;
+  width: 800px;
+  height: 220px;
   position: absolute;
-  padding-bottom: 200px;
-  padding-right: 50px;
-  font-size: 96px;
-  font-weight: 900;
-  color: #ecedee;
-  white-space: nowrap;
-  padding-right: 30px;
+  text-align: center;
+  bottom: 75%;
 `;
 
-const Hidden = styled("a")`
-  color: rgba(0, 0, 0, 0);
+const ScrollMessage = styled("div")`
+  overflow: hidden;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  bottom: 0;
+  font-size: 20px;
+  padding: 50px;
+  box-sizing: border-box;
+  color: black;
 `;
 
 export default class Title extends React.Component {
   render() {
     return (
       <TitlePage>
-        <div
-          className={css`
-            overflow: auto;
-          `}
-        >
-          <Slideshow />
-        </div>
-        <Wrapping>
-          Unfinished Stories Unfinished Stories Unfinished Stories Unfinished
-          Stories Unfinished Stories
-        </Wrapping>
-        <Background>
-          Unfinished Stories Unfinished Stories Unfinished Stories Unfinished
-          Stories Unfinished Stories Unfinished Stories
-        </Background>
-        <SameLine>
-          Unfinished Stories <Hidden> Unfinished Stories </Hidden> Unfinished
-          Stories
-        </SameLine>
-        <TitleMessage>COVID STORIES</TitleMessage>
-        <AddStoryLink
-          to="/form"
-          onClick={() => {
-            scroller.scrollTo("navbar", {
-              duration: 500,
-              delay: 0,
-              smooth: "easeInOutQuint",
-            });
-          }}
-        >
-          SHARE YOUR STORY
-        </AddStoryLink>
+        <Coloring>
+          <TitleMessage>Unfinished Stories</TitleMessage>
+          <Caption>
+            students' experiences about how Covid-19 has affected their lives
+          </Caption>
+          <AddStoryLink
+            to="/form"
+            onClick={() => {
+              scroller.scrollTo("navbar", {
+                duration: 500,
+                delay: 0,
+                smooth: "easeInOutQuint",
+              });
+            }}
+          >
+            SHARE YOUR STORY
+          </AddStoryLink>
+        </Coloring>
         <ScrollTo>
           {({ scroll }) => (
             <button onClick={() => scroll({ y: 750, smooth: true })}>

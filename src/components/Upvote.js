@@ -145,7 +145,6 @@ export default class Upvote extends React.Component {
               {this.renderLikeButton()}
             </div>
           </Like>
-          <div>peni</div>
         </div>
       </>
     );

@@ -115,7 +115,15 @@ export default class Title extends React.Component {
         </div>
         <ScrollTo>
           {({ scroll }) => (
-            <button onClick={() => scroll({ y: 750, smooth: true })}>
+            <button
+              onClick={() => {
+                scroller.scrollTo("navbar", {
+                  duration: 500,
+                  delay: 0,
+                  smooth: "easeInOutQuint",
+                });
+              }}
+            >
               <ScrollMessage>
                 <img src={Button} />
               </ScrollMessage>

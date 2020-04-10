@@ -20,32 +20,35 @@ var images = [
 ];
 
 const ImageContainer = styled.div`
-  width: 200px;
-  height: 40px;
+  width: 300px;
   position: absolute;
-  left: -15px;
-  bottom: 30px;
+  left: 0px;
+  top: 25px;
+  padding: 3px;
   background: white;
   border-radius: 25px;
   box-shadow: 0 7px 10px rgba(0, 0, 0, 0.4);
   text-align: center;
   transition: opacity 0.2s ease-in-out;
   opacity: 0;
-  height: 0;
-  overflow: hidden;
+  height: auto;
   :hover {
     opacity: 1;
-    height: auto;
   }
 `;
 
 const Like = styled.div`
   position: relative;
-  :hover ${ImageContainer} {
-    transition-delay: 0.6s;
-    opacity: 1;
-    height: auto;
+  ${ImageContainer} {
+    pointer-events: none;
   }
+  :hover ${ImageContainer} {
+    transition-delay: 0.2s;
+    opacity: 1;
+    pointer-events: auto;
+    /* height: auto; */
+  }
+
   :hover {
     background: #d3d3d3;
   }
@@ -55,12 +58,12 @@ const Like = styled.div`
   border-radius: 10px;
 `;
 const Image = styled.img`
-  max-width: 25px;
-  margin: 2px;
+  max-width: 35px;
+  margin: 5px;
   &:hover {
     transform: scale(1.5);
   }
-  z-index: 1000;
+  z-index: 100000;
 `;
 
 export default class Upvote extends React.Component {
@@ -142,6 +145,7 @@ export default class Upvote extends React.Component {
               {this.renderLikeButton()}
             </div>
           </Like>
+          <div>peni</div>
         </div>
       </>
     );

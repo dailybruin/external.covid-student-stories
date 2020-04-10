@@ -23,7 +23,7 @@ const TitlePage = styled("div")`
   font-family: Avenir;
 `;
 
-const TitleMessage = styled("div")`
+const BigTitle = styled("div")`
   overflow: hidden;
   font-size: 70px;
   font-weight: 900;
@@ -48,25 +48,12 @@ const Coloring = styled("div")`
   bottom: 75%;
 `;
 
-const ScrollMessage = styled("div")`
-  overflow: hidden;
-  position: absolute;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  bottom: 0;
-  font-size: 20px;
-  padding: 50px;
-  box-sizing: border-box;
-  color: black;
-`;
-
 export default class Title extends React.Component {
   render() {
     return (
       <TitlePage>
         <Coloring>
-          <TitleMessage>Unfinished Stories</TitleMessage>
+          <BigTitle>Unfinished Stories</BigTitle>
           <Caption>
             students' experiences about how Covid-19 has affected their lives
           </Caption>

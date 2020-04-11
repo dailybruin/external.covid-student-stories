@@ -92,6 +92,11 @@ export default class DataPage extends React.Component {
     let { data } = this.props;
     var cities = [];
     const { selectedFields } = this.state;
+    for (var i = 0; i < data.length; i++) {
+      if (data[i].hometown.indexOf(",") > -1) {
+        cities.push(data[i].hometown);
+      }
+    }
 
     data = data.filter((row) => showData(selectedFields, row));
     var count = 0;
@@ -100,11 +105,6 @@ export default class DataPage extends React.Component {
       if (data[i].knowPositive === "Yes") {
         count += 1;
         // cities.push([data[i].hometown]);
-      }
-    }
-    for (var i = 0; i < data.length; i++) {
-      if (data[i].hometown.indexOf(",") > -1) {
-        cities.push(data[i].hometown);
       }
     }
 

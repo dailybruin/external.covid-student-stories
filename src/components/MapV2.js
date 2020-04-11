@@ -12,11 +12,11 @@ const bbox = [-160, -70, 160, 70];
 const MAPBOX_TOKEN =
   "pk.eyJ1IjoiaHVhbmdrYTk3IiwiYSI6ImNrMmw4c2V2YzA0bWUzZG83M2EzN2NjZ2wifQ.ICymOqR-bnQFjDcFtS3xCA"; // Set your mapbox token here
 const style = {
-  width: "20px",
-  height: "20px",
+  width: "60px",
+  height: "60px",
   color: "#fff",
   background: "#1978c8",
-  borderRadius: "20px",
+  borderRadius: "60px",
   textAlign: "center",
 };
 
@@ -32,12 +32,12 @@ class ClusterMarker extends React.PureComponent {
   }
 
   render() {
-    const { longitude, latitude } = this.props;
+    const { longitude, latitude, pointCount } = this.props;
 
     return (
       <Marker longitude={longitude} latitude={latitude}>
         <div onClick={this.onClick} style={{ ...style, background: "#f28a25" }}>
-          {this.props.count}
+          {pointCount}
         </div>
       </Marker>
     );
@@ -89,7 +89,8 @@ class Map extends React.PureComponent {
   }
 
   matchLocation(locations) {
-    var location = locations[0].split(",");
+    console.log("THIS IS LOCATIOns ", locations);
+    var location = locations.split(",");
     var output = null;
     console.log("THIS IS LOCATION1OFARRYA ", location[1]);
     var city = states.abbr(location[1].trim());
@@ -114,18 +115,19 @@ class Map extends React.PureComponent {
     });
 
     console.log("THIS IS POINTS ", points);
-    // points.map((point, index) => (point.id = index));
+    points.map((point, index) => (point.id = index));
     return (
       <MapGL
-        style={{ width: "100%", height: "400px" }}
+        style={{ width: "100vw", height: "400vh" }}
         mapStyle="mapbox://styles/mapbox/light-v9"
         accessToken={MAPBOX_TOKEN}
         onViewportChange={this.onViewportChange}
+        captureScroll="false"
         {...viewport}
       >
         <Cluster
           ref={this._cluster}
-          radius={40}
+          radius={5}
           extent={512}
           nodeSize={64}
           component={(cluster) => (

@@ -6,7 +6,7 @@ import Masonry from "react-masonry-css";
 import {
   filterAllowsShow,
   selectionMatchesEntry,
-  getQueryString,
+  getQueryString
 } from "../utils/functions";
 import { MAP_year_to_yearName } from "../utils/mappings";
 import { filterfieldNames, responseColumns } from "../utils/properties";
@@ -25,19 +25,14 @@ const Container = styled("div")`
   width: 100%;
   height: 92.5vh;
   display: flex;
+  overflow: scroll;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
 `;
 
-const FiltersContainer = styled("div")`
-  width: 20%;
-  height: 100%;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  line-height: 30px;
-  cursor: pointer;
-  color: #626969;
-`;
+const FiltersContainer = styled("div")``;
 
 const ResponsesContainer = styled("div")`
   display: flex;
@@ -48,6 +43,10 @@ const ResponsesContainer = styled("div")`
   flex-direction: column;
   width: 80%;
   height: 100%;
+
+  @media (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
 const ResponseEntry = styled("div")`
@@ -82,12 +81,12 @@ export default class StoriesPage extends React.Component {
       selectedFieldNames: filterfieldNames.map((element, key) => ({
         column: element.column,
         selections: ["All"],
-        key: key,
+        key: key
       })),
       sortOptions: [
         { value: "recent", label: "most recent" },
         { value: "reacted", label: "most reacted" },
-        { value: "random", label: "random" },
+        { value: "random", label: "random" }
       ],
       selectedSort: null,
       stories: [],
@@ -95,12 +94,19 @@ export default class StoriesPage extends React.Component {
       lazyload: {
         error: false,
         hasMore: true,
-        isLoading: false,
+        isLoading: false
       },
+      filtersOpen: false,
     };
     this.onFilterClick = this.onFilterClick.bind(this);
     this.onSortClick = this.onSortClick.bind(this);
     this.loadStories = this.loadStories.bind(this);
+    this.toggleFilters = this.toggleFilters.bind(this);
+
+    this.breakpointCols = {
+      default: 2,
+      700: 1,
+    };
   }
 
   componentWillMount() {
@@ -113,19 +119,19 @@ export default class StoriesPage extends React.Component {
       axios(
         `https://covidstories.dailybruin.com/stories/?${queryString}&i=${this.state.currPage}`
       )
-        .then((results) => {
-          const newStories = results.data.map((d) => d.fields);
+        .then(results => {
+          const newStories = results.data.map(d => d.fields);
           this.setState({
             hasMore: true,
             isLoading: false,
             stories: [...this.state.stories, ...newStories],
-            currPage: this.state.currPage + 1,
+            currPage: this.state.currPage + 1
           });
         })
-        .catch((err) => {
+        .catch(err => {
           this.setState({
             error: err.message,
-            isLoading: false,
+            isLoading: false
           });
         });
     });
@@ -138,7 +144,7 @@ export default class StoriesPage extends React.Component {
     const element = this.refs.scrollview;
     console.log([
       element.scrollHeight - element.scrollTop,
-      element.clientHeight,
+      element.clientHeight
     ]);
     if (
       element.scrollHeight - element.scrollTop - 200 <=
@@ -155,7 +161,7 @@ export default class StoriesPage extends React.Component {
   onFilterClick(column, selections) {
     let newSelectedFieldNames = this.state.selectedFieldNames;
     let selectedfieldName = newSelectedFieldNames.find(
-      (element) => element.column == column
+      element => element.column == column
     );
     selectedfieldName.selections = selections;
     this.setState(
@@ -170,8 +176,8 @@ export default class StoriesPage extends React.Component {
     /*this.loadStories(getQueryString(selection));*/
   }
 
-  switchTab(index) {
-    this.setState({ tab: index });
+  toggleFilters() {
+    this.setState({ filtersOpen: !this.state.filtersOpen });
   }
 
   render() {
@@ -181,17 +187,57 @@ export default class StoriesPage extends React.Component {
     return (
       <>
         <Container>
-          <FiltersContainer>
-            {" "}
-            {filterfieldNames.map((element) => (
-              <FilterDropdown {...element} onClick={this.onFilterClick} />
-            ))}
-            <Select
-              options={this.state.sortOptions}
-              placeholder="sort by..."
-              value={this.state.selectedSort}
-              onChange={this.onSortClick}
-            />
+          <FiltersContainer
+            className={css`
+              z-index: 20;
+              width: 20%;
+              padding: 20px;
+              display: flex;
+              flex-direction: column;
+              flex-shrink: 0;
+              box-sizing: border-box;
+              line-height: 30px;
+              cursor: pointer;
+              color: #626969;
+              position: sticky;
+              top: 0;
+              transition: all 300ms ease-in-out;
+              @media (max-width: 600px) {
+                padding-top: 0;
+                width: 100%;
+                overflow: hidden;
+                border-bottom: 1px solid #212529;
+                background-color: #fff;
+                height: ${this.state.filtersOpen ? "92.5vh" : "30px"};
+              }
+            `}
+          >
+            <div onClick={this.toggleFilters} className={css``}>
+              Filters{" "}
+              <span
+                className={css`
+                  writing-mode: vertical-rl;
+                  text-orientation: mixed;
+                  padding-bottom: 2px;
+                  @media (min-width: 601px) {
+                    display: none;
+                  }
+                `}
+              >
+                {this.state.filtersOpen ? "‹" : "›"}
+              </span>
+            </div>
+            <div>
+              {filterfieldNames.map((element) => (
+                <FilterDropdown {...element} onClick={this.onFilterClick} />
+              ))}
+              <Select
+                options={this.state.sortOptions}
+                placeholder="sort by..."
+                value={this.state.selectedSort}
+                onChange={this.onSortClick}
+              />
+            </div>
           </FiltersContainer>
           <ResponsesContainer>
             <div
@@ -204,7 +250,7 @@ export default class StoriesPage extends React.Component {
               ref="scrollview"
             >
               <Masonry
-                breakpointCols={2}
+                breakpointCols={this.breakpointCols}
                 className="my-masonry-grid"
                 columnClassName="my-masonry-grid_column"
               >
@@ -230,7 +276,7 @@ export default class StoriesPage extends React.Component {
                             at {row.school}
                           </b>
                           {responseColumns.map(
-                            (response) =>
+                            response =>
                               row[response.column] != "" && (
                                 <ResponseEntry>
                                   <div>

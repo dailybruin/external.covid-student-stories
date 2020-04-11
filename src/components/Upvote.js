@@ -8,6 +8,7 @@ import haha from "../images/haha.png";
 import wow from "../images/waow.png";
 import sad from "../images/big-simp.png";
 import angry from "../images/amgery.png";
+import axios from "axios";
 
 const cookies = new Cookies();
 var images = [
@@ -61,11 +62,12 @@ const Image = styled.img`
 export default class Upvote extends React.Component {
   constructor(props) {
     super(props);
+    this.PK = this.props.id;
+    console.log(this.PK);
     var id = "";
     if (typeof cookies.get(this.props.id) !== undefined)
       id = cookies.get(this.props.id);
     var value = cookies.get(this.props.id);
-    console.log("value: " + value);
     this.state = {
       selected: id,
       open: false,
@@ -76,15 +78,36 @@ export default class Upvote extends React.Component {
     this.likeHandler = this.likeHandler.bind(this);
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
     this.handleMouseClose = this.handleMouseClose.bind(this);
+    this.getEmotionNumber = this.getEmotionNumber.bind(this);
   }
   emotionChosen(emotion) {
-    this.setState({ selected: emotion });
+    this.setState({ selected: emotion }, () => {
+      axios.post(`https://covidstories.dailybruin.com/stories/react/`, {
+        pk: this.PK,
+        react: this.getEmotionNumber(emotion),
+      });
+    });
+
     cookies.set(this.props.id, emotion);
     if (this.state.open) {
       clearTimeout(this.timer);
       this.timer = setTimeout(() => {
         this.setState({ open: false });
       }, 250);
+    }
+  }
+  getEmotionNumber(emotion) {
+    switch (emotion) {
+      case "love":
+        return 0;
+      case "sad":
+        return 1;
+      case "like":
+        return 2;
+      case "angry":
+        return 3;
+      default:
+        return 2;
     }
   }
   renderLikeButton() {
@@ -112,9 +135,19 @@ export default class Upvote extends React.Component {
   }
   likeHandler() {
     if (this.state.selected === "") {
-      this.setState({ selected: "like" });
+      this.setState({ selected: "like" }, () => {
+        axios.post(`https://covidstories.dailybruin.com/stories/react/`, {
+          pk: this.PK,
+          old_react: 2,
+        });
+      });
       cookies.set(this.props.id, "like");
     } else {
+      axios.post(`https://covidstories.dailybruin.com/stories/react/`, {
+        pk: this.PK,
+        old_react: this.getEmotionNumber(this.state.selected),
+      });
+
       this.setState({ selected: "" });
       cookies.set(this.props.id, "");
     }

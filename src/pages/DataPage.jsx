@@ -3,17 +3,15 @@ import styled from "styled-components";
 import { css } from "emotion";
 import axios from "axios";
 import PieChart from "../components/graphs/Pie";
+import WordCloud from "../components/WordCloud";
 import StackedBar from "../components/graphs/StackedBar";
-
-const StoriesContainer = styled("div")`
-  height: 90vh;
-  width: 100%;
-  display: flex;
-  background-color: white;
-`;
+import { Pie } from "react-chartjs-2";
+import Map from "../components/MapV2.js";
+import { auto } from "@popperjs/core";
+import { findByLabelText } from "@testing-library/dom";
 
 const ScrollContainer = styled("div")`
-  height: 100%;
+  height: 92.5vh;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -21,31 +19,26 @@ const ScrollContainer = styled("div")`
   background-color: white;
 `;
 
-const StoryEntry = styled("div")`
-  box-sizing: border-box;
-  border: 2px solid lightgreen;
-  margin: 5px;
-  padding: 5px;
-`;
-
 const NumberContainer = styled("div")`
-  width: 200px;
-  height: 200px;
-  color: white;
+  width: 20%;
+  color: #5e6363;
   font-size: 15px;
-  color: white;
   background-color: #b7c0c0;
+  background-color: white;
   text-align: center;
   padding: 30px;
-  margin: 30px;
+  border: 2px solid #c3c9c9;
+  border-radius: 10px;
 `;
 
 const GraphContainer = styled("div")`
-  width: 400px;
+  width: 35%;
   height: 400px;
   padding: 30px;
-  margin: 30px;
   background-color: #b7c0c0;
+  background-color: white;
+  border: 2px solid #c3c9c9;
+  border-radius: 10px;
 `;
 
 const filterFields = [
@@ -75,7 +68,6 @@ export default class DataPage extends React.Component {
       })),
       data: {}
     };
-    this.onFilterClick = this.onFilterClick.bind(this);
   }
 
   componentWillMount() {
@@ -101,43 +93,69 @@ export default class DataPage extends React.Component {
     });
   }
 
-  onFilterClick(field, selection) {
-    let newSelectedFields = this.state.selectedFields;
-    let selectedField = newSelectedFields.find(
-      element => element.field == field
-    );
-    selectedField.selection = selection;
-    this.setState({ selectedFields: newSelectedFields });
-  }
-
   render() {
-    let { data } = this.props;
-    const { selectedFields } = this.state;
-    data = data.filter(row => showData(selectedFields, row));
-
+    const { data } = this.state;
+    var cities = [];
+    var count = 0;
+    for (var i = 0; i < data.length; i++) {
+      console.log(data[i].comfortablePublish);
+      if (data[i].knowPositive === "Yes") {
+        count += 1;
+      }
+    }
+    for (var i = 0; i < data.length; i++) {
+      if (data[i].hometown.indexOf(",") > -1) {
+        cities.push(data[i].hometown);
+      }
+    }
     return (
       <>
-        {!this.state.isLoading ? (
-          <ScrollContainer>
-            <div style={{ height: "100%", overflow: "auto" }}>
-              <GraphContainer>
-                <PieChart data={this.state.data.curr_location_breakdown} />
-              </GraphContainer>
-              <GraphContainer>
-                <StackedBar data={this.state.data.feelings}></StackedBar>
-              </GraphContainer>
-              <NumberContainer>
-                <div style={{ fontSize: 100, fontWeight: "bold" }}>
-                  {" "}
-                  {this.state.data.numKnowPositives}{" "}
-                </div>
-                students know someone who has tested positive for Covid-19.
-              </NumberContainer>
+        <ScrollContainer>
+          {!this.state.isLoading && (
+            <div
+              style={{
+                height: "100%",
+                overflow: "auto"
+              }}
+            >
+              <div
+                style={{
+                  width: "100%",
+                  textAlign: "center",
+                  fontSize: "30px",
+                  fontWeight: "bold",
+                  color: "#5e6363"
+                }}
+              >
+                Number of Responses: {this.state.data.count}
+              </div>
+              <div
+                className={css`
+                  display: flex;
+                  justify-content: space-between;
+                  padding: 0 10% 0 10%;
+                  margin: 5vh 5vw 5vh 5vw;
+                  flex-wrap: wrap;
+                `}
+              >
+                <GraphContainer>
+                  <PieChart data={this.state.data.curr_location_breakdown} />
+                </GraphContainer>
+                <GraphContainer>
+                  <StackedBar data={this.state.data.feelings}></StackedBar>
+                </GraphContainer>
+                <NumberContainer>
+                  <div style={{ fontSize: 100, fontWeight: "bold" }}>
+                    {this.state.data.numKnowPositives}
+                  </div>
+                  students know someone who has tested positive for Covid-19.
+                </NumberContainer>
+              </div>
+              <Map component={Map} count={count} citiesList={cities} />
+              <WordCloud />
             </div>
-          </ScrollContainer>
-        ) : (
-          <></>
-        )}
+          )}
+        </ScrollContainer>
       </>
     );
   }

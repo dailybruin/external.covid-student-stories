@@ -75,12 +75,12 @@ function StackedBar(props) {
           text: "How are students feeling?",
           fontFamily: "Calibri",
           fontSize: 30,
-          fontColor: "white"
+          fontColor: "#5e6363"
         },
         legend: {
           position: "bottom",
           labels: {
-            fontColor: "white"
+            fontColor: "#5e6363"
           }
         },
         scales: {

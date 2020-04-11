@@ -28,12 +28,12 @@ function PieChart(props) {
           text: "Where are students?",
           fontFamily: "Calibri",
           fontSize: 30,
-          fontColor: "white"
+          fontColor: "#5e6363"
         },
         legend: {
           position: "bottom",
           labels: {
-            fontColor: "white"
+            fontColor: "#5e6363"
           }
         }
       }}

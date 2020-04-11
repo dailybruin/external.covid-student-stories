@@ -3,11 +3,12 @@
  */
 
 export const MAP_year_to_yearName = {
+  HS: "High School",
   FR: "First-year",
   SO: "Second-year",
   JR: "Third-year",
   SR: "Fourth-year+",
-  GR: "Graduate",
+  GR: "Graduate"
 };
 
 /*

@@ -6,7 +6,7 @@ import Masonry from "react-masonry-css";
 import {
   filterAllowsShow,
   selectionMatchesEntry,
-  getQueryString,
+  getQueryString
 } from "../utils/functions";
 import { MAP_year_to_yearName } from "../utils/mappings";
 import { filterfieldNames, responseColumns } from "../utils/properties";
@@ -81,12 +81,12 @@ export default class StoriesPage extends React.Component {
       selectedFieldNames: filterfieldNames.map((element, key) => ({
         column: element.column,
         selections: ["All"],
-        key: key,
+        key: key
       })),
       sortOptions: [
         { value: "recent", label: "most recent" },
         { value: "reacted", label: "most reacted" },
-        { value: "random", label: "random" },
+        { value: "random", label: "random" }
       ],
       selectedSort: null,
       stories: [],
@@ -94,7 +94,7 @@ export default class StoriesPage extends React.Component {
       lazyload: {
         error: false,
         hasMore: true,
-        isLoading: false,
+        isLoading: false
       },
       filtersOpen: false,
     };
@@ -119,19 +119,19 @@ export default class StoriesPage extends React.Component {
       axios(
         `https://covidstories.dailybruin.com/stories/?${queryString}&i=${this.state.currPage}`
       )
-        .then((results) => {
-          const newStories = results.data.map((d) => d.fields);
+        .then(results => {
+          const newStories = results.data.map(d => d.fields);
           this.setState({
             hasMore: true,
             isLoading: false,
             stories: [...this.state.stories, ...newStories],
-            currPage: this.state.currPage + 1,
+            currPage: this.state.currPage + 1
           });
         })
-        .catch((err) => {
+        .catch(err => {
           this.setState({
             error: err.message,
-            isLoading: false,
+            isLoading: false
           });
         });
     });
@@ -144,7 +144,7 @@ export default class StoriesPage extends React.Component {
     const element = this.refs.scrollview;
     console.log([
       element.scrollHeight - element.scrollTop,
-      element.clientHeight,
+      element.clientHeight
     ]);
     if (
       element.scrollHeight - element.scrollTop - 200 <=
@@ -161,7 +161,7 @@ export default class StoriesPage extends React.Component {
   onFilterClick(column, selections) {
     let newSelectedFieldNames = this.state.selectedFieldNames;
     let selectedfieldName = newSelectedFieldNames.find(
-      (element) => element.column == column
+      element => element.column == column
     );
     selectedfieldName.selections = selections;
     this.setState(
@@ -276,7 +276,7 @@ export default class StoriesPage extends React.Component {
                             at {row.school}
                           </b>
                           {responseColumns.map(
-                            (response) =>
+                            response =>
                               row[response.column] != "" && (
                                 <ResponseEntry>
                                   <div>

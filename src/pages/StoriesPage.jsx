@@ -185,6 +185,7 @@ export default class StoriesPage extends React.Component {
   }
 
   render() {
+    console.log(this.state.selectedFieldNames);
     let { tab, stories } = this.state;
     let { error, hasMore, isLoading } = this.state.lazyload;
     const { selectedFieldNames } = this.state;

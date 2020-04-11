@@ -7,6 +7,8 @@ import WordCloud from "../components/WordCloud";
 import StackedBar from "../components/graphs/StackedBar";
 import { Pie } from "react-chartjs-2";
 import Map from "../components/MapV2.js";
+import { auto } from "@popperjs/core";
+import { findByLabelText } from "@testing-library/dom";
 
 const ScrollContainer = styled("div")`
   height: 92.5vh;
@@ -18,28 +20,30 @@ const ScrollContainer = styled("div")`
 `;
 
 const NumberContainer = styled("div")`
-  width: 200px;
-  height: 200px;
-  color: white;
+  width: 20%;
+  color: #5e6363;
   font-size: 15px;
-  color: white;
   background-color: #b7c0c0;
+  background-color: white;
   text-align: center;
   padding: 30px;
-  margin: 30px;
+  border: 2px solid #c3c9c9;
+  border-radius: 10px;
 `;
 
 const GraphContainer = styled("div")`
-  width: 400px;
+  width: 35%;
   height: 400px;
   padding: 30px;
-  margin: 30px;
   background-color: #b7c0c0;
+  background-color: white;
+  border: 2px solid #c3c9c9;
+  border-radius: 10px;
 `;
 
 const filterFields = [
   { field: "School", categories: ["All", "UCLA", "USC"] },
-  { field: "Major", categories: ["All", "CS", "Math", "we should bin these"] },
+  { field: "Major", categories: ["All", "CS", "Math", "we should bin these"] }
 ];
 
 function showData(selectedFields, row) {
@@ -60,9 +64,9 @@ export default class DataPage extends React.Component {
         field: element.field,
         selection: "All",
         key: key,
-        isLoading: true,
+        isLoading: true
       })),
-      data: {},
+      data: {}
     };
   }
 
@@ -74,16 +78,16 @@ export default class DataPage extends React.Component {
   loadStories() {
     this.setState({ isLoading: true }, () => {
       axios(`https://covidstories.dailybruin.com/stories/stats`)
-        .then((results) => {
+        .then(results => {
           const newStories = results.data;
           this.setState({
-            data: newStories,
+            data: newStories
           });
           this.setState({
-            isLoading: false,
+            isLoading: false
           });
         })
-        .catch((err) => {
+        .catch(err => {
           this.setState({});
         });
     });
@@ -108,30 +112,47 @@ export default class DataPage extends React.Component {
       <>
         <ScrollContainer>
           {!this.state.isLoading && (
-            <div style={{ height: "100%", overflow: "auto" }}>
-              <WordCloud />
+            <div
+              style={{
+                height: "100%",
+                overflow: "auto"
+              }}
+            >
+              <div
+                style={{
+                  width: "100%",
+                  textAlign: "center",
+                  fontSize: "30px",
+                  fontWeight: "bold",
+                  color: "#5e6363"
+                }}
+              >
+                Number of Responses: {this.state.data.count}
+              </div>
               <div
                 className={css`
                   display: flex;
+                  justify-content: space-between;
+                  padding: 0 10% 0 10%;
+                  margin: 5vh 5vw 5vh 5vw;
+                  flex-wrap: wrap;
                 `}
               >
                 <GraphContainer>
                   <PieChart data={this.state.data.curr_location_breakdown} />
                 </GraphContainer>
                 <GraphContainer>
-                  <StackedBar
-                    data={this.state.data.curr_location_breakdown}
-                  ></StackedBar>
+                  <StackedBar data={this.state.data.feelings}></StackedBar>
                 </GraphContainer>
                 <NumberContainer>
                   <div style={{ fontSize: 100, fontWeight: "bold" }}>
-                    {" "}
-                    {this.state.data.numKnowPositives}{" "}
+                    {this.state.data.numKnowPositives}
                   </div>
                   students know someone who has tested positive for Covid-19.
                 </NumberContainer>
               </div>
               <Map component={Map} count={count} citiesList={cities} />
+              <WordCloud />
             </div>
           )}
         </ScrollContainer>

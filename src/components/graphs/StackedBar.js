@@ -7,26 +7,63 @@ function StackedBar(props) {
   return (
     <Bar
       data={{
-        labels: ["On Campus", "Off Campus", "Home", "Other"],
+        labels: [
+          "Finances",
+          "Housing",
+          "Academics",
+          "Physical Health",
+          "Mental Health"
+        ],
         datasets: [
           {
-            label: "Dataset 1",
-            backgroundColor: ["#657778", "#C6D3D5", "#ADC5DF", "#a1afbc"],
+            label: "Not worried",
+            backgroundColor: [
+              "#657778",
+              "#657778",
+              "#657778",
+              "#657778",
+              "#657778"
+            ],
             data: [
-              props.data.onCampus,
-              props.data.offCampus,
-              props.data.home,
-              props.data.other
+              props.data.finance["Not worried"],
+              props.data.housing["Not worried"],
+              props.data.academic["Not worried"],
+              props.data.physical["Not worried"],
+              props.data.mental["Not worried"]
             ]
           },
           {
-            label: "Dataset 2",
-            backgroundColor: ["#657778", "#C6D3D5", "#ADC5DF", "#a1afbc"],
+            label: "Somewhat worried",
+            backgroundColor: [
+              "#a1afbc",
+              "#a1afbc",
+              "#a1afbc",
+              "#a1afbc",
+              "#a1afbc"
+            ],
             data: [
-              props.data.onCampus,
-              props.data.offCampus,
-              props.data.home,
-              props.data.other
+              props.data.finance["Somwhat worried"],
+              props.data.housing["Somewhat worried"],
+              props.data.academic["Somewhat worried"],
+              props.data.physical["Somewhat worried"],
+              props.data.mental["Somewhat worried"]
+            ]
+          },
+          {
+            label: "Very worried",
+            backgroundColor: [
+              "#D0D8D9",
+              "#D0D8D9",
+              "#D0D8D9",
+              "#D0D8D9",
+              "#D0D8D9"
+            ],
+            data: [
+              props.data.finance["Very Worried"],
+              props.data.housing["Very Worried"],
+              props.data.academic["Very Worried"],
+              props.data.physical["Very Worried"],
+              props.data.mental["Very Worried"]
             ]
           }
         ]
@@ -35,15 +72,15 @@ function StackedBar(props) {
         maintainAspectRatio: false,
         title: {
           display: true,
-          text: "Where are students?",
+          text: "How are students feeling?",
           fontFamily: "Calibri",
           fontSize: 30,
-          fontColor: "white"
+          fontColor: "#5e6363"
         },
         legend: {
           position: "bottom",
           labels: {
-            fontColor: "white"
+            fontColor: "#5e6363"
           }
         },
         scales: {

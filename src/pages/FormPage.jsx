@@ -1,16 +1,20 @@
 import React from "react";
 import styled from "styled-components";
-import { colleges } from "./colleges";
+import { colleges, countries, states } from "./data";
 import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
 
+const SHEET_ID = "1QmoG1FXzcZW5NDrzsMrflLf5_zNirHNqdNI_ObV1IKk";
+const ACCESS_TOKEN =
+  "ya29.a0Ae4lvC3uXEjYz7fzrMq8V3ChwsktBVOzfDuPDokD60TSsX7itPZaEDOoyFq5H7fhvyRgr7oxfhJ7rlaLR3ExyyieUTOTZkAFHNMopOXGLU8PNT4qOW1R_0COU5Yadh89KGJgEJdoWg61lhvUl54i8H7XVxmM_jf1wz4";
+
 const desktopSizes = {
   question: "21px",
-  comment: "14px",
+  comment: "16px",
   choice: "18px",
   short_response: "18px",
   long_response: "14px",
-  requirement: "12px",
+  requirement: "14px",
   choices_header: "18px",
   other_option: "16px",
 };
@@ -31,9 +35,12 @@ const Requirement = styled("span")`
   line-height: 24px;
 `;
 const Background = styled("div")`
+  /* box-sizing: border-box; */
   background-color: white;
-  width: 50%;
-  margin: auto auto 50px auto;
+  width: 100%;
+  max-width: 650px;
+  padding: 0 20px;
+  margin: 50px auto 50px auto;
   font-family: "Roboto";
   hr {
     border: 0.5px solid #ddd;
@@ -50,6 +57,7 @@ const Header = styled("div")`
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
+  font-weight: bold;
   font-size: ${desktopSizes.question};
 `;
 
@@ -67,6 +75,10 @@ const ShortResponse = styled("input")`
   outline: none;
   border: none;
   border-bottom: 1px solid #bbb;
+  :focus {
+    border-bottom: 2px solid #4185f7;
+    margin-bottom: -1px;
+  }
 `;
 
 const MultipleChoice = styled("div")`
@@ -82,8 +94,13 @@ const Choice = styled("div")`
   flex-direction: row;
   margin: 3px 0;
   font-size: ${desktopSizes.choice};
-  line-height: 18px;
-  height: 18px;
+  line-height: 20px;
+  height: 20px;
+  > input {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+  }
   label > input {
     margin-left: 5px;
     font-size: ${desktopSizes.other_option};
@@ -91,6 +108,10 @@ const Choice = styled("div")`
     outline: none;
     border: none;
     border-bottom: 1px solid #bbb;
+  }
+  label > input:focus {
+    border-bottom: 2px solid #4185f7;
+    margin-bottom: -1px;
   }
 `;
 
@@ -127,7 +148,25 @@ const LongResponse = styled("textarea")`
   width: 100%;
   height: 200px;
   font-size: ${desktopSizes.long_response};
-  padding: 2px;
+  padding: 5px;
+  :focus {
+    border: 2px solid #4185f7;
+    margin: -1px;
+  }
+`;
+
+const MultipleShortResponse = styled("div")`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const Field = styled("div")`
+  width: 30%;
+  font-size: ${desktopSizes.short_response};
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 const SEARCHABLE_DROPDOWN = 0;
@@ -135,6 +174,7 @@ const SHORT_RESPONSE = 1;
 const LONG_RESPONSE = 2;
 const MCQ = 3;
 const MULTIPLE_MCQ = 4;
+const MULTIPLE_SHORT_RESPONSE = 5;
 
 // do not change 'name' entry
 const ques = [
@@ -146,7 +186,7 @@ const ques = [
     comment: "",
     required: true,
     id: 0,
-    name: "entry.1220080233",
+    name: "school",
   },
   {
     question: "What is your major?",
@@ -156,7 +196,7 @@ const ques = [
     comment: "If not applicable, put N/A.",
     required: true,
     id: 1,
-    name: "entry.1853942599",
+    name: "major",
   },
   {
     question: "What is your school year?",
@@ -169,23 +209,45 @@ const ques = [
       "Fourth Year or higher",
       "Grad Student",
     ],
+    values: ["HS", "FR", "SO", "JR", "SR", "GR"],
     other_option: false,
     comment: "",
     required: true,
     id: 2,
-    name: "entry.839894665",
+    name: "year",
   },
 
   {
     question: "What is your hometown?",
-    type: SHORT_RESPONSE,
-    choices: [],
+    type: MULTIPLE_SHORT_RESPONSE,
+    fields: [
+      {
+        name: "city",
+        title: "City",
+        type: SHORT_RESPONSE,
+        required: true,
+      },
+      {
+        name: "state",
+        title: "State",
+        type: SEARCHABLE_DROPDOWN,
+        required: false,
+        options: states,
+      },
+      {
+        name: "country",
+        title: "Country",
+        type: SEARCHABLE_DROPDOWN,
+        required: false,
+        options: countries,
+      },
+    ],
     other_option: false,
     comment:
-      "The place you grew up. If your hometown is not in the USA, type in 'City, Country'",
-    required: true,
+      'City, State. If your hometown is not in the USA, type in "City, Country"',
+    required: false,
     id: 3,
-    name: "entry.1167345863",
+    name: "hometown",
   },
   {
     question: "What is your ethnicity?",
@@ -195,7 +257,7 @@ const ques = [
     comment: "",
     required: false,
     id: 4,
-    name: "entry.77328821",
+    name: "ethnicity",
   },
   {
     question: "Where are you staying right now?",
@@ -207,21 +269,29 @@ const ques = [
       "Friend's place",
       "Prefer not to answer",
     ],
+    values: [
+      "School (On-campus)",
+      "School (Off-campus)",
+      "Home",
+      "Friend's place",
+      "Prefer not to answer",
+    ],
     other_option: true,
     comment: "",
     required: true,
     id: 5,
-    name: "entry.342592833",
+    name: "currentLocation",
   },
   {
     question: "Have you or someone you know tested positive for COVID-19?",
     type: MCQ,
     choices: ["Yes", "No", "Prefer not to answer"],
+    values: ["Y", "N"],
     other_option: false,
     comment: "",
     required: true,
-    id: 5,
-    name: "entry.342592833",
+    id: 6,
+    name: "knowPositive",
   },
   {
     question: "How has COVID-19 affected the way you feel about the following?",
@@ -232,6 +302,7 @@ const ques = [
       "Very worried",
       "Prefer not to share",
     ],
+    values: ["NW", "SW", "VW", "NA"],
     values: ["NW", "SW", "VW", "Prefer not to share"],
     other_option: false,
     subquestions: [
@@ -242,75 +313,140 @@ const ques = [
       "Physical well-being",
       "Mental/social well-being",
     ],
+    subquestion_names: [
+      "worryFinancial",
+      "worryHousing",
+      "worryAcademic",
+      "worryGovernment",
+      "worryPhysical",
+      "worryMental",
+    ],
     comment: "",
     required: true,
-    id: 6,
-  },
-  {
-    question:
-      "What do you think your school, country or community could have done differently regarding this situation?",
-    type: LONG_RESPONSE,
-    choices: [],
-    comment: "",
-    required: false,
     id: 7,
   },
   {
-    question: "How has COVID-19 affected you?",
+    question: "How has your community responded to the Covid-19 pandemic?",
     type: LONG_RESPONSE,
     choices: [],
-    comment: "",
+    comment:
+      "You can tell us about your local officials’ responses to the crisis, how your university addresses social distancing concerns or even how residents of your community have been helping each other through this time. 2,000 character limit",
     required: false,
     id: 8,
   },
   {
     question:
-      "Anything else? Feel free to share anything you have on your mind.",
+      "Is there anything you think your school or community could/should have done differently regarding this situation?",
+    type: LONG_RESPONSE,
+    choices: [],
+    comment: "2,000 character limit",
+    required: false,
+    id: 9,
+  },
+  {
+    question: "How has COVID-19 affected you?",
+    type: LONG_RESPONSE,
+    choices: [],
+    comment:
+      "This is unlike anything we've experienced before. Tell us about anything and everything. How has your life, or the lives of people around you, changed due to the novel coronavirus pandemic? How has the world changed? 2,000 character limit",
+    required: false,
+    id: 10,
+  },
+  {
+    question: "Is there anything we didn't ask that you would like to share?",
     type: LONG_RESPONSE,
     choices: [],
     other_option: false,
     comment:
       "Also, feel free to drop any links to photos, videos, or art that could help tell your story.",
     required: false,
-    id: 9,
+    id: 11,
+  },
+  {
+    question:
+      "Do you have any photos or videos that you captured that could helps us tell your story? Share the links here.",
+    type: LONG_RESPONSE,
+    choices: [],
+    other_option: false,
+    comment:
+      "Other art forms are welcome and appreciated, too! Just make sure what you're submitting has permissions to be shared and utilized on this platform.",
+    required: false,
+    id: 12,
+  },
+  {
+    question:
+      "If you shared art with us, please let us know how to attribute your work!",
+    type: SHORT_RESPONSE,
+    choices: [],
+    other_option: false,
+    comment:
+      "First name, last name, age. If you would like to remain anonymous with your work, let us know here.",
+    required: false,
+    id: 13,
   },
   {
     question:
       "Are you comfortable with us publishing your response on our Stories page?",
     type: MCQ,
     choices: ["Yes", "No"],
+    values: ["Y", "N"],
     other_option: false,
     comment: "",
     required: true,
-    id: 10,
-  },
-  {
-    question:
-      "Are you comfortable with us publishing your response on social media?",
-    type: MCQ,
-    choices: ["Yes", "No"],
-    other_option: false,
-    comment: "",
-    required: true,
-    id: 10,
+    id: 14,
   },
 ];
 class FormPage extends React.Component {
   constructor(props) {
     super(props);
-    // category: false = the basics
-    // category: true = tell us more
     this.state = {
-      index: 0,
-      category: false,
-      change: false,
       college: null,
+      city: null,
+      state: null,
+      country: null,
     };
   }
 
+  updateSheet = () => {
+    fetch(
+      `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}:batchUpdate`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          //update this token with yours.
+          Authorization: `Bearer ${ACCESS_TOKEN}`,
+        },
+        body: JSON.stringify({
+          requests: [
+            {
+              repeatCell: {
+                range: {
+                  startColumnIndex: 0,
+                  endColumnIndex: 1,
+                  startRowIndex: 0,
+                  endRowIndex: 1,
+                  sheetId: 0,
+                },
+                cell: {
+                  userEnteredValue: {
+                    numberValue: 10,
+                  },
+                },
+                fields: "*",
+              },
+            },
+          ],
+        }),
+      }
+    );
+  };
+
   handleChange = (selectedOption) => {
     this.setState({ college: selectedOption.value });
-    console.log(`Option selected:`, selectedOption, this.state.college);
+  };
+  getValue = (val) => {
+    return val;
   };
   render() {
     const questions = ques.map((question) => {
@@ -355,7 +491,7 @@ class FormPage extends React.Component {
                 type="radio"
                 id={choiceId}
                 name={question.name}
-                value={choice}
+                value={question.values[index]}
                 required={question.required}
               />
               <label for={choiceId}>{choice}</label>
@@ -375,7 +511,7 @@ class FormPage extends React.Component {
               Other:
               <input
                 type="text"
-                name={question.name}
+                name={question.name + "_other"}
                 id={question.name + "_other"}
                 placeholder="Your Answer"
               />
@@ -407,7 +543,7 @@ class FormPage extends React.Component {
                 <input
                   type="radio"
                   id={choiceId}
-                  name={question.name + "_" + rowIndex}
+                  name={question.subquestion_names[rowIndex]}
                   value={question.values[choiceIndex]}
                   required={question.required}
                 />
@@ -438,6 +574,42 @@ class FormPage extends React.Component {
             required={question.required}
           />
         );
+      } else if (question.type == MULTIPLE_SHORT_RESPONSE) {
+        const fields = question.fields.map((field, fieldIndex) => {
+          if (field.type == SHORT_RESPONSE) {
+            return (
+              <Field>
+                <span>{field.title + ": "}</span>
+                <ShortResponse
+                  type="text"
+                  name={field.name}
+                  id={question.id + "_" + field.name}
+                  placeholder="Your Answer"
+                  required={field.required}
+                />
+              </Field>
+            );
+          } else if (field.type == SEARCHABLE_DROPDOWN) {
+            return (
+              <Field>
+                <span>{field.title + ": "}</span>
+                <SearchableDropDown>
+                  <Select
+                    onChange={this.handleChange}
+                    onInputChange={this.handleInputChange}
+                    options={field.options}
+                  />
+                  <input
+                    type="hidden"
+                    name={field.name}
+                    required={field.required}
+                  />
+                </SearchableDropDown>
+              </Field>
+            );
+          }
+        });
+        type = <MultipleShortResponse>{fields}</MultipleShortResponse>;
       }
 
       return (
@@ -471,7 +643,7 @@ class FormPage extends React.Component {
           </p>
         </Top>
         <hr />
-        <form>
+        <form onSubmit={this.updateSheet()}>
           {questions}
           <input type="submit" value="Submit" />
         </form>

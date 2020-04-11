@@ -21,14 +21,14 @@ export const filterfieldNames = [
       "Second-year",
       "Third-year",
       "Fourth-year+",
-      "Graduate"
-    ]
+      "Graduate",
+    ],
   },
   {
     fieldName: "Hometown",
     column: "home",
-    categories: ["All", "California", "Out of State", "International"]
-  }
+    categories: ["All", "California", "Out of State", "International"],
+  },
 ];
 
 /*
@@ -38,20 +38,20 @@ export const filterfieldNames = [
  */
 export const responseColumns = [
   {
-    column: "responseCommunity",
-    question: "How has your community responded to the Covid-19 pandemic?",
-  },
-  {
     column: "responseAffected",
     question: "How has Covid-19 affected you?",
   },
-  // {
-  //   type: "responseElse",
-  //   question: "Is there anything we didn't ask that you would like to share?"
-  // },
+  {
+    column: "responseCommunity",
+    question: "How has your community responded to the Covid-19 pandemic?",
+  },
   {
     column: "responseDoneDifferently",
     question:
       "Is there anything you think your school or community could/should have done differently regarding this situation?",
   },
+  // {
+  //   type: "responseElse",
+  //   question: "Is there anything we didn't ask that you would like to share?"
+  // },
 ];

@@ -16,7 +16,7 @@ import debounce from "lodash.debounce";
 import axios from "axios";
 import SearchableDropdown from "../components/Searchable";
 import Select from "react-select";
-
+import anon_profile from "../images/anon.jpg";
 import "./masonry.css";
 
 import SharePost from "../components/SharePost";
@@ -25,19 +25,14 @@ const Container = styled("div")`
   width: 100%;
   height: 92.5vh;
   display: flex;
+  overflow: scroll;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
 `;
 
-const FiltersContainer = styled("div")`
-  width: 20%;
-  height: 100%;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  line-height: 30px;
-  cursor: pointer;
-  color: #626969;
-`;
+const FiltersContainer = styled("div")``;
 
 const ResponsesContainer = styled("div")`
   display: flex;
@@ -48,6 +43,10 @@ const ResponsesContainer = styled("div")`
   flex-direction: column;
   width: 80%;
   height: 100%;
+
+  @media (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
 const ResponseEntry = styled("div")`
@@ -57,7 +56,8 @@ const ResponseEntry = styled("div")`
   /* background-color: #f7f7f7; */
   border-radius: 5px;
   flex: 1;
-  color: #858c8c;
+  color: #6d6b67;
+  color: black;
 `;
 
 const PersonEntry = styled("div")`
@@ -70,8 +70,11 @@ const PersonEntry = styled("div")`
 `;
 
 const InteractionContainer = styled("div")`
-  padding-top: 20px;
+  border-top: 1px dotted #c3c9c9;
+  padding-top: 15px;
+  margin-top: 15px;
   display: flex;
+  align-items: middle;
   justify-content: space-between;
 `;
 
@@ -97,10 +100,17 @@ export default class StoriesPage extends React.Component {
         hasMore: true,
         isLoading: false,
       },
+      filtersOpen: false,
     };
     this.onFilterClick = this.onFilterClick.bind(this);
     this.onSortClick = this.onSortClick.bind(this);
     this.loadStories = this.loadStories.bind(this);
+    this.toggleFilters = this.toggleFilters.bind(this);
+
+    this.breakpointCols = {
+      default: 2,
+      700: 1,
+    };
   }
 
   componentWillMount() {
@@ -141,7 +151,7 @@ export default class StoriesPage extends React.Component {
       element.clientHeight,
     ]);
     if (
-      element.scrollHeight - element.scrollTop - 200 <=
+      element.scrollHeight - element.scrollTop - 1000 <=
       element.clientHeight
     ) {
       loadStories(getQueryString(this.state.selectedFieldNames));
@@ -170,8 +180,8 @@ export default class StoriesPage extends React.Component {
     /*this.loadStories(getQueryString(selection));*/
   }
 
-  switchTab(index) {
-    this.setState({ tab: index });
+  toggleFilters() {
+    this.setState({ filtersOpen: !this.state.filtersOpen });
   }
 
   render() {
@@ -181,17 +191,57 @@ export default class StoriesPage extends React.Component {
     return (
       <>
         <Container>
-          <FiltersContainer>
-            {" "}
-            {filterfieldNames.map((element) => (
-              <FilterDropdown {...element} onClick={this.onFilterClick} />
-            ))}
-            <Select
-              options={this.state.sortOptions}
-              placeholder="sort by..."
-              value={this.state.selectedSort}
-              onChange={this.onSortClick}
-            />
+          <FiltersContainer
+            className={css`
+              z-index: 20;
+              width: 20%;
+              padding: 20px;
+              display: flex;
+              flex-direction: column;
+              flex-shrink: 0;
+              box-sizing: border-box;
+              line-height: 30px;
+              cursor: pointer;
+              color: #626969;
+              position: sticky;
+              top: 0;
+              transition: all 300ms ease-in-out;
+              @media (max-width: 600px) {
+                padding-top: 0;
+                width: 100%;
+                overflow: hidden;
+                border-bottom: 1px solid #212529;
+                background-color: #fff;
+                height: ${this.state.filtersOpen ? "92.5vh" : "30px"};
+              }
+            `}
+          >
+            <div onClick={this.toggleFilters} className={css``}>
+              Filters{" "}
+              <span
+                className={css`
+                  writing-mode: vertical-rl;
+                  text-orientation: mixed;
+                  padding-bottom: 2px;
+                  @media (min-width: 601px) {
+                    display: none;
+                  }
+                `}
+              >
+                {this.state.filtersOpen ? "‹" : "›"}
+              </span>
+            </div>
+            <div>
+              {filterfieldNames.map((element) => (
+                <FilterDropdown {...element} onClick={this.onFilterClick} />
+              ))}
+              <Select
+                options={this.state.sortOptions}
+                placeholder="sort by..."
+                value={this.state.selectedSort}
+                onChange={this.onSortClick}
+              />
+            </div>
           </FiltersContainer>
           <ResponsesContainer>
             <div
@@ -204,7 +254,7 @@ export default class StoriesPage extends React.Component {
               ref="scrollview"
             >
               <Masonry
-                breakpointCols={2}
+                breakpointCols={this.breakpointCols}
                 className="my-masonry-grid"
                 columnClassName="my-masonry-grid_column"
               >
@@ -219,29 +269,58 @@ export default class StoriesPage extends React.Component {
                         `}
                       >
                         <PersonEntry>
-                          <b
+                          <div
                             className={css`
-                              font-size: 20px;
-                              color: #5e6363;
-                              font-weight: 700;
+                              display: flex;
+                              align-items: middle;
+                              height: auto;
                             `}
                           >
-                            {MAP_year_to_yearName[row.year]} {row.major} major
-                            at {row.school}
-                          </b>
+                            <img
+                              className={css`
+                                height: 45px;
+                                margin-left: -5px;
+                                margin-right: 8px;
+                                margin-top: 4px;
+                              `}
+                              src={anon_profile}
+                            />
+                            <div>
+                              <b
+                                className={css`
+                                  font-size: 20px;
+                                  color: #5e6363;
+                                  font-weight: 700;
+                                `}
+                              >
+                                {MAP_year_to_yearName[row.year]} {row.major}{" "}
+                                major
+                              </b>
+                              <div
+                                className={css`
+                                  margin-top: -4px;
+                                  font-size: 14px;
+                                `}
+                              >
+                                at {row.school}
+                              </div>
+                            </div>
+                          </div>
+
                           {responseColumns.map(
                             (response) =>
                               row[response.column] != "" && (
                                 <ResponseEntry>
                                   <div>
-                                    <b
+                                    <div
                                       className={css`
-                                        font-weight: 600;
-                                        color: #5e6363;
+                                        font-weight: 400;
+                                        margin-bottom: 4px;
+                                        color: #586572;
                                       `}
                                     >
-                                      {response.question}
-                                    </b>
+                                      <b>{response.question}</b>
+                                    </div>
                                   </div>
                                   <div>{row[response.column]}</div>
                                 </ResponseEntry>

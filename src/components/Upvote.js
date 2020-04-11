@@ -2,58 +2,71 @@ import React from "react";
 import { css } from "emotion";
 import styled from "styled-components";
 import Cookies from "universal-cookie";
+import like from "../images/thumbs-up.png";
+import love from "../images/love.png";
+import haha from "../images/haha.png";
+import wow from "../images/waow.png";
+import sad from "../images/big-simp.png";
+import angry from "../images/amgery.png";
 
 const cookies = new Cookies();
 var images = [
-  { key: "like", img: "http://i.imgur.com/LwCYmcM.gif" },
-  { key: "love", img: "http://i.imgur.com/k5jMsaH.gif" },
-  { key: "haha", img: "http://i.imgur.com/f93vCxM.gif" },
-  { key: "yay", img: "http://i.imgur.com/a44ke8c.gif" },
-  { key: "wow", img: "http://i.imgur.com/9xTkN93.gif" },
-  { key: "sad", img: "http://i.imgur.com/tFOrN5d.gif" },
-  { key: "angry", img: "http://i.imgur.com/1MgcQg0.gif" },
+  { key: "like", img: like },
+  { key: "love", img: love },
+  { key: "haha", img: haha },
+  { key: "wow", img: wow },
+  { key: "sad", img: sad },
+  { key: "angry", img: angry },
 ];
 
 const ImageContainer = styled.div`
-  width: 200px;
-  height: 30px;
+  width: 280px;
   position: absolute;
-  left: -15px;
-  bottom: 30px;
+  left: 0px;
+  top: 25px;
+  padding: 3px;
   background: white;
-  border-radius: 28px;
-  border-style: outset;
+  border-radius: 25px;
+  box-shadow: 0 7px 10px rgba(0, 0, 0, 0.4);
   text-align: center;
-  transition: opacity 0.2s ease-in-out;
+  transition: 0.6s;
+  transition-delay: 0.7s;
   opacity: 0;
-  height: 0;
-  overflow: hidden;
+  height: auto;
   :hover {
     opacity: 1;
-    height: auto;
   }
 `;
 
 const Like = styled.div`
   position: relative;
-  :hover ${ImageContainer} {
-    transition-delay: 0.6s;
-    opacity: 1;
-    height: auto;
+  ${ImageContainer} {
+    pointer-events: none;
   }
+  :hover ${ImageContainer} {
+    transition: opacity 0.2s ease-in-out;
+    transition-delay: 0.4s;
+    opacity: 1;
+    pointer-events: auto;
+    /* height: auto; */
+  }
+
   :hover {
     background: #d3d3d3;
   }
-  width: 30px;
-  left: 30px;
+  width: 40px;
+  left: 10px;
   outline: none;
+  border-radius: 10px;
 `;
 const Image = styled.img`
-  max-width: 20px;
-  margin: 2px;
+  max-width: 35px;
+  margin: 3px;
   &:hover {
     transform: scale(1.5);
+    transition: 0.5s;
   }
+  z-index: 100000;
 `;
 
 export default class Upvote extends React.Component {
@@ -92,7 +105,7 @@ export default class Upvote extends React.Component {
         return (
           <img
             className={css`
-              max-width: 15px;
+              max-width: 20px;
             `}
             src={url}
           />

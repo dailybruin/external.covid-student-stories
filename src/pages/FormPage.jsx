@@ -1,27 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-<<<<<<< HEAD
-import { colleges, countries, states } from './data';
-import Select from 'react-select';
-import CreatableSelect from 'react-select/creatable';
-=======
-import { colleges } from "./colleges";
+import { colleges, states, state_abbreviations, countries } from "./data";
 import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
->>>>>>> master
-
-const SHEET_ID = '1QmoG1FXzcZW5NDrzsMrflLf5_zNirHNqdNI_ObV1IKk';
-const ACCESS_TOKEN = 'ya29.a0Ae4lvC3uXEjYz7fzrMq8V3ChwsktBVOzfDuPDokD60TSsX7itPZaEDOoyFq5H7fhvyRgr7oxfhJ7rlaLR3ExyyieUTOTZkAFHNMopOXGLU8PNT4qOW1R_0COU5Yadh89KGJgEJdoWg61lhvUl54i8H7XVxmM_jf1wz4';
-
 
 const desktopSizes = {
-<<<<<<< HEAD
   question: '21px',
   comment: "16px",
-=======
-  question: "21px",
-  comment: "14px",
->>>>>>> master
   choice: "18px",
   short_response: "18px",
   long_response: "14px",
@@ -139,7 +124,9 @@ const SubQuestionCell = styled("div")`
   font-size: ${desktopSizes.choices_header};
   text-align: center;
   input {
-    margin: auto;
+    margin: 0;
+    width: 20px;
+    height: 20px;
   }
 `;
 
@@ -170,9 +157,13 @@ const MultipleShortResponse = styled("div")`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
 `;
 
 const Field = styled("div")`
+  span {
+    font-weight: bold;
+  }
   width: 30%;
   font-size: ${desktopSizes.short_response};
   display: flex;
@@ -192,16 +183,13 @@ const ques = [
   {
     question: "What school do you attend?",
     type: SEARCHABLE_DROPDOWN,
-    choices: colleges,
+    choices_labels: colleges,
+    choices_values: colleges,
     other_option: false,
     comment: "",
     required: true,
     id: 0,
-<<<<<<< HEAD
     name: "school"
-=======
-    name: "entry.1220080233",
->>>>>>> master
   },
   {
     question: "What is your major?",
@@ -211,30 +199,18 @@ const ques = [
     comment: "If not applicable, put N/A.",
     required: true,
     id: 1,
-<<<<<<< HEAD
     name: "major"
-=======
-    name: "entry.1853942599",
->>>>>>> master
   },
   {
     question: "What is your school year?",
     type: MCQ,
     choices: [
       "High School",
-<<<<<<< HEAD
-      "Freshman",
-      "Sophomore",
-      "Junior",
-      "Senior",
-      "Grad Student"
-=======
       "First Year",
       "Second Year",
       "Third Year",
-      "Fourth Year or higher",
-      "Grad Student",
->>>>>>> master
+      "Fourth Year",
+      "Grad Student"
     ],
     values: [
       "HS",
@@ -248,11 +224,7 @@ const ques = [
     comment: "",
     required: true,
     id: 2,
-<<<<<<< HEAD
     name: "year"
-=======
-    name: "entry.839894665",
->>>>>>> master
   },
 
   {
@@ -270,14 +242,16 @@ const ques = [
         title: "State",
         type: SEARCHABLE_DROPDOWN,
         required: false,
-        options: states
+        options_labels: states,
+        options_values: state_abbreviations
       },
       {
         name:'country',
         title: "Country",
         type: SEARCHABLE_DROPDOWN,
         required: false,
-        options: countries
+        options_labels: countries,
+        options_values: countries
       }
     ],
     other_option: false,
@@ -285,11 +259,7 @@ const ques = [
       "City, State. If your hometown is not in the USA, type in \"City, Country\"",
     required: false,
     id: 3,
-<<<<<<< HEAD
     name: "hometown"
-=======
-    name: "entry.1167345863",
->>>>>>> master
   },
   {
     question: "What is your ethnicity?",
@@ -299,36 +269,18 @@ const ques = [
     comment: "",
     required: false,
     id: 4,
-<<<<<<< HEAD
     name: "ethnicity"
-=======
-    name: "entry.77328821",
->>>>>>> master
   },
   {
     question: "Where are you staying right now?",
     type: MCQ,
-<<<<<<< HEAD
     choices: ["School (On-campus)", "School (Off-campus)", "Home", "Friend's place", "Prefer not to answer"],
     values: ["School (On-campus)", "School (Off-campus)", "Home", "Friend's place", "Prefer not to answer"],
-=======
-    choices: [
-      "School (On-campus)",
-      "School (Off-campus)",
-      "Home",
-      "Friend's place",
-      "Prefer not to answer",
-    ],
->>>>>>> master
     other_option: true,
     comment: "",
     required: true,
     id: 5,
-<<<<<<< HEAD
     name: "currentLocation"
-=======
-    name: "entry.342592833",
->>>>>>> master
   },
   {
     question: "Have you or someone you know tested positive for COVID-19?",
@@ -338,13 +290,8 @@ const ques = [
     other_option: false,
     comment: "",
     required: true,
-<<<<<<< HEAD
     id: 6,
     name: "knowPositive"
-=======
-    id: 5,
-    name: "entry.342592833",
->>>>>>> master
   },
   {
     question: "How has COVID-19 affected the way you feel about the following?",
@@ -353,7 +300,6 @@ const ques = [
       "Not worried",
       "Somewhat worried",
       "Very worried",
-<<<<<<< HEAD
       "Prefer not to share"
     ],
     values: [
@@ -361,9 +307,6 @@ const ques = [
       "SW",
       "VW",
       "NA"
-=======
-      "Prefer not to share",
->>>>>>> master
     ],
     values: ["NW", "SW", "VW", "Prefer not to share"],
     other_option: false,
@@ -385,11 +328,7 @@ const ques = [
     ],
     comment: "",
     required: true,
-<<<<<<< HEAD
     id: 7
-=======
-    id: 6,
->>>>>>> master
   },
   {
     question:
@@ -398,7 +337,6 @@ const ques = [
     choices: [],
     comment: "You can tell us about your local officials’ responses to the crisis, how your university addresses social distancing concerns or even how residents of your community have been helping each other through this time. 2,000 character limit",
     required: false,
-<<<<<<< HEAD
     id: 8
   },
   {
@@ -409,9 +347,6 @@ const ques = [
     comment: "2,000 character limit",
     required: false,
     id: 9
-=======
-    id: 7,
->>>>>>> master
   },
   {
     question: "How has COVID-19 affected you?",
@@ -419,11 +354,7 @@ const ques = [
     choices: [],
     comment: "This is unlike anything we've experienced before. Tell us about anything and everything. How has your life, or the lives of people around you, changed due to the novel coronavirus pandemic? How has the world changed? 2,000 character limit",
     required: false,
-<<<<<<< HEAD
     id: 10
-=======
-    id: 8,
->>>>>>> master
   },
   {
     question:
@@ -434,7 +365,6 @@ const ques = [
     comment:
       "Also, feel free to drop any links to photos, videos, or art that could help tell your story.",
     required: false,
-<<<<<<< HEAD
     id: 11
   },
   {
@@ -461,95 +391,28 @@ const ques = [
   },
   {
     question: "Are you comfortable with us publishing your response on our Stories page?",
-=======
-    id: 9,
-  },
-  {
-    question:
-      "Are you comfortable with us publishing your response on our Stories page?",
-    type: MCQ,
-    choices: ["Yes", "No"],
-    other_option: false,
-    comment: "",
-    required: true,
-    id: 10,
-  },
-  {
-    question:
-      "Are you comfortable with us publishing your response on social media?",
->>>>>>> master
     type: MCQ,
     choices: ["Yes", "No"],
     values: ["Y", "N"],
     other_option: false,
     comment: "",
     required: true,
-<<<<<<< HEAD
     id: 14
   }
-=======
-    id: 10,
-  },
->>>>>>> master
 ];
 class FormPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-<<<<<<< HEAD
-      college: null,
-      city: null,
-      state: null,
-      country: null
-=======
-      index: 0,
-      category: false,
-      change: false,
-      college: null,
->>>>>>> master
     };
   }
 
-  updateSheet = () => {
-    fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}:batchUpdate`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        //update this token with yours. 
-        Authorization: `Bearer ${ACCESS_TOKEN}`,
-      },
-      body: JSON.stringify({
-
-        requests: [{
-          repeatCell: {
-            range: {
-              startColumnIndex: 0,
-              endColumnIndex: 1,
-              startRowIndex: 0,
-              endRowIndex: 1,
-              sheetId: 0
-            },
-            cell: {
-              userEnteredValue: {
-                "numberValue": 10
-              },
-            },
-            fields: "*"
-          }
-        }]
-
-      })
-    })
-  };
-
   handleChange = (selectedOption) => {
-<<<<<<< HEAD
-    this.setState({college : selectedOption.value});
-=======
-    this.setState({ college: selectedOption.value });
-    console.log(`Option selected:`, selectedOption, this.state.college);
->>>>>>> master
+    console.log(selectedOption);
   };
+  setValue = (value) => {
+    return value;
+  }
   getValue = (val) => {
     return val;
   }
@@ -558,21 +421,17 @@ class FormPage extends React.Component {
       const title = <div>{question.question}</div>;
       let type = null;
       if (question.type == SEARCHABLE_DROPDOWN) {
-        const optionsList = question.choices.map((option) => ({
-          value: option,
+        const optionsList = question.choices_labels.map((option, index) => ({
           label: option,
+          value: question.choices_values[index]
         }));
         type = (
           <SearchableDropDown>
             <CreatableSelect
               onChange={this.handleChange}
-              onInputChange={this.handleInputChange}
               options={optionsList}
-            />
-            <input
-              type="hidden"
+              placeholder="Select or type your answer..."
               name={question.name}
-              value={this.state.college}
               required={question.required}
             />
           </SearchableDropDown>
@@ -592,47 +451,18 @@ class FormPage extends React.Component {
           const choiceId = question.id + "_choice_" + index;
           return (
             <Choice>
-<<<<<<< HEAD
               <input type="radio" id={choiceId} name={question.name} value={question.values[index]} required={question.required}/>
-=======
-              <input
-                type="radio"
-                id={choiceId}
-                name={question.name}
-                value={choice}
-                required={question.required}
-              />
->>>>>>> master
               <label for={choiceId}>{choice}</label>
             </Choice>
           );
         });
         const other_choice = !question.other_option ? null : (
           <Choice>
-<<<<<<< HEAD
               <input type="radio" id={question.id + '_other_option'} name={question.name} value="" required={question.required}/>
               <label for={question.id + '_other_option'}>
                 Other: 
                 <input type="text" name={question.name+'_other'} id={question.name+'_other'} placeholder='Your Answer'/>
               </label>
-=======
-            <input
-              type="radio"
-              id={question.id + "_other_option"}
-              name={question.name}
-              value=""
-              required={question.required}
-            />
-            <label for={question.id + "_other_option"}>
-              Other:
-              <input
-                type="text"
-                name={question.name}
-                id={question.name + "_other"}
-                placeholder="Your Answer"
-              />
-            </label>
->>>>>>> master
           </Choice>
         );
         type = (
@@ -657,9 +487,6 @@ class FormPage extends React.Component {
               question.id + "_choice_" + rowIndex + "_" + choiceIndex;
             return (
               <SubQuestionCell>
-<<<<<<< HEAD
-                <input type="radio" id={choiceId} name={question.subquestion_names[rowIndex]} value={question.values[choiceIndex]} required={question.required} />
-=======
                 <input
                   type="radio"
                   id={choiceId}
@@ -667,7 +494,6 @@ class FormPage extends React.Component {
                   value={question.values[choiceIndex]}
                   required={question.required}
                 />
->>>>>>> master
               </SubQuestionCell>
             );
           });
@@ -710,16 +536,22 @@ class FormPage extends React.Component {
           }
           else if (field.type == SEARCHABLE_DROPDOWN)
           {
+            console.log(field);
+            const optionsList = field.options_labels.map((option, index) => ({
+              label: option,
+              value: field.options_values[index]
+            }));
             return (
               <Field>
                 <span>{field.title + ": "}</span>
                 <SearchableDropDown>
                   <Select
                     onChange={this.handleChange}
-                    onInputChange={this.handleInputChange}
-                    options={field.options}
+                    options={optionsList}
+                    placeholder="Select or type..."
+                    name={field.name}
+                    required={field.required}
                   />
-                  <input type="hidden" name={field.name} required={field.required} />
                 </SearchableDropDown>
               </Field>
             );
@@ -762,13 +594,8 @@ class FormPage extends React.Component {
             know how you are doing.
           </p>
         </Top>
-<<<<<<< HEAD
-        <hr/>
-        <form onSubmit={this.updateSheet()}>
-=======
         <hr />
         <form>
->>>>>>> master
           {questions}
           <input type="submit" value="Submit" />
         </form>

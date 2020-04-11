@@ -6,6 +6,7 @@ import { Link as ScrollLink, scroller } from "react-scroll";
 import Slideshow from "./Slideshow";
 import Button from "../button.svg";
 import { ScrollTo } from "react-scroll-to";
+import Typewriter from "./Typewriter";
 
 const AddStoryLink = styled(Link)`
   font-size: 18px;
@@ -30,7 +31,6 @@ const ScrollMessage = styled("div")`
   overflow: hidden;
   position: absolute;
   justify-content: center;
-  align-items: center;
   text-align: center;
   bottom: 0;
   margin: 20px;
@@ -58,14 +58,6 @@ const TitlePage = styled("div")`
   font-family: Avenir;
 `;
 
-const BigTitle = styled("div")`
-  overflow: hidden;
-  font-size: 70px;
-  font-weight: 900;
-  color: white;
-  padding-top: 20px;
-`;
-
 const Caption = styled("div")`
   overflow: hidden;
   font-size: 18px;
@@ -89,7 +81,7 @@ export default class Title extends React.Component {
     return (
       <TitlePage>
         <Coloring>
-          <BigTitle>Unfinished Stories</BigTitle>
+          <Typewriter />
           <Caption>
             students' experiences about how Covid-19 has affected their lives
           </Caption>

@@ -147,7 +147,7 @@ export default class StoriesPage extends React.Component {
       element.clientHeight,
     ]);
     if (
-      element.scrollHeight - element.scrollTop - 200 <=
+      element.scrollHeight - element.scrollTop - 1000 <=
       element.clientHeight
     ) {
       loadStories(getQueryString(this.state.selectedFieldNames));

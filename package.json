@@ -16,6 +16,7 @@
     "chart.js": "^2.9.3",
     "city-points-us": "^1.0.0",
     "emotion": "^10.0.27",
+    "googleapis": "39",
     "lodash.debounce": "^4.0.8",
     "mapbox-gl": "^1.9.1",
     "node-fetch": "^2.6.0",

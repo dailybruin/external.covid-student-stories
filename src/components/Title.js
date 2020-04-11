@@ -8,23 +8,41 @@ import Button from "../button.svg";
 import { ScrollTo } from "react-scroll-to";
 import Typewriter from "./Typewriter";
 
+const mediaQueries = {
+  mobile: "@media (max-width: 700px)",
+  notMobile: "@media (min-width: 701px)",
+  tablet: "@media (max-width: 900px)",
+};
+const { mobile, notMobile, tablet } = mediaQueries;
+
 const AddStoryLink = styled(Link)`
-  font-size: 18px;
-  color: white;
+  font-size: 24px;
+  color: black;
   font-weight: 800;
   z-index: 9999;
-  font-size: 36px;
-  color: #a1afbc;
-  font-weight: 800;
-`;
-
-const TitleMessage = styled("div")`
-  overflow: hidden;
-  font-size: 96px;
-  padding: 50px;
-  font-weight: 900;
-  color: #a1afbc;
-  margin-bottom: 150px;
+  background-color: white;
+  padding: 10px;
+  position: relative;
+  border-radius: 5px;
+  box-shadow: 0px 5px 5px gray;
+  outline: none;
+  text-decoration: none;
+  :hover {
+    background-color: gray;
+    text-decoration: none;
+  }
+  :active {
+    box-shadow: none;
+    top: 5px;
+    text-decoration: none;
+  }
+  :visited {
+    color: inherit;
+  }
+  ${mobile} {
+    font-size: 16px;
+    padding: 5px;
+  }
 `;
 
 const ScrollMessage = styled("div")`
@@ -32,6 +50,7 @@ const ScrollMessage = styled("div")`
   position: absolute;
   justify-content: center;
   text-align: center;
+  align-items: center;
   bottom: 0;
   margin: 20px;
   color: white;
@@ -62,6 +81,11 @@ const Caption = styled("div")`
   overflow: hidden;
   font-size: 18px;
   color: white;
+  padding-bottom: 15px;
+  ${mobile} {
+    font-size: 16px;
+    padding: 5px;
+  }
 `;
 
 const Coloring = styled("div")`
@@ -69,11 +93,16 @@ const Coloring = styled("div")`
   background-color: black;
   opacity: 0.7;
   width: 800px;
-  height: 220px;
+  height: 225px;
   z-index: 1000000;
   position: absolute;
   text-align: center;
   bottom: 75%;
+  ${mobile} {
+    width: 75%;
+    height: 160px;
+    padding: 0;
+  }
 `;
 
 export default class Title extends React.Component {

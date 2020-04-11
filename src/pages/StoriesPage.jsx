@@ -25,19 +25,14 @@ const Container = styled("div")`
   width: 100%;
   height: 92.5vh;
   display: flex;
+  overflow: scroll;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
 `;
 
-const FiltersContainer = styled("div")`
-  width: 20%;
-  height: 100%;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  line-height: 30px;
-  cursor: pointer;
-  color: #626969;
-`;
+const FiltersContainer = styled("div")``;
 
 const ResponsesContainer = styled("div")`
   display: flex;
@@ -48,6 +43,10 @@ const ResponsesContainer = styled("div")`
   flex-direction: column;
   width: 80%;
   height: 100%;
+
+  @media (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
 const ResponseEntry = styled("div")`
@@ -96,11 +95,18 @@ export default class StoriesPage extends React.Component {
         error: false,
         hasMore: true,
         isLoading: false
-      }
+      },
+      filtersOpen: false,
     };
     this.onFilterClick = this.onFilterClick.bind(this);
     this.onSortClick = this.onSortClick.bind(this);
     this.loadStories = this.loadStories.bind(this);
+    this.toggleFilters = this.toggleFilters.bind(this);
+
+    this.breakpointCols = {
+      default: 2,
+      700: 1,
+    };
   }
 
   componentWillMount() {
@@ -170,8 +176,8 @@ export default class StoriesPage extends React.Component {
     /*this.loadStories(getQueryString(selection));*/
   }
 
-  switchTab(index) {
-    this.setState({ tab: index });
+  toggleFilters() {
+    this.setState({ filtersOpen: !this.state.filtersOpen });
   }
 
   render() {
@@ -181,17 +187,57 @@ export default class StoriesPage extends React.Component {
     return (
       <>
         <Container>
-          <FiltersContainer>
-            {" "}
-            {filterfieldNames.map(element => (
-              <FilterDropdown {...element} onClick={this.onFilterClick} />
-            ))}
-            {/* <Select
-              options={this.state.sortOptions}
-              placeholder="sort by..."
-              value={this.state.selectedSort}
-              onChange={this.onSortClick}
-            /> */}
+          <FiltersContainer
+            className={css`
+              z-index: 20;
+              width: 20%;
+              padding: 20px;
+              display: flex;
+              flex-direction: column;
+              flex-shrink: 0;
+              box-sizing: border-box;
+              line-height: 30px;
+              cursor: pointer;
+              color: #626969;
+              position: sticky;
+              top: 0;
+              transition: all 300ms ease-in-out;
+              @media (max-width: 600px) {
+                padding-top: 0;
+                width: 100%;
+                overflow: hidden;
+                border-bottom: 1px solid #212529;
+                background-color: #fff;
+                height: ${this.state.filtersOpen ? "92.5vh" : "30px"};
+              }
+            `}
+          >
+            <div onClick={this.toggleFilters} className={css``}>
+              Filters{" "}
+              <span
+                className={css`
+                  writing-mode: vertical-rl;
+                  text-orientation: mixed;
+                  padding-bottom: 2px;
+                  @media (min-width: 601px) {
+                    display: none;
+                  }
+                `}
+              >
+                {this.state.filtersOpen ? "‹" : "›"}
+              </span>
+            </div>
+            <div>
+              {filterfieldNames.map((element) => (
+                <FilterDropdown {...element} onClick={this.onFilterClick} />
+              ))}
+              <Select
+                options={this.state.sortOptions}
+                placeholder="sort by..."
+                value={this.state.selectedSort}
+                onChange={this.onSortClick}
+              />
+            </div>
           </FiltersContainer>
           <ResponsesContainer>
             <div
@@ -204,7 +250,7 @@ export default class StoriesPage extends React.Component {
               ref="scrollview"
             >
               <Masonry
-                breakpointCols={2}
+                breakpointCols={this.breakpointCols}
                 className="my-masonry-grid"
                 columnClassName="my-masonry-grid_column"
               >

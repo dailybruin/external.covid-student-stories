@@ -29,7 +29,8 @@ const ImageContainer = styled.div`
   border-radius: 25px;
   box-shadow: 0 7px 10px rgba(0, 0, 0, 0.4);
   text-align: center;
-  transition: opacity 0.2s ease-in-out;
+  transition: 0.6s;
+  transition-delay: 0.7s;
   opacity: 0;
   height: auto;
   :hover {
@@ -43,7 +44,8 @@ const Like = styled.div`
     pointer-events: none;
   }
   :hover ${ImageContainer} {
-    transition-delay: 0.2s;
+    transition: opacity 0.2s ease-in-out;
+    transition-delay: 0.4s;
     opacity: 1;
     pointer-events: auto;
     /* height: auto; */
@@ -62,6 +64,7 @@ const Image = styled.img`
   margin: 5px;
   &:hover {
     transform: scale(1.5);
+    transition: 0.5s;
   }
   z-index: 100000;
 `;

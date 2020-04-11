@@ -31,9 +31,12 @@ const Requirement = styled("span")`
   line-height: 24px;
 `;
 const Background = styled("div")`
+  /* box-sizing: border-box; */
   background-color: white;
-  width: 50%;
-  margin: auto auto 50px auto;
+  width: 100%;
+  max-width: 650px;
+  padding: 0 20px;
+  margin: 50px auto 50px auto;
   font-family: "Roboto";
   hr {
     border: 0.5px solid #ddd;

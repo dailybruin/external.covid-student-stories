@@ -29,28 +29,17 @@ const ImageContainer = styled.div`
   border-radius: 25px;
   box-shadow: 0 7px 10px rgba(0, 0, 0, 0.4);
   text-align: center;
-  transition: 0.6s;
-  transition-delay: 0.7s;
-  opacity: 0;
+  transition: opacity 0.6s;
   height: auto;
-  :hover {
-    opacity: 1;
-  }
+  opacity: ${(props) => (props.open ? 1 : 0)};
+  transform: ${(props) => (props.open ? "'scaleY(1)'," : "scaleY(0)")};
+  transition: all 0.25s ease-in-out;
 `;
 
 const Like = styled.div`
   position: relative;
-  ${ImageContainer} {
-    pointer-events: none;
-  }
-  :hover ${ImageContainer} {
-    transition: opacity 0.2s ease-in-out;
-    transition-delay: 0.4s;
-    opacity: 1;
-    pointer-events: auto;
-    /* height: auto; */
-  }
 
+  background: ${(props) => (props.open ? "#d3d3d3" : "white")};
   :hover {
     background: #d3d3d3;
   }
@@ -81,13 +70,22 @@ export default class Upvote extends React.Component {
       selected: id,
       open: false,
     };
+    this.timer = null;
     this.emotionChosen = this.emotionChosen.bind(this);
     this.renderLikeButton = this.renderLikeButton.bind(this);
     this.likeHandler = this.likeHandler.bind(this);
+    this.handleMouseEnter = this.handleMouseEnter.bind(this);
+    this.handleMouseClose = this.handleMouseClose.bind(this);
   }
   emotionChosen(emotion) {
     this.setState({ selected: emotion });
     cookies.set(this.props.id, emotion);
+    if (this.state.open) {
+      clearTimeout(this.timer);
+      this.timer = setTimeout(() => {
+        this.setState({ open: false });
+      }, 250);
+    }
   }
   renderLikeButton() {
     if (this.state.selected === "") {
@@ -121,6 +119,18 @@ export default class Upvote extends React.Component {
       cookies.set(this.props.id, "");
     }
   }
+  handleMouseEnter() {
+    clearTimeout(this.timer);
+    this.timer = setTimeout(() => {
+      this.setState({ open: true });
+    }, 1000);
+  }
+  handleMouseClose() {
+    clearTimeout(this.timer);
+    this.timer = setTimeout(() => {
+      this.setState({ open: false });
+    }, 1000);
+  }
   render() {
     var img = images.map((image) => (
       <Image
@@ -137,8 +147,13 @@ export default class Upvote extends React.Component {
           `}
         >
           <b>Reacc:</b>
-          <Like>
-            <ImageContainer>{img}</ImageContainer>
+          <Like
+            onMouseEnter={this.handleMouseEnter}
+            onMouseLeave={this.handleMouseClose}
+            open={this.state.open}
+          >
+            {<ImageContainer open={this.state.open}>{img}</ImageContainer>}
+
             <div
               onClick={this.likeHandler}
               className={css`

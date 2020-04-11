@@ -6,8 +6,6 @@ import Navbar from "./components/Navbar";
 import Title from "./components/Title";
 import styled from "styled-components";
 import { css } from "emotion";
-import Tabletop from "tabletop";
-import { preprocessSheetsData } from "./utils/functions";
 
 /*
 school	
@@ -19,19 +17,7 @@ responseCommunity	responseAffected	responseElse responseDoneDifferently
 comfortablePublish	knowPositive	currentLocation
 */
 class App extends React.Component {
-  componentDidMount() {
-    Tabletop.init({
-      key: "1iVHXhygVYOPzm7lRWSFrEVOquX3X7gTV-Ixu1Gy1fh4",
-      callback: (googleData) => {
-        this.setState({
-          data: preprocessSheetsData(googleData),
-        });
-      },
-      simpleSheet: true,
-    });
-  }
   render() {
-    if (!this.state) return <div>Loading...</div>;
     return (
       <div className="App">
         <Router>
@@ -39,10 +25,10 @@ class App extends React.Component {
           <Navbar />
           <Switch>
             <Route exact path="/">
-              <StoriesPage data={this.state.data}></StoriesPage>
+              <StoriesPage></StoriesPage>
             </Route>
             <Route exact path="/data">
-              <DataPage data={this.state.data}></DataPage>
+              <DataPage></DataPage>
             </Route>
             <Route exact path="/form">
               <FormPage></FormPage>

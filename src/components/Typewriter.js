@@ -25,7 +25,7 @@ export default class Typewriter extends React.Component {
   render() {
     return (
       <BigTitle>
-        <Typed strings={["Unfinished Stories"]} typeSpeed={50} />
+        <Typed strings={["Unfinished Stories"]} typeSpeed={80} />
       </BigTitle>
     );
   }

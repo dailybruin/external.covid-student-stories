@@ -1,12 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { colleges, countries, states } from "./data";
+import { colleges, states, state_abbreviations, countries } from "./data";
 import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
-
-const SHEET_ID = "1QmoG1FXzcZW5NDrzsMrflLf5_zNirHNqdNI_ObV1IKk";
-const ACCESS_TOKEN =
-  "ya29.a0Ae4lvC3uXEjYz7fzrMq8V3ChwsktBVOzfDuPDokD60TSsX7itPZaEDOoyFq5H7fhvyRgr7oxfhJ7rlaLR3ExyyieUTOTZkAFHNMopOXGLU8PNT4qOW1R_0COU5Yadh89KGJgEJdoWg61lhvUl54i8H7XVxmM_jf1wz4";
 
 const desktopSizes = {
   question: "21px",
@@ -128,7 +124,9 @@ const SubQuestionCell = styled("div")`
   font-size: ${desktopSizes.choices_header};
   text-align: center;
   input {
-    margin: auto;
+    margin: 0;
+    width: 20px;
+    height: 20px;
   }
 `;
 
@@ -162,6 +160,9 @@ const MultipleShortResponse = styled("div")`
 `;
 
 const Field = styled("div")`
+  span {
+    font-weight: bold;
+  }
   width: 30%;
   font-size: ${desktopSizes.short_response};
   display: flex;
@@ -181,7 +182,8 @@ const ques = [
   {
     question: "What school do you attend?",
     type: SEARCHABLE_DROPDOWN,
-    choices: colleges,
+    choices_labels: colleges,
+    choices_values: colleges,
     other_option: false,
     comment: "",
     required: true,
@@ -206,9 +208,10 @@ const ques = [
       "First Year",
       "Second Year",
       "Third Year",
-      "Fourth Year or higher",
+      "Fourth Year",
       "Grad Student",
     ],
+    values: ["HS", "FR", "SO", "JR", "SR", "GR"],
     values: ["HS", "FR", "SO", "JR", "SR", "GR"],
     other_option: false,
     comment: "",
@@ -232,14 +235,16 @@ const ques = [
         title: "State",
         type: SEARCHABLE_DROPDOWN,
         required: false,
-        options: states,
+        options_labels: states,
+        options_values: state_abbreviations,
       },
       {
         name: "country",
         title: "Country",
         type: SEARCHABLE_DROPDOWN,
         required: false,
-        options: countries,
+        options_labels: countries,
+        options_values: countries,
       },
     ],
     other_option: false,
@@ -303,6 +308,7 @@ const ques = [
       "Prefer not to share",
     ],
     values: ["NW", "SW", "VW", "NA"],
+    values: ["NW", "SW", "VW", "NA"],
     values: ["NW", "SW", "VW", "Prefer not to share"],
     other_option: false,
     subquestions: [
@@ -328,9 +334,10 @@ const ques = [
   {
     question: "How has your community responded to the Covid-19 pandemic?",
     type: LONG_RESPONSE,
+    charLimit: 500,
     choices: [],
     comment:
-      "You can tell us about your local officials’ responses to the crisis, how your university addresses social distancing concerns or even how residents of your community have been helping each other through this time. 2,000 character limit",
+      "You can tell us about your local officials’ responses to the crisis, how your university addresses social distancing concerns or even how residents of your community have been helping each other through this time. 500 character limit.",
     required: false,
     id: 8,
   },
@@ -338,17 +345,19 @@ const ques = [
     question:
       "Is there anything you think your school or community could/should have done differently regarding this situation?",
     type: LONG_RESPONSE,
+    charLimit: 500,
     choices: [],
-    comment: "2,000 character limit",
+    comment: "500 character limit.",
     required: false,
     id: 9,
   },
   {
     question: "How has COVID-19 affected you?",
     type: LONG_RESPONSE,
+    charLimit: 1250,
     choices: [],
     comment:
-      "This is unlike anything we've experienced before. Tell us about anything and everything. How has your life, or the lives of people around you, changed due to the novel coronavirus pandemic? How has the world changed? 2,000 character limit",
+      "This is unlike anything we've experienced before. Tell us about anything and everything. How has your life, or the lives of people around you, changed due to the novel coronavirus pandemic? How has the world changed? 1,250 character limit.",
     required: false,
     id: 10,
   },
@@ -399,51 +408,14 @@ const ques = [
 class FormPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      college: null,
-      city: null,
-      state: null,
-      country: null,
-    };
+    this.state = {};
   }
 
-  updateSheet = () => {
-    fetch(
-      `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}:batchUpdate`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          //update this token with yours.
-          Authorization: `Bearer ${ACCESS_TOKEN}`,
-        },
-        body: JSON.stringify({
-          requests: [
-            {
-              repeatCell: {
-                range: {
-                  startColumnIndex: 0,
-                  endColumnIndex: 1,
-                  startRowIndex: 0,
-                  endRowIndex: 1,
-                  sheetId: 0,
-                },
-                cell: {
-                  userEnteredValue: {
-                    numberValue: 10,
-                  },
-                },
-                fields: "*",
-              },
-            },
-          ],
-        }),
-      }
-    );
-  };
-
   handleChange = (selectedOption) => {
-    this.setState({ college: selectedOption.value });
+    console.log(selectedOption);
+  };
+  setValue = (value) => {
+    return value;
   };
   getValue = (val) => {
     return val;
@@ -453,21 +425,17 @@ class FormPage extends React.Component {
       const title = <div>{question.question}</div>;
       let type = null;
       if (question.type == SEARCHABLE_DROPDOWN) {
-        const optionsList = question.choices.map((option) => ({
-          value: option,
+        const optionsList = question.choices_labels.map((option, index) => ({
           label: option,
+          value: question.choices_values[index],
         }));
         type = (
           <SearchableDropDown>
             <CreatableSelect
               onChange={this.handleChange}
-              onInputChange={this.handleInputChange}
               options={optionsList}
-            />
-            <input
-              type="hidden"
+              placeholder="Select or type your answer..."
               name={question.name}
-              value={this.state.college}
               required={question.required}
             />
           </SearchableDropDown>
@@ -570,7 +538,7 @@ class FormPage extends React.Component {
             name={question.name}
             id={question.id}
             placeholder="Your Answer"
-            maxlength={2000}
+            maxlength={question.charLimit}
             required={question.required}
           />
         );
@@ -590,17 +558,19 @@ class FormPage extends React.Component {
               </Field>
             );
           } else if (field.type == SEARCHABLE_DROPDOWN) {
+            console.log(field);
+            const optionsList = field.options_labels.map((option, index) => ({
+              label: option,
+              value: field.options_values[index],
+            }));
             return (
               <Field>
                 <span>{field.title + ": "}</span>
                 <SearchableDropDown>
                   <Select
                     onChange={this.handleChange}
-                    onInputChange={this.handleInputChange}
-                    options={field.options}
-                  />
-                  <input
-                    type="hidden"
+                    options={optionsList}
+                    placeholder="Select or type..."
                     name={field.name}
                     required={field.required}
                   />
@@ -643,7 +613,7 @@ class FormPage extends React.Component {
           </p>
         </Top>
         <hr />
-        <form onSubmit={this.updateSheet()}>
+        <form>
           {questions}
           <input type="submit" value="Submit" />
         </form>

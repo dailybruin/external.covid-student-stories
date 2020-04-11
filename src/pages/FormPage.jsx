@@ -334,8 +334,9 @@ const ques = [
     question:
       "How has your community responded to the Covid-19 pandemic?",
     type: LONG_RESPONSE,
+    charLimit: 500,
     choices: [],
-    comment: "You can tell us about your local officials’ responses to the crisis, how your university addresses social distancing concerns or even how residents of your community have been helping each other through this time. 2,000 character limit",
+    comment: "You can tell us about your local officials’ responses to the crisis, how your university addresses social distancing concerns or even how residents of your community have been helping each other through this time. 500 character limit.",
     required: false,
     id: 8
   },
@@ -343,16 +344,18 @@ const ques = [
     question:
       "Is there anything you think your school or community could/should have done differently regarding this situation?",
     type: LONG_RESPONSE,
+    charLimit: 500,
     choices: [],
-    comment: "2,000 character limit",
+    comment: "500 character limit.",
     required: false,
     id: 9
   },
   {
     question: "How has COVID-19 affected you?",
     type: LONG_RESPONSE,
+    charLimit: 1250,
     choices: [],
-    comment: "This is unlike anything we've experienced before. Tell us about anything and everything. How has your life, or the lives of people around you, changed due to the novel coronavirus pandemic? How has the world changed? 2,000 character limit",
+    comment: "This is unlike anything we've experienced before. Tell us about anything and everything. How has your life, or the lives of people around you, changed due to the novel coronavirus pandemic? How has the world changed? 1,250 character limit.",
     required: false,
     id: 10
   },
@@ -517,7 +520,7 @@ class FormPage extends React.Component {
             name={question.name}
             id={question.id}
             placeholder="Your Answer"
-            maxlength={2000}
+            maxlength={question.charLimit}
             required={question.required}
           />
         );

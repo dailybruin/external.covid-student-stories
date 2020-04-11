@@ -92,16 +92,19 @@ export default class DataPage extends React.Component {
   render() {
     const { data } = this.state;
     var cities = [];
+    const { selectedFields } = this.state;
+    for (var i = 0; i < data.length; i++) {
+      if (data[i].hometown.indexOf(",") > -1) {
+        cities.push(data[i].hometown);
+      }
+    }
+
+    data = data.filter((row) => showData(selectedFields, row));
     var count = 0;
     for (var i = 0; i < data.length; i++) {
       console.log(data[i].comfortablePublish);
       if (data[i].knowPositive === "Yes") {
         count += 1;
-      }
-    }
-    for (var i = 0; i < data.length; i++) {
-      if (data[i].hometown.indexOf(",") > -1) {
-        cities.push(data[i].hometown);
       }
     }
     return (

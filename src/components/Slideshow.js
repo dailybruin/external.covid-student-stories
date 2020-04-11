@@ -8,6 +8,13 @@ import cover3 from "../images/covidstories_cover3.jpg";
 import cover4 from "../images/covidstories_cover4.jpg";
 import cover5 from "../images/covidstories_cover5.jpg";
 
+const mediaQueries = {
+  mobile: "@media (max-width: 700px)",
+  notMobile: "@media (min-width: 701px)",
+  tablet: "@media (max-width: 900px)",
+};
+const { mobile, notMobile, tablet } = mediaQueries;
+
 const slides = [
   {
     id: 0,

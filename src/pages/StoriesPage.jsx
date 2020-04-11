@@ -6,7 +6,7 @@ import Masonry from "react-masonry-css";
 import {
   filterAllowsShow,
   selectionMatchesEntry,
-  getQueryString
+  getQueryString,
 } from "../utils/functions";
 import { MAP_year_to_yearName } from "../utils/mappings";
 import { filterfieldNames, responseColumns } from "../utils/properties";
@@ -16,7 +16,7 @@ import debounce from "lodash.debounce";
 import axios from "axios";
 import SearchableDropdown from "../components/Searchable";
 import Select from "react-select";
-
+import anon_profile from "../images/anon.jpg";
 import "./masonry.css";
 
 import SharePost from "../components/SharePost";
@@ -56,7 +56,8 @@ const ResponseEntry = styled("div")`
   /* background-color: #f7f7f7; */
   border-radius: 5px;
   flex: 1;
-  color: #858c8c;
+  color: #6d6b67;
+  color: black;
 `;
 
 const PersonEntry = styled("div")`
@@ -69,8 +70,11 @@ const PersonEntry = styled("div")`
 `;
 
 const InteractionContainer = styled("div")`
-  padding-top: 20px;
+  border-top: 1px dotted #c3c9c9;
+  padding-top: 15px;
+  margin-top: 15px;
   display: flex;
+  align-items: middle;
   justify-content: space-between;
 `;
 
@@ -81,12 +85,12 @@ export default class StoriesPage extends React.Component {
       selectedFieldNames: filterfieldNames.map((element, key) => ({
         column: element.column,
         selections: ["All"],
-        key: key
+        key: key,
       })),
       sortOptions: [
         { value: "recent", label: "most recent" },
         { value: "reacted", label: "most reacted" },
-        { value: "random", label: "random" }
+        { value: "random", label: "random" },
       ],
       selectedSort: null,
       stories: [],
@@ -94,7 +98,7 @@ export default class StoriesPage extends React.Component {
       lazyload: {
         error: false,
         hasMore: true,
-        isLoading: false
+        isLoading: false,
       },
       filtersOpen: false,
     };
@@ -119,19 +123,19 @@ export default class StoriesPage extends React.Component {
       axios(
         `https://covidstories.dailybruin.com/stories/?${queryString}&i=${this.state.currPage}`
       )
-        .then(results => {
-          const newStories = results.data.map(d => d.fields);
+        .then((results) => {
+          const newStories = results.data.map((d) => d.fields);
           this.setState({
             hasMore: true,
             isLoading: false,
             stories: [...this.state.stories, ...newStories],
-            currPage: this.state.currPage + 1
+            currPage: this.state.currPage + 1,
           });
         })
-        .catch(err => {
+        .catch((err) => {
           this.setState({
             error: err.message,
-            isLoading: false
+            isLoading: false,
           });
         });
     });
@@ -144,7 +148,7 @@ export default class StoriesPage extends React.Component {
     const element = this.refs.scrollview;
     console.log([
       element.scrollHeight - element.scrollTop,
-      element.clientHeight
+      element.clientHeight,
     ]);
     if (
       element.scrollHeight - element.scrollTop - 1000 <=
@@ -161,7 +165,7 @@ export default class StoriesPage extends React.Component {
   onFilterClick(column, selections) {
     let newSelectedFieldNames = this.state.selectedFieldNames;
     let selectedfieldName = newSelectedFieldNames.find(
-      element => element.column == column
+      (element) => element.column == column
     );
     selectedfieldName.selections = selections;
     this.setState(
@@ -265,29 +269,58 @@ export default class StoriesPage extends React.Component {
                         `}
                       >
                         <PersonEntry>
-                          <b
+                          <div
                             className={css`
-                              font-size: 20px;
-                              color: #5e6363;
-                              font-weight: 700;
+                              display: flex;
+                              align-items: middle;
+                              height: auto;
                             `}
                           >
-                            {MAP_year_to_yearName[row.year]} {row.major} major
-                            at {row.school}
-                          </b>
+                            <img
+                              className={css`
+                                height: 45px;
+                                margin-left: -5px;
+                                margin-right: 8px;
+                                margin-top: 4px;
+                              `}
+                              src={anon_profile}
+                            />
+                            <div>
+                              <b
+                                className={css`
+                                  font-size: 20px;
+                                  color: #5e6363;
+                                  font-weight: 700;
+                                `}
+                              >
+                                {MAP_year_to_yearName[row.year]} {row.major}{" "}
+                                major
+                              </b>
+                              <div
+                                className={css`
+                                  margin-top: -4px;
+                                  font-size: 14px;
+                                `}
+                              >
+                                at {row.school}
+                              </div>
+                            </div>
+                          </div>
+
                           {responseColumns.map(
-                            response =>
+                            (response) =>
                               row[response.column] != "" && (
                                 <ResponseEntry>
                                   <div>
-                                    <b
+                                    <div
                                       className={css`
-                                        font-weight: 600;
-                                        color: #5e6363;
+                                        font-weight: 400;
+                                        margin-bottom: 4px;
+                                        color: #586572;
                                       `}
                                     >
-                                      {response.question}
-                                    </b>
+                                      <b>{response.question}</b>
+                                    </div>
                                   </div>
                                   <div>{row[response.column]}</div>
                                 </ResponseEntry>

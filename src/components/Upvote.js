@@ -20,7 +20,7 @@ var images = [
 ];
 
 const ImageContainer = styled.div`
-  width: 300px;
+  width: 280px;
   position: absolute;
   left: 0px;
   top: 25px;
@@ -61,7 +61,7 @@ const Like = styled.div`
 `;
 const Image = styled.img`
   max-width: 35px;
-  margin: 5px;
+  margin: 3px;
   &:hover {
     transform: scale(1.5);
     transition: 0.5s;

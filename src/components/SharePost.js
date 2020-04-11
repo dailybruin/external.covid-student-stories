@@ -33,7 +33,8 @@ export default class SharePost extends React.Component {
               <FacebookIcon size={24} round={true} />
               <div
                 className={css`
-                  font-size: 18px;
+                  font-size: 16px;
+                  margin-left: 5px;
                   float: right;
                 `}
               >
@@ -49,7 +50,8 @@ export default class SharePost extends React.Component {
               <RedditIcon size={24} round={true} />
               <div
                 className={css`
-                  font-size: 18px;
+                  font-size: 16px;
+                  margin-left: 5px;
                   float: right;
                 `}
               >
@@ -66,7 +68,8 @@ export default class SharePost extends React.Component {
               <TwitterIcon size={24} round={true} />
               <div
                 className={css`
-                  font-size: 18px;
+                  margin-left: 5px;
+                  font-size: 16px;
                   float: right;
                 `}
               >
@@ -82,7 +85,8 @@ export default class SharePost extends React.Component {
               <WhatsappIcon size={24} round={true} />
               <div
                 className={css`
-                  font-size: 18px;
+                  margin-left: 5px;
+                  font-size: 16px;
                   float: right;
                 `}
               >
@@ -98,7 +102,8 @@ export default class SharePost extends React.Component {
               <WeiboIcon size={24} round={true} />
               <div
                 className={css`
-                  font-size: 18px;
+                  margin-left: 5px;
+                  font-size: 16px;
                   float: right;
                 `}
               >

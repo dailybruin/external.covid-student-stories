@@ -85,7 +85,7 @@ const InteractionContainer = styled("div")`
   padding-top: 15px;
   margin-top: 15px;
   display: flex;
-  align-items: middle;
+  align-items: center;
   justify-content: space-between;
 `;
 
@@ -135,7 +135,10 @@ export default class StoriesPage extends React.Component {
         `https://covidstories.dailybruin.com/stories/?${queryString}&i=${this.state.currPage}`
       )
         .then((results) => {
-          const newStories = results.data.map((d) => d.fields);
+          const newStories = results.data.map((d) => {
+            const pk = d.pk;
+            return { ...d.fields, pk };
+          });
           this.setState({
             hasMore: true,
             isLoading: false,
@@ -157,10 +160,7 @@ export default class StoriesPage extends React.Component {
     const { error, isLoading, hasMore } = this.state.lazyload;
     if (error || isLoading || !hasMore) return;
     const element = this.refs.scrollview;
-    console.log([
-      element.scrollHeight - element.scrollTop,
-      element.clientHeight,
-    ]);
+
     if (
       element.scrollHeight - element.scrollTop - 1000 <=
       element.clientHeight
@@ -196,7 +196,6 @@ export default class StoriesPage extends React.Component {
   }
 
   render() {
-    console.log(this.state.selectedFieldNames);
     let { tab, stories } = this.state;
     let { error, hasMore, isLoading } = this.state.lazyload;
     const { selectedFieldNames } = this.state;
@@ -217,7 +216,6 @@ export default class StoriesPage extends React.Component {
               flex-direction: column;
               flex-shrink: 0;
               box-sizing: border-box;
-              line-height: 30px;
               cursor: pointer;
               color: #626969;
               position: sticky;
@@ -253,8 +251,8 @@ export default class StoriesPage extends React.Component {
             </div>
             <div
               className={css`
-                font-size: 20px;
-                line-height: 40px;
+                font-size: 18px;
+                line-height: 30px;
                 ${mobile} {
                   font-size: 14px;
                   line-height: 22px;
@@ -292,7 +290,7 @@ export default class StoriesPage extends React.Component {
                 columnClassName="my-masonry-grid_column"
               >
                 {stories.map(
-                  (row, i) =>
+                  (row) =>
                     row.year && (
                       <div
                         className={css`
@@ -367,8 +365,14 @@ export default class StoriesPage extends React.Component {
                               )
                           )}
                           <InteractionContainer>
-                           
-                            <Upvote id={i} love ={row.reactLove} sad ={row.reactSad} like ={row.reactUp} angry ={row.reactAngry} total={row.reactTotal}></Upvote>
+                            <Upvote
+                              id={row.pk}
+                              love={row.reactLove}
+                              sad={row.reactSad}
+                              like={row.reactUp}
+                              angry={row.reactAngry}
+                              total={row.reactTotal}
+                            ></Upvote>
                             <SharePost row={row} />
                           </InteractionContainer>
                         </PersonEntry>

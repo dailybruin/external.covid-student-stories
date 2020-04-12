@@ -563,7 +563,6 @@ class FormPage extends React.Component {
               </Field>
             );
           } else if (field.type == SEARCHABLE_DROPDOWN) {
-            console.log(field);
             const optionsList = field.options_labels.map((option, index) => ({
               label: option,
               value: field.options_values[index],

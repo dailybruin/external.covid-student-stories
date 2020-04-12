@@ -21,7 +21,7 @@ export default class FilterDropdown extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      expanded: false,
+      expanded: true,
       selected: ["All"],
     };
   }

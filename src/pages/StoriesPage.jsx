@@ -18,9 +18,14 @@ import SearchableDropdown from "../components/Searchable";
 import Select from "react-select";
 import anon_profile from "../images/anon.jpg";
 import "./masonry.css";
-
 import SharePost from "../components/SharePost";
 
+const mediaQueries = {
+  mobile: "@media (max-width: 700px)",
+  notMobile: "@media (min-width: 701px)",
+  tablet: "@media (max-width: 900px)",
+};
+const { mobile } = mediaQueries;
 const Container = styled("div")`
   width: 100%;
   height: 94.5vh;
@@ -28,12 +33,14 @@ const Container = styled("div")`
   overflow: scroll;
   font-family: Avenir;
 
-  @media (max-width: 600px) {
+  ${mobile} {
     flex-direction: column;
   }
 `;
 
-const FiltersContainer = styled("div")``;
+const FiltersContainer = styled("div")`
+  background-color: #f9f9f9;
+`;
 
 const ResponsesContainer = styled("div")`
   display: flex;
@@ -45,7 +52,7 @@ const ResponsesContainer = styled("div")`
   width: 80%;
   height: 100%;
 
-  @media (max-width: 600px) {
+  ${mobile} {
     width: 100%;
   }
 `;
@@ -59,6 +66,9 @@ const ResponseEntry = styled("div")`
   flex: 1;
   color: #6d6b67;
   color: black;
+  ${mobile} {
+    font-size: 13px;
+  }
 `;
 
 const PersonEntry = styled("div")`
@@ -71,7 +81,7 @@ const PersonEntry = styled("div")`
 `;
 
 const InteractionContainer = styled("div")`
-  border-right: 1px dotted #c3c9c9;
+  border-top: 1px dotted #c3c9c9;
   padding-top: 15px;
   margin-top: 15px;
   display: flex;
@@ -213,10 +223,11 @@ export default class StoriesPage extends React.Component {
               position: sticky;
               top: 0;
               transition: all 300ms ease-in-out;
-              border-right: 1px solid #212529;
+              border-right: 1px solid #d3d3d3;
 
-              @media (max-width: 600px) {
+              ${mobile} {
                 padding-top: 0;
+                padding-left: 1em;
                 width: 100%;
                 overflow: hidden;
                 border-bottom: 1px solid #212529;
@@ -244,6 +255,10 @@ export default class StoriesPage extends React.Component {
               className={css`
                 font-size: 20px;
                 line-height: 40px;
+                ${mobile} {
+                  font-size: 14px;
+                  line-height: 22px;
+                }
               `}
             >
               {filterfieldNames.map((element) => (
@@ -264,6 +279,9 @@ export default class StoriesPage extends React.Component {
                 width: 100%;
                 overflow: auto;
                 padding: 20px;
+                ${mobile} {
+                  padding: 0px;
+                }
               `}
               onScroll={this.handleStoriesScroll}
               ref="scrollview"
@@ -306,6 +324,9 @@ export default class StoriesPage extends React.Component {
                                   font-size: 20px;
                                   color: #5e6363;
                                   font-weight: 700;
+                                  ${mobile} {
+                                    font-size: 16px;
+                                  }
                                 `}
                               >
                                 {MAP_year_to_yearName[row.year]} {row.major}{" "}
@@ -315,6 +336,10 @@ export default class StoriesPage extends React.Component {
                                 className={css`
                                   margin-top: -4px;
                                   font-size: 14px;
+                                  ${mobile} {
+                                    font-size: 12px;
+                                    margin-top: 0;
+                                  }
                                 `}
                               >
                                 at {row.school}

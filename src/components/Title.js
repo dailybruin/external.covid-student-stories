@@ -46,15 +46,9 @@ const AddStoryLink = styled(Link)`
 `;
 
 const ScrollMessage = styled("div")`
-  overflow: hidden;
+  cursor: pointer;
   position: absolute;
-  justify-content: center;
-  text-align: center;
-  align-items: center;
-  bottom: 0;
-  margin: 20px;
-  color: white;
-  border-radius: 50%;
+  bottom: 30px;
   /* @keyframes shadow-pulse {
     0% {
       box-shadow: 0 0 0 0px rgba(0, 0, 0, 1);
@@ -63,6 +57,9 @@ const ScrollMessage = styled("div")`
       box-shadow: 0 0 0 35px rgba(0, 0, 0, 0);
     }
   } */
+  &:hover {
+    filter: brightness(130%);
+  }
   @keyframes bounce {
     100% {
       transform: translateY(0);
@@ -129,13 +126,13 @@ export default class Title extends React.Component {
           </Caption>
           <AddStoryLink
             to="/form"
-            onClick={() => {
-              scroller.scrollTo("navbar", {
-                duration: 500,
-                delay: 0,
-                smooth: "easeInOutQuint",
-              });
-            }}
+            // onClick={() => {
+            //   scroller.scrollTo("navbar", {
+            //     duration: 500,
+            //     delay: 0,
+            //     smooth: "easeInOutQuint",
+            //   });
+            // }}
           >
             SHARE YOUR STORY
           </AddStoryLink>

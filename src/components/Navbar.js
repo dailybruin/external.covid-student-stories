@@ -17,26 +17,41 @@ const NavbarStyled = styled("div")`
   justify-content: space-between;
   background-color: #6d6b67;
   box-sizing: border-box;
-  padding: 0 3em;
+  padding: 0 2em;
   align-items: center;
   overflow-x: scroll;
+  ${mobile} {
+    padding: 0 1em;
+  }
 `;
 
 const StyledLink = styled(Link)`
   font-size: 18px;
   margin: 30px;
   box-sizing: border-box;
-  text-decoration: none;
   color: white;
-
   &:hover {
+    color: white !important;
+    text-decoration: underline !important;
+  }
+  ${mobile} {
+    font-size: 14px;
+    margin: 5px;
   }
 `;
 
-const Header = styled("div")`
+const Header = styled(Link)`
   font-size: 24px;
+  text-decoration: none;
   color: white;
+  &:hover {
+    color: white !important;
+    text-decoration: underline !important;
+  }
   font-weight: 400;
+  ${mobile} {
+    font-size: 16px;
+  }
 `;
 
 export default class Navbar extends React.Component {
@@ -54,11 +69,38 @@ export default class Navbar extends React.Component {
         `}
       >
         <NavbarStyled>
-          <Header>Unfinished Stories</Header>
+          <Header to="/">Unfinished Stories</Header>
           <div>
-            <StyledLink to="/">stories</StyledLink>
-            <StyledLink to="/data">data</StyledLink>
-            <StyledLink to="/form">form</StyledLink>
+            <StyledLink
+              to="/stories"
+              className={css`
+                text-decoration: ${this.props.highlighted == "stories"
+                  ? "underline !important"
+                  : "none !important"};
+              `}
+            >
+              stories
+            </StyledLink>
+            <StyledLink
+              to="/data"
+              className={css`
+                text-decoration: ${this.props.highlighted == "data"
+                  ? "underline !important"
+                  : "none !important"};
+              `}
+            >
+              data
+            </StyledLink>
+            <StyledLink
+              to="/form"
+              className={css`
+                text-decoration: ${this.props.highlighted == "form"
+                  ? "underline !important"
+                  : "none !important"};
+              `}
+            >
+              form
+            </StyledLink>
           </div>
         </NavbarStyled>
       </Element>

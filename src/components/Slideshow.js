@@ -20,26 +20,31 @@ const slides = [
     id: 0,
     img: cover1,
     text: "ONE",
+    credit: "Courtney Quirmbach",
   },
   {
     id: 1,
     img: cover2,
     text: "TWO",
+    credit: "Liz Ketcham",
   },
   {
     id: 2,
     img: cover3,
     text: "THREE",
+    credit: "Courtney Quirmbach",
   },
   {
     id: 3,
     img: cover4,
     text: "FOUR",
+    credit: "Courtney Quirmbach",
   },
   {
     id: 4,
     img: cover5,
     text: "FIVE",
+    credit: "Liz Ketcham",
   },
 ];
 
@@ -65,16 +70,35 @@ const Slideshow = () => {
           left: 0;
           width: 100%;
           height: 100vh;
-          background-size: cover;
-          background-position: center;
+          /* background-size: cover; */
+          /* background-position: center; */
           will-change: opacity;
+          background: linear-gradient(
+              180deg,
+              rgba(0, 0, 0, 0) 0%,
+              rgba(0, 0, 0, 0.3) 80%,
+              rgba(0, 0, 0, 0.85) 95%
+            ),
+            url(${item.img});
+          background-position: bottom;
+          background-size: cover;
         `}
         style={{
           ...props,
-          backgroundImage: `url(${item.img})`,
+          // backgroundImage: `url(${item.img})`,
         }}
       >
-        <h1> {item.text}</h1>
+        <div
+          className={css`
+            position: absolute;
+            padding: 20px;
+            bottom: 0;
+            right: 0;
+            color: white;
+          `}
+        >
+          courtesy of {item.credit}
+        </div>
       </animated.div>
     </div>
   ));

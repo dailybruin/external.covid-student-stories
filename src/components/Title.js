@@ -21,10 +21,10 @@ const AddStoryLink = styled(Link)`
   font-weight: 800;
   z-index: 9999;
   background-color: white;
-  padding: 10px;
-  position: relative;
+  padding: 10px 20px;
   border-radius: 5px;
-  box-shadow: 0px 5px 5px gray;
+  /* box-shadow: 0px 5px 5px gray solid; */
+  margin: 20px;
   outline: none;
   text-decoration: none;
   :hover {
@@ -32,9 +32,8 @@ const AddStoryLink = styled(Link)`
     text-decoration: none;
   }
   :active {
-    box-shadow: none;
-    top: 5px;
-    text-decoration: none;
+    /* box-shadow: none; */
+    /* top: 5px; */
   }
   :visited {
     color: inherit;
@@ -42,6 +41,7 @@ const AddStoryLink = styled(Link)`
   ${mobile} {
     font-size: 16px;
     padding: 5px;
+    margin: 5px;
   }
 `;
 
@@ -55,15 +55,26 @@ const ScrollMessage = styled("div")`
   margin: 20px;
   color: white;
   border-radius: 50%;
-  @keyframes shadow-pulse {
+  /* @keyframes shadow-pulse {
     0% {
       box-shadow: 0 0 0 0px rgba(0, 0, 0, 1);
     }
     100% {
       box-shadow: 0 0 0 35px rgba(0, 0, 0, 0);
     }
+  } */
+  @keyframes bounce {
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-5px);
+    }
+    0% {
+      transform: translateY(0);
+    }
   }
-  animation: shadow-pulse 1s infinite;
+  animation: bounce 2s infinite;
 `;
 
 const TitlePage = styled("div")`
@@ -81,27 +92,29 @@ const Caption = styled("div")`
   overflow: hidden;
   font-size: 18px;
   color: white;
-  padding-bottom: 15px;
   ${mobile} {
-    font-size: 16px;
-    padding: 5px;
+    font-size: 12px;
+    padding: 1px;
   }
 `;
 
 const Coloring = styled("div")`
   overflow: hidden;
   background-color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
   opacity: 0.7;
   width: 800px;
-  height: 225px;
+  padding: 30px;
+  top: 0px;
   z-index: 1000000;
   position: absolute;
   text-align: center;
-  bottom: 75%;
   ${mobile} {
-    width: 75%;
-    height: 160px;
-    padding: 0;
+    width: 100%;
+    padding: 10px;
   }
 `;
 
@@ -126,6 +139,7 @@ export default class Title extends React.Component {
           >
             SHARE YOUR STORY
           </AddStoryLink>
+          <Caption>or scroll down to see others'</Caption>
         </Coloring>
         <div
           className={css`
@@ -134,23 +148,18 @@ export default class Title extends React.Component {
         >
           <Slideshow />
         </div>
-        <ScrollTo>
-          {({ scroll }) => (
-            <button
-              onClick={() => {
-                scroller.scrollTo("navbar", {
-                  duration: 500,
-                  delay: 0,
-                  smooth: "easeInOutQuint",
-                });
-              }}
-            >
-              <ScrollMessage>
-                <img src={Button} />
-              </ScrollMessage>
-            </button>
-          )}
-        </ScrollTo>
+        <ScrollMessage>
+          <img
+            src={Button}
+            onClick={() => {
+              scroller.scrollTo("navbar", {
+                duration: 500,
+                delay: 0,
+                smooth: "easeInOutQuint",
+              });
+            }}
+          />
+        </ScrollMessage>
       </TitlePage>
     );
   }

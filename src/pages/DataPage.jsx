@@ -11,7 +11,7 @@ import { auto } from "@popperjs/core";
 import { findByLabelText } from "@testing-library/dom";
 
 const ScrollContainer = styled("div")`
-  height: 92.5vh;
+  height: 94.5vh;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -43,7 +43,7 @@ const GraphContainer = styled("div")`
 
 const filterFields = [
   { field: "School", categories: ["All", "UCLA", "USC"] },
-  { field: "Major", categories: ["All", "CS", "Math", "we should bin these"] }
+  { field: "Major", categories: ["All", "CS", "Math", "we should bin these"] },
 ];
 
 function showData(selectedFields, row) {
@@ -64,9 +64,9 @@ export default class DataPage extends React.Component {
         field: element.field,
         selection: "All",
         key: key,
-        isLoading: true
+        isLoading: true,
       })),
-      data: {}
+      data: {},
     };
   }
 
@@ -78,16 +78,16 @@ export default class DataPage extends React.Component {
   loadStories() {
     this.setState({ isLoading: true }, () => {
       axios(`https://covidstories.dailybruin.com/stories/stats`)
-        .then(results => {
+        .then((results) => {
           const newStories = results.data;
           this.setState({
-            data: newStories
+            data: newStories,
           });
           this.setState({
-            isLoading: false
+            isLoading: false,
           });
         })
-        .catch(err => {
+        .catch((err) => {
           this.setState({});
         });
     });
@@ -115,7 +115,7 @@ export default class DataPage extends React.Component {
             <div
               style={{
                 height: "100%",
-                overflow: "auto"
+                overflow: "auto",
               }}
             >
               <div
@@ -124,7 +124,7 @@ export default class DataPage extends React.Component {
                   textAlign: "center",
                   fontSize: "30px",
                   fontWeight: "bold",
-                  color: "#5e6363"
+                  color: "#5e6363",
                 }}
               >
                 Number of Responses: {this.state.data.count}

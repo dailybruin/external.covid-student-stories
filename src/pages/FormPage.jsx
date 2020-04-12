@@ -36,6 +36,7 @@ const Background = styled("div")`
   width: 100%;
   max-width: 650px;
   padding: 0 20px;
+  padding-top: 140px;
   margin: 50px auto 50px auto;
   font-family: "Roboto";
   hr {
@@ -114,6 +115,7 @@ const Choice = styled("div")`
 const SubQuestionRow = styled("div")`
   display: flex;
   flex-direction: row;
+  align-items: center;
   border-bottom: 1px solid #eee;
   min-height: 50px;
 `;
@@ -232,7 +234,7 @@ const ques = [
       },
       {
         name: "state",
-        title: "State",
+        title: "(Optional) State",
         type: SEARCHABLE_DROPDOWN,
         required: false,
         options_labels: states,
@@ -240,7 +242,7 @@ const ques = [
       },
       {
         name: "country",
-        title: "Country",
+        title: "(Optional) Country",
         type: SEARCHABLE_DROPDOWN,
         required: false,
         options_labels: countries,
@@ -250,12 +252,12 @@ const ques = [
     other_option: false,
     comment:
       'City, State. If your hometown is not in the USA, type in "City, Country"',
-    required: false,
+    required: true,
     id: 3,
     name: "hometown",
   },
   {
-    question: "What is your ethnicity?",
+    question: "(Optional) What is your ethnicity?",
     type: SHORT_RESPONSE,
     choices: [],
     other_option: false,
@@ -332,37 +334,39 @@ const ques = [
     id: 7,
   },
   {
-    question: "How has your community responded to the Covid-19 pandemic?",
-    type: LONG_RESPONSE,
-    charLimit: 500,
-    choices: [],
-    comment:
-      "You can tell us about your local officials’ responses to the crisis, how your university addresses social distancing concerns or even how residents of your community have been helping each other through this time. 500 character limit.",
-    required: false,
-    id: 8,
-  },
-  {
-    question:
-      "Is there anything you think your school or community could/should have done differently regarding this situation?",
-    type: LONG_RESPONSE,
-    charLimit: 500,
-    choices: [],
-    comment: "500 character limit.",
-    required: false,
-    id: 9,
-  },
-  {
-    question: "How has COVID-19 affected you?",
+    question: "(Optional) How has COVID-19 affected you?",
     type: LONG_RESPONSE,
     charLimit: 1250,
     choices: [],
     comment:
       "This is unlike anything we've experienced before. Tell us about anything and everything. How has your life, or the lives of people around you, changed due to the novel coronavirus pandemic? How has the world changed? 1,250 character limit.",
     required: false,
+    id: 8,
+  },
+  {
+    question:
+      "(Optional) How has your community responded to the Covid-19 pandemic?",
+    type: LONG_RESPONSE,
+    charLimit: 500,
+    choices: [],
+    comment:
+      "You can tell us about your local officials’ responses to the crisis, how your university addresses social distancing concerns or even how residents of your community have been helping each other through this time. 500 character limit.",
+    required: false,
+    id: 9,
+  },
+  {
+    question:
+      "(Optional) Is there anything you think your school or community could/should have done differently regarding this situation?",
+    type: LONG_RESPONSE,
+    charLimit: 500,
+    choices: [],
+    comment: "500 character limit.",
+    required: false,
     id: 10,
   },
   {
-    question: "Is there anything we didn't ask that you would like to share?",
+    question:
+      "(Optional) Is there anything we didn't ask that you would like to share?",
     type: LONG_RESPONSE,
     choices: [],
     other_option: false,
@@ -373,7 +377,7 @@ const ques = [
   },
   {
     question:
-      "Do you have any photos or videos that you captured that could helps us tell your story? Share the links here.",
+      "(Optional) Do you have any photos or videos that you captured that could helps us tell your story? Share the links here.",
     type: LONG_RESPONSE,
     choices: [],
     other_option: false,
@@ -384,7 +388,7 @@ const ques = [
   },
   {
     question:
-      "If you shared art with us, please let us know how to attribute your work!",
+      "(Optional) If you shared art with us, please let us know how to attribute your work!",
     type: SHORT_RESPONSE,
     choices: [],
     other_option: false,
@@ -548,6 +552,7 @@ class FormPage extends React.Component {
             return (
               <Field>
                 <span>{field.title + ": "}</span>
+
                 <ShortResponse
                   type="text"
                   name={field.name}
@@ -594,7 +599,10 @@ class FormPage extends React.Component {
             <Comment></Comment>
           )}
           {type}
+          <br />
+          <br />
           <hr />
+          <br />
         </Question>
       );
     });
@@ -603,6 +611,11 @@ class FormPage extends React.Component {
         <Top>
           <h1>Covid-19 Student Stories</h1>
           <p>
+            Before you leave, this will only take a minute! The form consists of
+            mostly multiple choice questions with a few optional free responses
+            down below.
+            <br />
+            <br />
             The Daily Bruin is collecting student stories related to the
             Covid-19 pandemic to help students learn more about each others'
             experiences.

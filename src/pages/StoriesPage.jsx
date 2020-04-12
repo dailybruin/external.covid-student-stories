@@ -23,9 +23,10 @@ import SharePost from "../components/SharePost";
 
 const Container = styled("div")`
   width: 100%;
-  height: 92.5vh;
+  height: 94.5vh;
   display: flex;
   overflow: scroll;
+  font-family: Avenir;
 
   @media (max-width: 600px) {
     flex-direction: column;
@@ -70,7 +71,7 @@ const PersonEntry = styled("div")`
 `;
 
 const InteractionContainer = styled("div")`
-  border-top: 1px dotted #c3c9c9;
+  border-right: 1px dotted #c3c9c9;
   padding-top: 15px;
   margin-top: 15px;
   display: flex;
@@ -191,6 +192,11 @@ export default class StoriesPage extends React.Component {
     const { selectedFieldNames } = this.state;
     return (
       <>
+        {/* <div
+          className={css`
+            height: 200px;
+          `}
+        ></div> */}
         <Container>
           <FiltersContainer
             className={css`
@@ -207,6 +213,8 @@ export default class StoriesPage extends React.Component {
               position: sticky;
               top: 0;
               transition: all 300ms ease-in-out;
+              border-right: 1px solid #212529;
+
               @media (max-width: 600px) {
                 padding-top: 0;
                 width: 100%;
@@ -219,7 +227,7 @@ export default class StoriesPage extends React.Component {
           >
             <div onClick={this.toggleFilters} className={css``}>
               Filters{" "}
-              <span
+              {/* <span
                 className={css`
                   writing-mode: vertical-rl;
                   text-orientation: mixed;
@@ -230,9 +238,14 @@ export default class StoriesPage extends React.Component {
                 `}
               >
                 {this.state.filtersOpen ? "‹" : "›"}
-              </span>
+              </span> */}
             </div>
-            <div>
+            <div
+              className={css`
+                font-size: 20px;
+                line-height: 40px;
+              `}
+            >
               {filterfieldNames.map((element) => (
                 <FilterDropdown {...element} onClick={this.onFilterClick} />
               ))}
@@ -250,6 +263,7 @@ export default class StoriesPage extends React.Component {
                 height: 100%;
                 width: 100%;
                 overflow: auto;
+                padding: 20px;
               `}
               onScroll={this.handleStoriesScroll}
               ref="scrollview"

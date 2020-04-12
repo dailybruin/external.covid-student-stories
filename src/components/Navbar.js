@@ -4,14 +4,22 @@ import { Link } from "react-router-dom";
 import { Element } from "react-scroll";
 import { css } from "emotion";
 
+const mediaQueries = {
+  mobile: "@media (max-width: 700px)",
+  notMobile: "@media (min-width: 701px)",
+  tablet: "@media (max-width: 900px)",
+};
+const { mobile } = mediaQueries;
+
 const NavbarStyled = styled("div")`
-  height: 7.5vh;
+  height: 5.5vh;
   display: flex;
   justify-content: space-between;
-  background-color: #586572;
+  background-color: #6d6b67;
   box-sizing: border-box;
   padding: 0 3em;
   align-items: center;
+  overflow-x: scroll;
 `;
 
 const StyledLink = styled(Link)`
@@ -40,6 +48,9 @@ export default class Navbar extends React.Component {
           position: sticky;
           top: 0;
           z-index: 100000;
+          ${mobile} {
+            font-size: 12px;
+          }
         `}
       >
         <NavbarStyled>

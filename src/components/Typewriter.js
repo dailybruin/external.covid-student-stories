@@ -14,7 +14,6 @@ const BigTitle = styled("div")`
   font-size: 65px;
   font-weight: 900;
   color: white;
-  padding-top: 20px;
   ${mobile} {
     font-size: 24px;
     padding: 5px;
@@ -25,7 +24,7 @@ export default class Typewriter extends React.Component {
   render() {
     return (
       <BigTitle>
-        <Typed strings={["Unfinished Stories"]} typeSpeed={80} />
+        <Typed strings={["Unfinished Stories"]} typeSpeed={120} />
       </BigTitle>
     );
   }

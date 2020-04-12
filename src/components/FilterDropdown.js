@@ -13,7 +13,7 @@ import { SymbolDef, AST_DefClass } from "terser";
 fieldName: string
 elements: string[]
 */
-const filterField = styled("div")`
+const FilterField = styled("div")`
   font-family: "Avenir";
 `;
 
@@ -22,7 +22,7 @@ export default class FilterDropdown extends React.Component {
     super(props);
     this.state = {
       expanded: false,
-      selected: ["All"]
+      selected: ["All"],
     };
   }
 
@@ -47,11 +47,22 @@ export default class FilterDropdown extends React.Component {
     const { fieldName, column, categories, onClick } = this.props;
     return (
       <>
-        <div onClick={() => this.setState({ expanded: !expanded })}>
-          {this.setFilterArrow(fieldName, expanded)}
-          <filterField>
+        <div
+          onClick={() => this.setState({ expanded: !expanded })}
+          className={css`
+            display: flex;
+          `}
+        >
+          <div
+            className={css`
+              padding-right: 10px;
+            `}
+          >
+            {this.setFilterArrow(fieldName, expanded)}
+          </div>
+          <FilterField>
             <b>{fieldName}</b>
-          </filterField>
+          </FilterField>
         </div>
         {expanded &&
           categories.map((category, idx) => (
@@ -71,14 +82,25 @@ export default class FilterDropdown extends React.Component {
                       onClick(column, joined);
                     }
                   } else {
-                    var newState = selected.filter(x => x != category);
+                    var newState = selected.filter((x) => x != category);
                     this.setState({ selected: newState });
                     onClick(column, newState);
                   }
                 }}
+                className={css`
+                  padding-left: 25px;
+                  display: flex;
+                  align-items: center;
+                `}
               >
-                {this.setIcon(category, selected)}
-                {category}
+                <div
+                  className={css`
+                    padding-right: 10px;
+                  `}
+                >
+                  {this.setIcon(category, selected)}
+                </div>
+                <div>{category}</div>
               </div>
             </div>
           ))}

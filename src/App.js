@@ -4,8 +4,7 @@ import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import { Link as ScrollLink, scroller } from "react-scroll";
 import Navbar from "./components/Navbar";
 import Title from "./components/Title";
-import styled from "styled-components";
-import { css } from "emotion";
+import { useTransition, animated } from "react-spring";
 
 /*
 school	

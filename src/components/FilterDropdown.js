@@ -51,6 +51,7 @@ export default class FilterDropdown extends React.Component {
           onClick={() => this.setState({ expanded: !expanded })}
           className={css`
             display: flex;
+            cursor: pointer;
           `}
         >
           <div
@@ -91,6 +92,7 @@ export default class FilterDropdown extends React.Component {
                   padding-left: 25px;
                   display: flex;
                   align-items: center;
+                  cursor: pointer;
                 `}
               >
                 <div

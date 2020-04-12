@@ -63,32 +63,30 @@ export function filterAllowsShow(filterState, row) {
 
 const MAP_SELECTION_YEAR = swapMap(MAP_year_to_yearName);
 
-export function getQueryString(responseSelections) {
+export function getQueryString(
+  responseSelections,
+  selectedSort,
+  selectedReactSort
+) {
   if (!responseSelections) return "";
   let queryString = "";
-  console.log(responseSelections);
-  const yearObject = responseSelections.find(e => e.column == "year");
-  const schoolObject = responseSelections.find(e => e.column == "school");
-  console.log(yearObject);
-  console.log(schoolObject);
-  console.log(schoolObject.selections[0] != "All");
+  const yearObject = responseSelections.find((e) => e.column == "year");
+  const schoolObject = responseSelections.find((e) => e.column == "school");
 
   if (yearObject.selections[0] != "All") {
-    console.log("yearobject");
-    console.log(yearObject);
     queryString +=
       "year=" +
-      yearObject.selections.map(sel => MAP_SELECTION_YEAR[sel]).join("+");
+      yearObject.selections.map((sel) => MAP_SELECTION_YEAR[sel]).join("+");
   }
 
   if (schoolObject.selections[0] != "All") {
-    console.log("schoolobject");
-    console.log(schoolObject);
     if (queryString != "") {
       queryString += "&";
     }
     queryString += "school=" + schoolObject.selections.join("+");
   }
-  console.log(queryString);
+
+  if (queryString != "") queryString += "&";
+  queryString += `sort=${selectedSort}&reax=${selectedReactSort}`;
   return queryString;
 }

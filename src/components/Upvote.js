@@ -102,9 +102,9 @@ function renderReacts(reacts) {
     >
       <div
         className={css`
-          width: ${50}px;
+          width: ${22 * finalObjects.length}px;
           box-sizing: content-box;
-          margin-left: 10px;
+          margin: 0 10px;
         `}
       >
         {finalObjects.map((obj) => (
@@ -321,6 +321,16 @@ export default class Upvote extends React.Component {
             </div>
           </Like>
           {renderReacts(this.state.reacts)}
+          {this.state.reacts.total > 0 && (
+            <div
+              className={css`
+                font-size: 14px;
+                margin-bottom: -3px;
+              `}
+            >
+              {this.state.reacts.total}
+            </div>
+          )}
         </div>
       </>
     );

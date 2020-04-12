@@ -1,3 +1,10 @@
+import like from "../images/thumbs-up.png";
+import love from "../images/love.png";
+import haha from "../images/haha.png";
+import wow from "../images/waow.png";
+import sad from "../images/big-simp.png";
+import angry from "../images/amgery.png";
+
 /*
  * PROPS
  * fieldName: name of field to display in filters bar
@@ -54,4 +61,17 @@ export const responseColumns = [
   //   type: "responseElse",
   //   question: "Is there anything we didn't ask that you would like to share?"
   // },
+];
+
+export const sortOptions = [
+  { value: 0, label: "latest" },
+  { value: 1, label: "top" },
+  { value: 2, label: "hot" },
+];
+
+export const reactSortOptions = [
+  { value: 3, label: "like", img: like },
+  { value: 1, label: "love", img: love },
+  { value: 2, label: "sad", img: sad },
+  { value: 4, label: "angry", img: angry },
 ];

@@ -3,19 +3,28 @@ import styled from "styled-components";
 import { css } from "emotion";
 import FilterDropdown from "../components/FilterDropdown";
 import Masonry from "react-masonry-css";
+import Select from "react-select";
+import { SortSelect, ReactSortSelect } from "../components/SortButtons";
 import {
   filterAllowsShow,
   selectionMatchesEntry,
   getQueryString,
 } from "../utils/functions";
-import { MAP_year_to_yearName } from "../utils/mappings";
-import { filterfieldNames, responseColumns } from "../utils/properties";
+import {
+  MAP_year_to_yearName,
+  MAP_reaction_to_label,
+  MAP_sort_to_label,
+} from "../utils/mappings";
+import {
+  filterfieldNames,
+  responseColumns,
+  reactSortOptions,
+  sortOptions,
+} from "../utils/properties";
 import { isElementOfType } from "react-dom/test-utils";
 import Upvote from "../components/Upvote.js";
 import debounce from "lodash.debounce";
 import axios from "axios";
-import SearchableDropdown from "../components/Searchable";
-import Select from "react-select";
 import anon_profile from "../images/anon.jpg";
 import "./masonry.css";
 import SharePost from "../components/SharePost";
@@ -88,7 +97,16 @@ const InteractionContainer = styled("div")`
   align-items: center;
   justify-content: space-between;
 `;
-
+const Hdr = styled("div")`
+  font-size: 30px;
+  margin-bottom: 5px;
+  margin-top: 15px;
+  ${mobile} {
+    margin-top: 10px;
+    margin-bottom: 3px;
+    font-size: 16px;
+  }
+`;
 export default class StoriesPage extends React.Component {
   constructor(props) {
     super(props);
@@ -98,12 +116,8 @@ export default class StoriesPage extends React.Component {
         selections: ["All"],
         key: key,
       })),
-      sortOptions: [
-        { value: "recent", label: "most recent" },
-        { value: "reacted", label: "most reacted" },
-        { value: "random", label: "random" },
-      ],
-      selectedSort: null,
+      selectedReactionSort: 0, // 0 means latest
+      selectedSort: 0, // 0 means no sort
       stories: [],
       currPage: 1,
       lazyload: {
@@ -126,10 +140,19 @@ export default class StoriesPage extends React.Component {
 
   componentWillMount() {
     // Loads some users on initial load
-    this.loadStories(getQueryString(this.state.selectedFieldNames));
+    this.loadStories(
+      getQueryString(
+        this.state.selectedFieldNames,
+        this.state.selectedSort,
+        this.state.selectedReactionSort
+      )
+    );
   }
 
   loadStories(queryString) {
+    console.log(
+      `https://covidstories.dailybruin.com/stories/?${queryString}&i=${this.state.currPage}`
+    );
     this.setState({ isLoading: true }, () => {
       axios(
         `https://covidstories.dailybruin.com/stories/?${queryString}&i=${this.state.currPage}`
@@ -160,12 +183,17 @@ export default class StoriesPage extends React.Component {
     const { error, isLoading, hasMore } = this.state.lazyload;
     if (error || isLoading || !hasMore) return;
     const element = this.refs.scrollview;
-
     if (
       element.scrollHeight - element.scrollTop - 1000 <=
       element.clientHeight
     ) {
-      loadStories(getQueryString(this.state.selectedFieldNames));
+      loadStories(
+        getQueryString(
+          this.state.selectedFieldNames,
+          this.state.selectedSort,
+          this.state.selectedReactionSort
+        )
+      );
     }
   }, 50);
 
@@ -181,7 +209,14 @@ export default class StoriesPage extends React.Component {
     selectedfieldName.selections = selections;
     this.setState(
       { selectedFieldNames: newSelectedFieldNames, stories: [], currPage: 1 },
-      () => this.loadStories(getQueryString(newSelectedFieldNames))
+      () =>
+        this.loadStories(
+          getQueryString(
+            newSelectedFieldNames,
+            this.state.selectedSort,
+            this.state.selectedReactionSort
+          )
+        )
     );
   }
 
@@ -216,7 +251,6 @@ export default class StoriesPage extends React.Component {
               flex-direction: column;
               flex-shrink: 0;
               box-sizing: border-box;
-              cursor: pointer;
               color: #626969;
               position: sticky;
               top: 0;
@@ -225,17 +259,17 @@ export default class StoriesPage extends React.Component {
 
               ${mobile} {
                 padding-top: 0;
-                padding-left: 1em;
+                padding-left: 0.8em;
                 width: 100%;
                 overflow: hidden;
                 border-bottom: 1px solid #212529;
                 background-color: #fff;
-                height: ${this.state.filtersOpen ? "92.5vh" : "30px"};
+                height: ${this.state.filtersOpen ? "92.5vh" : "22px"};
               }
             `}
           >
             <div onClick={this.toggleFilters} className={css``}>
-              Filters{" "}
+              Filters / Sorting
               {/* <span
                 className={css`
                   writing-mode: vertical-rl;
@@ -259,15 +293,64 @@ export default class StoriesPage extends React.Component {
                 }
               `}
             >
+              <Hdr>Sort</Hdr>
+              <div
+                className={css`
+                  padding-left: 20px;
+                `}
+              >
+                <SortSelect
+                  options={sortOptions}
+                  placeholder="sort by..."
+                  // value={MAP_sort_to_label[this.state.selectedSort]}
+                  onChange={(val) => {
+                    this.setState(
+                      {
+                        selectedSort: val.value,
+                        stories: [],
+                        currPage: 1,
+                      },
+                      () => {
+                        this.loadStories(
+                          getQueryString(
+                            this.state.selectedFieldNames,
+                            val.value,
+                            this.state.selectedReactionSort
+                          )
+                        );
+                      }
+                    );
+                  }}
+                />
+                <ReactSortSelect
+                  options={reactSortOptions}
+                  placeholder="sort by reacc..."
+                  // value={MAP_reaction_to_label[this.state.selectedReactionSort]}
+                  onChange={(val) => {
+                    this.setState(
+                      {
+                        selectedReactionSort: val.value,
+                        stories: [],
+                        currPage: 1,
+                      },
+                      () => {
+                        this.loadStories(
+                          getQueryString(
+                            this.state.selectedFieldNames,
+                            this.state.selectedSort,
+                            val.value
+                          )
+                        );
+                      }
+                    );
+                  }}
+                />
+              </div>
+              <Hdr>Filter</Hdr>
+
               {filterfieldNames.map((element) => (
                 <FilterDropdown {...element} onClick={this.onFilterClick} />
               ))}
-              <Select
-                options={this.state.sortOptions}
-                placeholder="sort by..."
-                value={this.state.selectedSort}
-                onChange={this.onSortClick}
-              />
             </div>
           </FiltersContainer>
           <ResponsesContainer>

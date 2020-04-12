@@ -8,6 +8,7 @@ import haha from "../images/haha.png";
 import wow from "../images/waow.png";
 import sad from "../images/big-simp.png";
 import angry from "../images/amgery.png";
+import axios from "axios";
 
 const cookies = new Cookies();
 var images = [
@@ -61,30 +62,57 @@ const Image = styled.img`
 export default class Upvote extends React.Component {
   constructor(props) {
     super(props);
+    this.PK = this.props.id;
     var id = "";
     if (typeof cookies.get(this.props.id) !== undefined)
       id = cookies.get(this.props.id);
     var value = cookies.get(this.props.id);
-    console.log("value: " + value);
     this.state = {
       selected: id,
       open: false,
     };
     this.timer = null;
+    this.likes = this.props.like;
+    this.loves = this.props.love;
+    this.sads = this.props.sad;
+    this.angrys = this.props.angry;
+    this.totalReacts = this.props.total;
     this.emotionChosen = this.emotionChosen.bind(this);
     this.renderLikeButton = this.renderLikeButton.bind(this);
     this.likeHandler = this.likeHandler.bind(this);
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
     this.handleMouseClose = this.handleMouseClose.bind(this);
+    this.getEmotionNumber = this.getEmotionNumber.bind(this);
   }
   emotionChosen(emotion) {
-    this.setState({ selected: emotion });
+    this.setState({ selected: emotion }, () => {
+      axios.post(`https://covidstories.dailybruin.com/stories/react/`, {
+        pk: this.PK,
+        react: this.getEmotionNumber(emotion),
+      });
+      this.totalReacts++;
+    });
+
     cookies.set(this.props.id, emotion);
     if (this.state.open) {
       clearTimeout(this.timer);
       this.timer = setTimeout(() => {
         this.setState({ open: false });
       }, 250);
+    }
+  }
+  getEmotionNumber(emotion) {
+    switch (emotion) {
+      case "love":
+        return 0;
+      case "sad":
+        return 1;
+      case "like":
+        return 2;
+      case "angry":
+        return 3;
+      default:
+        return 2;
     }
   }
   renderLikeButton() {
@@ -112,9 +140,20 @@ export default class Upvote extends React.Component {
   }
   likeHandler() {
     if (this.state.selected === "") {
-      this.setState({ selected: "like" });
+      this.setState({ selected: "like" }, () => {
+        axios.post(`https://covidstories.dailybruin.com/stories/react/`, {
+          pk: this.PK,
+          react: 2,
+        });
+      });
       cookies.set(this.props.id, "like");
+      this.totalReacts++;
     } else {
+      axios.post(`https://covidstories.dailybruin.com/stories/react/`, {
+        pk: this.PK,
+        old_react: this.getEmotionNumber(this.state.selected),
+      });
+      this.totalReacts--;
       this.setState({ selected: "" });
       cookies.set(this.props.id, "");
     }
@@ -141,28 +180,31 @@ export default class Upvote extends React.Component {
     ));
     return (
       <>
-        <div
-          className={css`
-            display: flex;
-          `}
-        >
-          <b>Reacc:</b>
-          <Like
-            onMouseEnter={this.handleMouseEnter}
-            onMouseLeave={this.handleMouseClose}
-            open={this.state.open}
+        <div>
+          <div>{this.totalReacts}</div>
+          <div
+            className={css`
+              display: flex;
+            `}
           >
-            {<ImageContainer open={this.state.open}>{img}</ImageContainer>}
-
-            <div
-              onClick={this.likeHandler}
-              className={css`
-                text-align: center;
-              `}
+            <b>Reacc:</b>
+            <Like
+              onMouseEnter={this.handleMouseEnter}
+              onMouseLeave={this.handleMouseClose}
+              open={this.state.open}
             >
-              {this.renderLikeButton()}
-            </div>
-          </Like>
+              {<ImageContainer open={this.state.open}>{img}</ImageContainer>}
+
+              <div
+                onClick={this.likeHandler}
+                className={css`
+                  text-align: center;
+                `}
+              >
+                {this.renderLikeButton()}
+              </div>
+            </Like>
+          </div>
         </div>
       </>
     );

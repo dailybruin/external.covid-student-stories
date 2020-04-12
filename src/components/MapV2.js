@@ -122,7 +122,6 @@ class Map extends React.PureComponent {
         mapStyle="mapbox://styles/mapbox/light-v9"
         accessToken={MAPBOX_TOKEN}
         onViewportChange={this.onViewportChange}
-        captureScroll="false"
         {...viewport}
       >
         <Cluster

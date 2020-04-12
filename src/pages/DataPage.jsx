@@ -152,8 +152,8 @@ export default class DataPage extends React.Component {
               <div style={{ fontSize: 100, fontWeight: "bold" }}> {count} </div>
               students know someone who has tested positive for Covid-19.
             </NumberContainer>
+            <Map component={Map} count={count} citiesList={cities} />
           </div>
-          <Map component={Map} count={count} citiesList={cities} />
         </ScrollContainer>
       </>
     );

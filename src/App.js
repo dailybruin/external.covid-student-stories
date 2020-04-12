@@ -6,6 +6,7 @@ import {
   Switch,
   Link,
   useHistory,
+  useLocation,
 } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Title from "./components/Title";
@@ -23,18 +24,21 @@ comfortablePublish	knowPositive	currentLocation
 
 function Bottom() {
   let history = useHistory();
+  let location = useLocation();
   console.log(history);
   console.log("Fuck");
+  console.log(location.pathname);
   useEffect(() => {
     window.addEventListener("scroll", handleStoriesScroll);
   });
   const handleStoriesScroll = debounce((e) => {
     if (
-      window.innerHeight + window.scrollY + 20 >=
-      document.body.offsetHeight
+      window.innerHeight + window.scrollY + 20 >= document.body.offsetHeight &&
+      location.pathname == "/"
     ) {
       setTimeout(function () {
         history.push("/stories");
+        window.removeEventListener("scroll", handleStoriesScroll);
       }, 500);
     }
   }, 50);

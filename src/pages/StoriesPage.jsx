@@ -248,7 +248,8 @@ export default class StoriesPage extends React.Component {
                               )
                           )}
                           <InteractionContainer>
-                            <Upvote id={i}></Upvote>
+                           
+                            <Upvote id={i} love ={row.reactLove} sad ={row.reactSad} like ={row.reactUp} angry ={row.reactAngry} total={row.reactTotal}></Upvote>
                             <SharePost row={row} />
                           </InteractionContainer>
                         </PersonEntry>

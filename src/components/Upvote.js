@@ -63,7 +63,6 @@ export default class Upvote extends React.Component {
   constructor(props) {
     super(props);
     this.PK = this.props.id;
-    console.log(this.PK);
     var id = "";
     if (typeof cookies.get(this.props.id) !== undefined)
       id = cookies.get(this.props.id);
@@ -73,6 +72,11 @@ export default class Upvote extends React.Component {
       open: false,
     };
     this.timer = null;
+    this.likes = this.props.like;
+    this.loves = this.props.love;
+    this.sads = this.props.sad;
+    this.angrys = this.props.angry;
+    this.totalReacts = this.props.total;
     this.emotionChosen = this.emotionChosen.bind(this);
     this.renderLikeButton = this.renderLikeButton.bind(this);
     this.likeHandler = this.likeHandler.bind(this);
@@ -86,6 +90,7 @@ export default class Upvote extends React.Component {
         pk: this.PK,
         react: this.getEmotionNumber(emotion),
       });
+      this.totalReacts++;
     });
 
     cookies.set(this.props.id, emotion);
@@ -138,16 +143,17 @@ export default class Upvote extends React.Component {
       this.setState({ selected: "like" }, () => {
         axios.post(`https://covidstories.dailybruin.com/stories/react/`, {
           pk: this.PK,
-          old_react: 2,
+          react: 2,
         });
       });
       cookies.set(this.props.id, "like");
+      this.totalReacts++;
     } else {
       axios.post(`https://covidstories.dailybruin.com/stories/react/`, {
         pk: this.PK,
         old_react: this.getEmotionNumber(this.state.selected),
       });
-
+      this.totalReacts--;
       this.setState({ selected: "" });
       cookies.set(this.props.id, "");
     }
@@ -174,28 +180,31 @@ export default class Upvote extends React.Component {
     ));
     return (
       <>
-        <div
-          className={css`
-            display: flex;
-          `}
-        >
-          <b>Reacc:</b>
-          <Like
-            onMouseEnter={this.handleMouseEnter}
-            onMouseLeave={this.handleMouseClose}
-            open={this.state.open}
+        <div>
+          <div>{this.totalReacts}</div>
+          <div
+            className={css`
+              display: flex;
+            `}
           >
-            {<ImageContainer open={this.state.open}>{img}</ImageContainer>}
-
-            <div
-              onClick={this.likeHandler}
-              className={css`
-                text-align: center;
-              `}
+            <b>Reacc:</b>
+            <Like
+              onMouseEnter={this.handleMouseEnter}
+              onMouseLeave={this.handleMouseClose}
+              open={this.state.open}
             >
-              {this.renderLikeButton()}
-            </div>
-          </Like>
+              {<ImageContainer open={this.state.open}>{img}</ImageContainer>}
+
+              <div
+                onClick={this.likeHandler}
+                className={css`
+                  text-align: center;
+                `}
+              >
+                {this.renderLikeButton()}
+              </div>
+            </Like>
+          </div>
         </div>
       </>
     );

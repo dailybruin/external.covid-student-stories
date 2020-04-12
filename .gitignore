@@ -4,6 +4,7 @@ node_modules
 # dependencies
 node_modules/
 yarn.lock
+*.lock
 
 # Logs
 logs

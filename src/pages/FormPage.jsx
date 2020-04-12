@@ -625,7 +625,10 @@ class FormPage extends React.Component {
           </p>
         </Top>
         <hr />
-        <form>
+        <form
+          action="https://covidstories.dailybruin.com/stories/create/"
+          method="POST"
+        >
           {questions}
           <input type="submit" value="Submit" />
         </form>

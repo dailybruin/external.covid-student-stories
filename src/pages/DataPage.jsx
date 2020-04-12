@@ -103,11 +103,7 @@ export default class DataPage extends React.Component {
         count += 1;
       }
     }
-    for (var i = 0; i < data.length; i++) {
-      if (data[i].hometown.indexOf(",") > -1) {
-        cities.push(data[i].hometown);
-      }
-    }
+
     return (
       <>
         <ScrollContainer>
@@ -151,21 +147,21 @@ export default class DataPage extends React.Component {
                   students know someone who has tested positive for Covid-19.
                 </NumberContainer>
               </div>
-              <Map component={Map} count={count} citiesList={cities} />
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "100vh",
+                }}
+              >
+                <Map component={Map} />
+              </div>
+
               <WordCloud />
             </div>
           )}
         </ScrollContainer>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100vh",
-          }}
-        >
-          <Map component={Map} count={count} citiesList={cities} />
-        </div>
       </>
     );
   }

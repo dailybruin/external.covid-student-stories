@@ -7,7 +7,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import cityPointsUS from "city-points-us";
 import states from "us-state-converter";
 import styled from "styled-components";
-
+import axios from "axios";
 const MAPBOX_TOKEN =
   "pk.eyJ1IjoiaHVhbmdrYTk3IiwiYSI6ImNrMmw4c2V2YzA0bWUzZG83M2EzN2NjZ2wifQ.ICymOqR-bnQFjDcFtS3xCA"; // Set your mapbox token here
 const style = {
@@ -65,6 +65,7 @@ class Map extends React.PureComponent {
         longitude: -100,
         zoom: 2.8,
       },
+      data: {},
     };
 
     this._cluster = React.createRef();
@@ -102,24 +103,55 @@ class Map extends React.PureComponent {
   matchLocation(locations) {
     var location = locations.split(",");
 
-    var city = states.abbr(location[1].trim());
+    var state = states.abbr(location[1].trim());
 
     return cityPointsUS.features.find(
       (point) =>
-        point.properties.state === city &&
+        point.properties.state === state &&
         point.properties.city.toLowerCase().trim() ===
           location[0].toLowerCase().trim()
     );
   }
 
-  render() {
-    const { viewport } = this.state;
-    let temp = this.props.citiesList;
+  componentWillMount() {
+    // Loads some users on initial load
+    this.loadStories();
+  }
 
-    let raw_points = temp.map(this.matchLocation);
+  loadStories() {
+    this.setState({ isLoading: true }, () => {
+      axios(`https://covidstories.dailybruin.com/stories`)
+        .then((results) => {
+          console.log("THIS IS RESULTS data ", results.data);
+          const newStories = results.data;
+          this.setState({
+            data: newStories,
+          });
+          this.setState({
+            isLoading: false,
+          });
+        })
+        .catch((err) => {
+          this.setState({});
+        });
+    });
+  }
+
+  render() {
+    const { viewport, data } = this.state;
+    var cities = [];
+    for (var i = 0; i < data.length; i++) {
+      console.log("TEST CITY ", data[i].fields.city);
+      cities.push(data[i].fields.city);
+    }
+    console.log("THIS IS CITIES ", cities);
+
+    let raw_points = cities.map(this.matchLocation);
+    console.log("THIS IS RAW POINTS ", raw_points);
     var points = raw_points.filter(function (x) {
       return x !== undefined;
     });
+    console.log("THIS IS POINTS ", points);
 
     points.map((point, index) => (point.id = index));
     return (

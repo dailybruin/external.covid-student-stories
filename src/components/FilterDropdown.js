@@ -1,29 +1,44 @@
 import React from "react";
 import { css } from "emotion";
+import styled from "styled-components";
 import { IoIosCheckmarkCircleOutline } from "react-icons/io";
 import { IoIosCheckmarkCircle } from "react-icons/io";
+import { IoIosSquareOutline } from "react-icons/io";
+import { IoIosSquare } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
+import { IoIosArrowDown } from "react-icons/io";
 import { SymbolDef, AST_DefClass } from "terser";
 
 /*
 fieldName: string
 elements: string[]
 */
+const filterField = styled("div")`
+  font-family: "Avenir";
+`;
 
 export default class FilterDropdown extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       expanded: false,
-      selected: ["All"],
+      selected: ["All"]
     };
   }
 
   setIcon(category, selected) {
     if (selected.includes(category)) {
-      return <IoIosCheckmarkCircle></IoIosCheckmarkCircle>;
+      return <IoIosSquare></IoIosSquare>;
     } else {
-      return <IoIosCheckmarkCircleOutline></IoIosCheckmarkCircleOutline>;
+      return <IoIosSquareOutline></IoIosSquareOutline>;
+    }
+  }
+
+  setFilterArrow(filterFieldName, expanded) {
+    if (expanded) {
+      return <IoIosArrowDown> </IoIosArrowDown>;
+    } else {
+      return <IoIosArrowForward> </IoIosArrowForward>;
     }
   }
 
@@ -33,9 +48,10 @@ export default class FilterDropdown extends React.Component {
     return (
       <>
         <div onClick={() => this.setState({ expanded: !expanded })}>
-          <b>
-            {fieldName} ({selected})
-          </b>
+          {this.setFilterArrow(fieldName, expanded)}
+          <filterField>
+            <b>{fieldName}</b>
+          </filterField>
         </div>
         {expanded &&
           categories.map((category, idx) => (
@@ -55,7 +71,7 @@ export default class FilterDropdown extends React.Component {
                       onClick(column, joined);
                     }
                   } else {
-                    var newState = selected.filter((x) => x != category);
+                    var newState = selected.filter(x => x != category);
                     this.setState({ selected: newState });
                     onClick(column, newState);
                   }

@@ -67,14 +67,27 @@ export function getQueryString(responseSelections) {
   if (!responseSelections) return "";
   let queryString = "";
   console.log(responseSelections);
-  const yearObject = responseSelections.find((e) => e.column == "year");
+  const yearObject = responseSelections.find(e => e.column == "year");
+  const schoolObject = responseSelections.find(e => e.column == "school");
   console.log(yearObject);
-  if (yearObject.selection != "All") {
+  console.log(schoolObject);
+  console.log(schoolObject.selections[0] != "All");
+
+  if (yearObject.selections[0] != "All") {
     console.log("yearobject");
     console.log(yearObject);
     queryString +=
       "year=" +
-      yearObject.selections.map((sel) => MAP_SELECTION_YEAR[sel]).join("+");
+      yearObject.selections.map(sel => MAP_SELECTION_YEAR[sel]).join("+");
+  }
+
+  if (schoolObject.selections[0] != "All") {
+    console.log("schoolobject");
+    console.log(schoolObject);
+    if (queryString != "") {
+      queryString += "&";
+    }
+    queryString += "school=" + schoolObject.selections.join("+");
   }
   console.log(queryString);
   return queryString;

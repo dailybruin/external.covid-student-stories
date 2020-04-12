@@ -1,4 +1,25 @@
-var stories = "";
+var data = "";
+
+function getData(url) {
+  fetch(url, {
+    method: "GET",
+  }).then((results) => {
+    return results.json();
+  });
+}
+
+data = getData("https://covidstories.dailybruin.com/stories/");
+
+// function httpGet(theUrl) {
+//   var xmlHttp = new XMLHttpRequest();
+//   xmlHttp.open("GET", theUrl, false); // false for synchronous request
+//   return xmlHttp.responseText;
+// }
+
+// data = httpGet("https://covidstories.dailybruin.com/stories/");
+
+console.log(data);
+console.log(typeof data);
 
 const words = [
   {

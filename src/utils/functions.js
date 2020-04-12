@@ -1,3 +1,5 @@
+import { MAP_year_to_yearName, swapMap } from "./mappings";
+
 /*
  * This file is used to store utility functions.
  */
@@ -31,7 +33,7 @@ export function preprocessSheetsData(rawData) {
  * i.e. "Fourth-year+" which you click, is equivalent to "Fourth-year and higher" from the Google Form.
  */
 export function selectionMatchesEntry(column, selection, entry) {
-  console.log([selection, entry]);
+  // console.log([selection, entry]);
   if (selection === entry) return true;
   switch (column) {
     case "year":
@@ -57,4 +59,23 @@ export function filterAllowsShow(filterState, row) {
       return false;
   }
   return true;
+}
+
+const MAP_SELECTION_YEAR = swapMap(MAP_year_to_yearName);
+
+export function getQueryString(responseSelections) {
+  if (!responseSelections) return "";
+  let queryString = "";
+  console.log(responseSelections);
+  const yearObject = responseSelections.find((e) => e.column == "year");
+  console.log(yearObject);
+  if (yearObject.selection != "All") {
+    console.log("yearobject");
+    console.log(yearObject);
+    queryString +=
+      "year=" +
+      yearObject.selections.map((sel) => MAP_SELECTION_YEAR[sel]).join("+");
+  }
+  console.log(queryString);
+  return queryString;
 }

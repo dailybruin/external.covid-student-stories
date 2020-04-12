@@ -3,7 +3,11 @@ import styled from "styled-components";
 import { css } from "emotion";
 import FilterDropdown from "../components/FilterDropdown";
 import Masonry from "react-masonry-css";
-import { filterAllowsShow, selectionMatchesEntry } from "../utils/functions";
+import {
+  filterAllowsShow,
+  selectionMatchesEntry,
+  getQueryString,
+} from "../utils/functions";
 import { MAP_year_to_yearName } from "../utils/mappings";
 import { filterfieldNames, responseColumns } from "../utils/properties";
 import { isElementOfType } from "react-dom/test-utils";
@@ -110,7 +114,7 @@ export default class StoriesPage extends React.Component {
     this.state = {
       selectedFieldNames: filterfieldNames.map((element, key) => ({
         column: element.column,
-        selection: "All",
+        selections: ["All"],
         key: key,
       })),
       responseSelections: responseColumns.map((element, key) => ({
@@ -119,6 +123,7 @@ export default class StoriesPage extends React.Component {
         selected: true,
         key: element.key,
       })),
+      tab: 0,
       stories: [],
       currPage: 1,
       lazyload: {
@@ -126,7 +131,6 @@ export default class StoriesPage extends React.Component {
         hasMore: true,
         isLoading: false,
       },
-      tab: 0,
     };
     this.onFilterClick = this.onFilterClick.bind(this);
     this.onQuestionClick = this.onQuestionClick.bind(this);
@@ -135,18 +139,16 @@ export default class StoriesPage extends React.Component {
 
   componentWillMount() {
     // Loads some users on initial load
-    this.loadStories();
+    this.loadStories(getQueryString(this.state.selectedFieldNames));
   }
 
-  loadStories() {
+  loadStories(queryString) {
     this.setState({ isLoading: true }, () => {
       axios(
-        `https://covidstories.dailybruin.com/stories/?i=${this.state.currPage}`
+        `https://covidstories.dailybruin.com/stories/?${queryString}&i=${this.state.currPage}`
       )
         .then((results) => {
           const newStories = results.data.map((d) => d.fields);
-          console.log(newStories);
-          console.log(this.state);
           this.setState({
             hasMore: true,
             isLoading: false,
@@ -169,7 +171,7 @@ export default class StoriesPage extends React.Component {
     if (error || isLoading || !hasMore) return;
     const element = this.refs.scrollview;
     if (element.scrollHeight - element.scrollTop === element.clientHeight) {
-      loadStories();
+      loadStories(getQueryString(this.state.selectedFieldNames));
     }
   }, 50);
 
@@ -177,13 +179,16 @@ export default class StoriesPage extends React.Component {
    * what to do when the filter is clicked.
    * (this passed in as a callback into the filter buttons)
    */
-  onFilterClick(column, selection) {
+  onFilterClick(column, selections) {
     let newSelectedFieldNames = this.state.selectedFieldNames;
     let selectedfieldName = newSelectedFieldNames.find(
       (element) => element.column == column
     );
-    selectedfieldName.selection = selection;
-    this.setState({ selectedFieldNames: newSelectedFieldNames });
+    selectedfieldName.selections = selections;
+    this.setState(
+      { selectedFieldNames: newSelectedFieldNames, stories: [], currPage: 1 },
+      () => this.loadStories(getQueryString(newSelectedFieldNames))
+    );
   }
 
   /*
@@ -194,7 +199,6 @@ export default class StoriesPage extends React.Component {
     let responseSelected = newResponseSelections.find(
       (e) => e.column == element.column
     );
-    console.log(responseSelected.question);
     responseSelected.selected = !responseSelected.selected;
     this.setState({
       responseSelections: newResponseSelections,
@@ -213,15 +217,19 @@ export default class StoriesPage extends React.Component {
     data = data.filter((row) => filterAllowsShow(selectedFieldNames, row));
     return (
       <>
-        <WordCloud></WordCloud>
+        {/* <WordCloud></WordCloud> */}
         <Container>
-          {/*
-        <div>
-          <Tab onClick={() => this.switchTab(0)}>Words</Tab>
-          <Tab onClick={() => this.switchTab(1)}>Stats</Tab>
-        </div>
-        */}
-          <SwipeableViews index={tab} onChangeIndex={() => this.switchTab(tab)}>
+          <div>
+            <Tab onClick={() => this.switchTab(0)}>Words</Tab>
+            <Tab onClick={() => this.switchTab(1)}>Stats</Tab>
+          </div>
+          <SwipeableViews
+            index={tab}
+            onChangeIndex={() => this.switchTab(tab)}
+            className={css`
+              width: 100%;
+            `}
+          >
             <StoriesContainer>
               <FiltersContainer>
                 School

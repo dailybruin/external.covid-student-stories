@@ -4,7 +4,10 @@ import { css } from "emotion";
 import FilterDropdown from "../components/FilterDropdown";
 import ReactList from "react-list";
 import { Pie } from "react-chartjs-2";
+<<<<<<< HEAD
 import Map from "../components/MapV2.js";
+=======
+>>>>>>> master
 
 const StoriesContainer = styled("div")`
   height: 90vh;
@@ -92,20 +95,27 @@ export default class DataPage extends React.Component {
     let { data } = this.props;
     var cities = [];
     const { selectedFields } = this.state;
+<<<<<<< HEAD
     for (var i = 0; i < data.length; i++) {
       if (data[i].hometown.indexOf(",") > -1) {
         cities.push(data[i].hometown);
       }
     }
 
+=======
+>>>>>>> master
     data = data.filter((row) => showData(selectedFields, row));
     var count = 0;
     for (var i = 0; i < data.length; i++) {
       console.log(data[i].comfortablePublish);
+<<<<<<< HEAD
       if (data[i].knowPositive === "Yes") {
         count += 1;
         // cities.push([data[i].hometown]);
       }
+=======
+      if (data[i].knowPositive === "Yes") count += 1;
+>>>>>>> master
     }
 
     return (
@@ -152,7 +162,10 @@ export default class DataPage extends React.Component {
               <div style={{ fontSize: 100, fontWeight: "bold" }}> {count} </div>
               students know someone who has tested positive for Covid-19.
             </NumberContainer>
+<<<<<<< HEAD
             <Map component={Map} count={count} citiesList={cities} />
+=======
+>>>>>>> master
           </div>
         </ScrollContainer>
       </>

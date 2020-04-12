@@ -11,6 +11,7 @@ const AddStoryLink = styled(Link)`
 `;
 
 const TitleMessage = styled("div")`
+  overflow: hidden;
   font-size: 96px;
   padding: 50px;
   font-weight: 900;
@@ -19,6 +20,7 @@ const TitleMessage = styled("div")`
 `;
 
 const ScrollMessage = styled("div")`
+  overflow: hidden;
   position: absolute;
   justify-content: center;
   align-items: center;
@@ -29,12 +31,14 @@ const ScrollMessage = styled("div")`
   box-sizing: border-box;
   color: white;
   background-color: #586572;
-  width: 1680px;
+  width: 100%;
 `;
 
 const TitlePage = styled("div")`
   height: 100vh;
   width: 100%;
+  overflow: hidden !important;
+  text-overflow: clip;
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -44,6 +48,9 @@ const TitlePage = styled("div")`
 `;
 
 const Background = styled("div")`
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
   position: absolute;
   padding-bottom: 500px;
   padding-right: 50px;
@@ -54,6 +61,9 @@ const Background = styled("div")`
 `;
 
 const Wrapping = styled("div")`
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
   position: absolute;
   padding-bottom: 800px;
   padding-right: 50px;
@@ -65,6 +75,9 @@ const Wrapping = styled("div")`
 `;
 
 const SameLine = styled("div")`
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
   position: absolute;
   padding-bottom: 200px;
   padding-right: 50px;

@@ -12,7 +12,7 @@ const mediaQueries = {
 const { mobile } = mediaQueries;
 
 const NavbarStyled = styled("div")`
-  height: 5.5vh;
+  height: 7.5vh;
   display: flex;
   justify-content: space-between;
   background-color: #6d6b67;

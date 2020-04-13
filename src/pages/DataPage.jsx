@@ -16,7 +16,7 @@ const { mobile } = mediaQueries;
 const { tablet } = mediaQueries;
 
 const ScrollContainer = styled("div")`
-  height: 94.5vh;
+  height: 92.5vh;
   width: 100%;
   display: flex;
   flex-direction: column;

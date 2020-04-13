@@ -28,7 +28,7 @@ const mediaQueries = {
 const { mobile } = mediaQueries;
 const Container = styled("div")`
   width: 100%;
-  height: 94.5vh;
+  height: 92.5vh;
   display: flex;
   overflow: scroll;
   font-family: Avenir;

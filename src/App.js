@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { StoriesPage, FormPage, DataPage } from "./pages";
 import {
-  HashRouter as Router,
+  BrowserRouter as Router,
   Route,
   Switch,
   useHistory,

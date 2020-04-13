@@ -143,7 +143,7 @@ export default class StoriesPage extends React.Component {
   loadStories(queryString) {
     this.setState({ isLoading: true }, () => {
       axios(
-        `https://covidstories.dailybruin.com/stories/?${queryString}&i=${this.state.currPage}`
+        `https://covidstories.dailybruin.com/api/stories/?${queryString}&i=${this.state.currPage}`
       )
         .then((results) => {
           const newStories = results.data.map((d) => {

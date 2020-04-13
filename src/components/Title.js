@@ -16,7 +16,7 @@ const { mobile, notMobile, tablet } = mediaQueries;
 
 const AddStoryLink = styled(Link)`
   font-size: 24px;
-  color: black;
+  color: black !important;
   font-weight: 800;
   z-index: 9999;
   background-color: white;
@@ -30,6 +30,7 @@ const AddStoryLink = styled(Link)`
   :hover {
     background-color: gray;
     text-decoration: none;
+    color: black !important;
   }
   :active {
     /* box-shadow: none; */

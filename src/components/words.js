@@ -18,9 +18,6 @@ data = getData("https://covidstories.dailybruin.com/stories/");
 
 // data = httpGet("https://covidstories.dailybruin.com/stories/");
 
-console.log(data);
-console.log(typeof data);
-
 const words = [
   {
     text: "told",

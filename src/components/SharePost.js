@@ -23,7 +23,7 @@ export default class SharePost extends React.Component {
 
     return (
       <FacebookShareButton
-        url={"http://features.dailybruin.com/2020/unfinished-stories"}
+        url={"https://covidstories.dailybruin.com"}
         quote={post}
         hashtag={"UnfinishedStories"}
       >

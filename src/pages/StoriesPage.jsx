@@ -354,6 +354,17 @@ export default class StoriesPage extends React.Component {
               onScroll={this.handleStoriesScroll}
               ref="scrollview"
             >
+              {stories.length == 0 && (
+                <div
+                  className={css`
+                    align-self: center;
+                    text-align: center;
+                    font-size: 18px;
+                  `}
+                >
+                  No results
+                </div>
+              )}
               <Masonry
                 breakpointCols={this.breakpointCols}
                 className="my-masonry-grid"
@@ -393,7 +404,7 @@ export default class StoriesPage extends React.Component {
                                   color: #5e6363;
                                   font-weight: 700;
                                   ${mobile} {
-                                    font-size: 16px;
+                                    font-size: 17px;
                                   }
                                 `}
                               >
@@ -405,7 +416,7 @@ export default class StoriesPage extends React.Component {
                                   margin-top: -4px;
                                   font-size: 14px;
                                   ${mobile} {
-                                    font-size: 12px;
+                                    font-size: 13px;
                                     margin-top: 0;
                                   }
                                 `}

@@ -475,7 +475,6 @@ class FormPage extends React.Component {
     return val;
   };
   submitForm = function (e) {
-    e.preventDefault();
     this.setState({ formSubmitted: true });
     return;
   };

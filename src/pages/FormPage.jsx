@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { colleges, states, state_abbreviations, countries } from "./data";
+import { css } from "emotion";
 import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
 
@@ -36,7 +37,7 @@ const Background = styled("div")`
   width: 100%;
   max-width: 650px;
   padding: 0 20px;
-  padding-top: 140px;
+  padding: 140px 0;
   margin: 50px auto 50px auto;
   font-family: "Roboto";
   hr {
@@ -311,7 +312,7 @@ const ques = [
     ],
     values: ["NW", "SW", "VW", "NA"],
     values: ["NW", "SW", "VW", "NA"],
-    values: ["NW", "SW", "VW", "Prefer not to share"],
+    values: ["NW", "SW", "VW", "NA"],
     other_option: false,
     subquestions: [
       "Financial status",
@@ -334,16 +335,18 @@ const ques = [
     id: 7,
   },
   {
+    name: "responseAffected",
     question: "(Optional) How has COVID-19 affected you?",
     type: LONG_RESPONSE,
-    charLimit: 1250,
+    charLimit: 1000,
     choices: [],
     comment:
-      "This is unlike anything we've experienced before. Tell us about anything and everything. How has your life, or the lives of people around you, changed due to the novel coronavirus pandemic? How has the world changed? 1,250 character limit.",
+      "This is unlike anything we've experienced before. Tell us about anything and everything. How has your life, or the lives of people around you, changed due to the novel coronavirus pandemic? How has the world changed? 1,000 character limit.",
     required: false,
     id: 8,
   },
   {
+    name: "responseCommunity",
     question:
       "(Optional) How has your community responded to the Covid-19 pandemic?",
     type: LONG_RESPONSE,
@@ -355,6 +358,7 @@ const ques = [
     id: 9,
   },
   {
+    name: "responseDoneDifferently",
     question:
       "(Optional) Is there anything you think your school or community could/should have done differently regarding this situation?",
     type: LONG_RESPONSE,
@@ -374,6 +378,7 @@ const ques = [
       "Also, feel free to drop any links to photos, videos, or art that could help tell your story.",
     required: false,
     id: 11,
+    name: "responseElse",
   },
   {
     question:
@@ -385,6 +390,7 @@ const ques = [
       "Other art forms are welcome and appreciated, too! Just make sure what you're submitting has permissions to be shared and utilized on this platform.",
     required: false,
     id: 12,
+    name: "mediaLinks",
   },
   {
     question:
@@ -396,6 +402,7 @@ const ques = [
       "First name, last name, age. If you would like to remain anonymous with your work, let us know here.",
     required: false,
     id: 13,
+    name: "artCredit",
   },
   {
     question:
@@ -407,12 +414,17 @@ const ques = [
     comment: "",
     required: true,
     id: 14,
+    name: "comfortablePublish",
   },
 ];
 class FormPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      responseAffected: "",
+      responseDoneDifferently: "",
+      responseCommunity: "",
+    };
   }
 
   handleChange = (selectedOption) => {
@@ -538,13 +550,43 @@ class FormPage extends React.Component {
         );
       } else if (question.type == LONG_RESPONSE) {
         type = (
-          <LongResponse
-            name={question.name}
-            id={question.id}
-            placeholder="Your Answer"
-            maxlength={question.charLimit}
-            required={question.required}
-          />
+          <>
+            <LongResponse
+              name={question.name}
+              id={question.id}
+              placeholder="Your Answer"
+              maxLength={`${question.charLimit}`}
+              required={question.required}
+              onChange={(e) => {
+                const val = e.target.value;
+                switch (question.name) {
+                  case "responseCommunity":
+                    this.setState({ responseCommunity: val });
+                    break;
+                  case "responseDoneDifferently":
+                    this.setState({ responseDoneDifferently: val });
+                    break;
+                  case "responseAffected":
+                    this.setState({ responseAffected: val });
+                    break;
+                }
+              }}
+            />
+            {question.charLimit && (
+              <div
+                className={css`
+                  float: right;
+                  font-size: 12px;
+                `}
+              >
+                Chars:{" "}
+                {this.state[question.name]
+                  ? this.state[question.name].length
+                  : 0}{" "}
+                / {question.charLimit}
+              </div>
+            )}
+          </>
         );
       } else if (question.type == MULTIPLE_SHORT_RESPONSE) {
         const fields = question.fields.map((field, fieldIndex) => {
@@ -563,7 +605,6 @@ class FormPage extends React.Component {
               </Field>
             );
           } else if (field.type == SEARCHABLE_DROPDOWN) {
-            console.log(field);
             const optionsList = field.options_labels.map((option, index) => ({
               label: option,
               value: field.options_values[index],
@@ -626,7 +667,10 @@ class FormPage extends React.Component {
           </p>
         </Top>
         <hr />
-        <form>
+        <form
+          action="https://covidstories.dailybruin.com/stories/create/"
+          method="POST"
+        >
           {questions}
           <input type="submit" value="Submit" />
         </form>

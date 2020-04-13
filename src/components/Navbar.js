@@ -70,7 +70,22 @@ export default class Navbar extends React.Component {
       >
         <NavbarStyled>
           <Header to="/">Unfinished Stories</Header>
-          <div>
+          <div
+            className={css`
+              @keyframes bnc {
+                100% {
+                  transform: translateY(0);
+                }
+                50% {
+                  transform: translateY(-3px);
+                }
+                0% {
+                  transform: translateY(0);
+                }
+              }
+              animation: bnc 1s 3 !important;
+            `}
+          >
             <StyledLink
               to="/stories"
               className={css`

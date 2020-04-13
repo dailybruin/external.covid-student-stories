@@ -8,7 +8,7 @@ export const MAP_year_to_yearName = {
   SO: "Second-year",
   JR: "Third-year",
   SR: "Fourth-year+",
-  GR: "Graduate"
+  GR: "Graduate",
 };
 
 /*
@@ -21,3 +21,7 @@ export function swapMap(json) {
   }
   return ret;
 }
+
+export const MAP_reaction_to_label = ["none", "love", "sad", "like", "angry"];
+
+export const MAP_sort_to_label = ["latest", "top", "hot"];

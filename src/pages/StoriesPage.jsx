@@ -184,7 +184,7 @@ export default class StoriesPage extends React.Component {
     if (error || isLoading || !hasMore) return;
     const element = this.refs.scrollview;
     if (
-      element.scrollHeight - element.scrollTop - 1000 <=
+      element.scrollHeight - element.scrollTop - 3000 <=
       element.clientHeight
     ) {
       loadStories(

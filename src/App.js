@@ -33,12 +33,15 @@ function Bottom() {
   });
   const handleStoriesScroll = debounce((e) => {
     if (
-      window.innerHeight + window.scrollY + 20 >= document.body.offsetHeight &&
-      location.pathname == "/"
+      window.innerHeight + window.scrollY + 100 >= document.body.offsetHeight &&
+      location.pathname == "/" &&
+      location.pathname != "/stories" &&
+      location.pathname != "/data" &&
+      location.pathname != "/form"
     ) {
+      window.removeEventListener("scroll", handleStoriesScroll);
       setTimeout(function () {
         history.push("/stories");
-        window.removeEventListener("scroll", handleStoriesScroll);
       }, 500);
     }
   }, 50);

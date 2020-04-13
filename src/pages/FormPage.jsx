@@ -424,6 +424,7 @@ class FormPage extends React.Component {
       responseAffected: "",
       responseDoneDifferently: "",
       responseCommunity: "",
+      formSubmitted: false,
     };
   }
 
@@ -670,10 +671,27 @@ class FormPage extends React.Component {
         <form
           action="https://covidstories.dailybruin.com/stories/create/"
           method="POST"
+          target="blackhole"
+          onSubmit={() => this.setState({ formSubmitted: true })}
         >
           {questions}
           <input type="submit" value="Submit" />
         </form>
+        <iframe name="blackhole" style={{ display: "none" }}></iframe>
+        {this.state.formSubmitted && (
+          <div
+            className={css`
+              padding: 40px 0;
+              font-size: 20px;
+            `}
+          >
+            Thanks for sharing!
+            <br />
+            <br />
+            We have recorded your response. Navigate to the <b>Stories</b> tab
+            to see what others have shared.
+          </div>
+        )}
       </Background>
     );
   }

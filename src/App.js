@@ -32,6 +32,7 @@ function Bottom() {
     window.addEventListener("scroll", handleStoriesScroll);
   });
   const handleStoriesScroll = debounce((e) => {
+    console.log(e);
     if (
       window.innerHeight + window.scrollY + 100 >= document.body.offsetHeight &&
       location.pathname == "/" &&

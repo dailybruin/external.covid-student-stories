@@ -74,21 +74,24 @@ export function getQueryString(
   const schoolObject = responseSelections.find((e) => e.column == "school");
 
   if (yearObject.selections[0] != "All") {
+    const yearObjectSelectionsEncoded = yearObject.selections.map((obj) =>
+      encodeURIComponent(obj.split(" ").join("_"))
+    );
     queryString +=
       "year=" +
-      yearObject.selections
+      yearObjectSelectionsEncoded
         .map((sel) => MAP_SELECTION_YEAR[sel])
-        .join("+")
-        .split(" ")
-        .join("_");
+        .join("+");
   }
 
   if (schoolObject.selections[0] != "All") {
     if (queryString != "") {
       queryString += "&";
     }
-    queryString +=
-      "school=" + schoolObject.selections.join("+").split(" ").join("_");
+    const schoolObjectSelectionsEncoded = schoolObject.selections.map((obj) =>
+      encodeURIComponent(obj.split(" ").join("_"))
+    );
+    queryString += "school=" + schoolObjectSelectionsEncoded.join("+");
   }
 
   if (queryString != "") queryString += "&";

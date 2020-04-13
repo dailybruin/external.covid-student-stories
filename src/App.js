@@ -55,6 +55,7 @@ function Bottom() {
 function App() {
   return (
     <div className="App">
+      <iframe name="blackhole" style={{ display: "none" }}></iframe>
       <Router>
         <Switch>
           <Route exact path="/">
@@ -102,7 +103,6 @@ function App() {
               </Link>{" "}
               tab to see what others have shared.
             </div>
-            )
           </Route>
         </Switch>
       </Router>

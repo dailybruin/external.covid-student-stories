@@ -170,7 +170,7 @@ export default class Upvote extends React.Component {
       newReacts[newReact] += 1;
       newReacts.total += 1;
       this.setState({ selected: newReact, reacts: newReacts }, () => {
-        axios.post(`https://covidstories.dailybruin.com/stories/react/`, {
+        axios.post(`https://covidstudents.dailybruin.com/api/stories/react/`, {
           pk: this.props.id,
           react: getEmotionNumber(newReact),
         });
@@ -183,7 +183,7 @@ export default class Upvote extends React.Component {
       newReacts[newReact] += 1;
       newReacts[prevReact] -= 1;
       this.setState({ selected: newReact, reacts: newReacts }, () => {
-        axios.post(`https://covidstories.dailybruin.com/stories/react/`, {
+        axios.post(`https://covidstudents.dailybruin.com/api/stories/react/`, {
           pk: this.props.id,
           react: getEmotionNumber(newReact),
           oldReact: getEmotionNumber(prevReact),
@@ -246,7 +246,7 @@ export default class Upvote extends React.Component {
       newReacts.like += 1;
       newReacts.total += 1;
       axios
-        .post(`https://covidstories.dailybruin.com/stories/react/`, {
+        .post(`https://covidstudents.dailybruin.com/api/stories/react/`, {
           pk: this.props.id,
           react: 2,
         })
@@ -260,7 +260,7 @@ export default class Upvote extends React.Component {
       newReacts.total -= 1;
       newReacts[this.state.selected] -= 1;
       axios
-        .post(`https://covidstories.dailybruin.com/stories/react/`, {
+        .post(`https://covidstudents.dailybruin.com/api/stories/react/`, {
           pk: this.props.id,
           oldReact: getEmotionNumber(this.state.selected),
         })

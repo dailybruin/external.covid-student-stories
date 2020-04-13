@@ -310,16 +310,6 @@ const ques = [
     name: "hometown",
   },
   {
-    question: "(Optional) What is your ethnicity?",
-    type: SHORT_RESPONSE,
-    choices: [],
-    other_option: false,
-    comment: "",
-    required: false,
-    id: 4,
-    name: "ethnicity",
-  },
-  {
     question: "Where are you staying right now?",
     type: MCQ,
     choices: [
@@ -721,7 +711,6 @@ class FormPage extends React.Component {
           {questions}
           <input type="submit" value="Submit" />
         </form>
-        <iframe name="blackhole" style={{ display: "none" }}></iframe>
         <DummySubmit formSubmitted={this.state.formSubmitted} />
       </Background>
     );

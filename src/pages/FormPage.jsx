@@ -312,7 +312,7 @@ const ques = [
     ],
     values: ["NW", "SW", "VW", "NA"],
     values: ["NW", "SW", "VW", "NA"],
-    values: ["NW", "SW", "VW", "Prefer not to share"],
+    values: ["NW", "SW", "VW", "NA"],
     other_option: false,
     subquestions: [
       "Financial status",

@@ -172,7 +172,7 @@ export default class DataPage extends React.Component {
                   }
                 `}
               >
-                Here are the trends lying beneath the stories shared.
+                Here are the trends underlying the stories shared.
               </div>
               <div
                 style={{

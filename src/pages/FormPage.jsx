@@ -713,7 +713,7 @@ class FormPage extends React.Component {
         </Top>
         <hr />
         <form
-          action="https://covidstories.dailybruin.com/api/stories/create/"
+          action="https://covidstudents.dailybruin.com/api/stories/create/"
           method="POST"
           target="blackhole"
           onSubmit={(e) => this.submitForm(e)}

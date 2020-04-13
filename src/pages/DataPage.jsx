@@ -120,7 +120,7 @@ export default class DataPage extends React.Component {
 
   loadStories() {
     this.setState({ isLoading: true }, () => {
-      axios(`https://covidstories.dailybruin.com/api/stories/stats`)
+      axios(`https://covidstudents.dailybruin.com/api/stories/stats`)
         .then((results) => {
           const newStories = results.data;
           this.setState({

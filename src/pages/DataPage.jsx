@@ -31,7 +31,6 @@ const ScrollContainer = styled("div")`
 const NumberContainer = styled("div")`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   width: 17.5%;
   color: #5e6363;
   font-size: 20px;
@@ -174,10 +173,14 @@ export default class DataPage extends React.Component {
                 <NumberContainer>
                   <div
                     className={css`
-                      font-size: ${this.state.data.count <= 99999
+                      font-size: ${this.state.data.count <= 9999
                         ? "calc(10vmin + 10px)"
                         : "calc(7.5vmin)"};
-                      font-weight: "bold";
+                      font-weight: bold;
+                      height: 60%;
+                      display: flex;
+                      justify-content: center;
+                      align-items: flex-end;
                     `}
                   >
                     {this.state.data.count}
@@ -187,10 +190,14 @@ export default class DataPage extends React.Component {
                 <NumberContainer>
                   <div
                     className={css`
-                      font-size: ${this.state.data.numKnowPositives <= 99999
+                      font-size: ${this.state.data.numKnowPositives <= 9999
                         ? "calc(10vmin + 10px)"
                         : "calc(7.5vmin)"};
-                      font-weight: "bold";
+                      font-weight: bold;
+                      height: 60%;
+                      display: flex;
+                      justify-content: center;
+                      align-items: flex-end;
                     `}
                   >
                     {this.state.data.numKnowPositives}

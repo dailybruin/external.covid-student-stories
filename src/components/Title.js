@@ -5,7 +5,6 @@ import { css } from "emotion";
 import { Link as ScrollLink, scroller } from "react-scroll";
 import Slideshow from "./Slideshow";
 import Button from "../button.svg";
-import { ScrollTo } from "react-scroll-to";
 import Typewriter from "./Typewriter";
 
 const mediaQueries = {

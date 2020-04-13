@@ -1,18 +1,6 @@
 import React from "react";
-import Dropdown from "react-bootstrap/Dropdown";
 import { css } from "emotion";
-import {
-  FacebookShareButton,
-  FacebookIcon,
-  RedditShareButton,
-  RedditIcon,
-  TwitterShareButton,
-  TwitterIcon,
-  WhatsappShareButton,
-  WhatsappIcon,
-  WeiboShareButton,
-  WeiboIcon,
-} from "react-share";
+import { FacebookShareButton } from "react-share";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { MAP_year_to_yearName } from "../utils/mappings";
 import share_arrow from "../images/share_arrow.png";
@@ -35,7 +23,7 @@ export default class SharePost extends React.Component {
 
     return (
       <FacebookShareButton
-        url={"https://dailybruin.com/"}
+        url={"http://features.dailybruin.com/2020/unfinished-stories"}
         quote={post}
         hashtag={"UnfinishedStories"}
       >

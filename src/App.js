@@ -1,17 +1,24 @@
 import React, { useEffect } from "react";
 import { StoriesPage, FormPage, DataPage } from "./pages";
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Route,
   Switch,
-  Link,
   useHistory,
   useLocation,
 } from "react-router-dom";
+// import ReactGA from "react-ga";
+// import { createBrowserHistory } from "history";
 import Navbar from "./components/Navbar";
 import Title from "./components/Title";
 import debounce from "lodash.debounce";
 
+// const history = createBrowserHistory();
+
+// history.listen((location) => {
+//   ReactGA.set({ page: location.pathname }); // Update the user's current page
+//   ReactGA.pageview(location.pathname); // Record a pageview for the given page
+// });
 /*
 school	
 major	

@@ -5,23 +5,14 @@ import FilterDropdown from "../components/FilterDropdown";
 import Masonry from "react-masonry-css";
 import Select from "react-select";
 import { SortSelect, ReactSortSelect } from "../components/SortButtons";
-import {
-  filterAllowsShow,
-  selectionMatchesEntry,
-  getQueryString,
-} from "../utils/functions";
-import {
-  MAP_year_to_yearName,
-  MAP_reaction_to_label,
-  MAP_sort_to_label,
-} from "../utils/mappings";
+import { getQueryString } from "../utils/functions";
+import { MAP_year_to_yearName } from "../utils/mappings";
 import {
   filterfieldNames,
   responseColumns,
   reactSortOptions,
   sortOptions,
 } from "../utils/properties";
-import { isElementOfType } from "react-dom/test-utils";
 import Upvote from "../components/Upvote.js";
 import debounce from "lodash.debounce";
 import axios from "axios";
@@ -150,9 +141,6 @@ export default class StoriesPage extends React.Component {
   }
 
   loadStories(queryString) {
-    console.log(
-      `https://covidstories.dailybruin.com/stories/?${queryString}&i=${this.state.currPage}`
-    );
     this.setState({ isLoading: true }, () => {
       axios(
         `https://covidstories.dailybruin.com/stories/?${queryString}&i=${this.state.currPage}`

@@ -180,7 +180,6 @@ export default class Upvote extends React.Component {
       const { selected, reacts } = this.state;
       let prevReact = selected;
       let newReacts = reacts;
-      console.log(prevReact);
       newReacts[newReact] += 1;
       newReacts[prevReact] -= 1;
       this.setState({ selected: newReact, reacts: newReacts }, () => {

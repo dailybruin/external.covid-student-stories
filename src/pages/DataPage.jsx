@@ -5,10 +5,6 @@ import axios from "axios";
 import PieChart from "../components/graphs/Pie";
 import WordCloud from "../components/WordCloud";
 import StackedBar from "../components/graphs/StackedBar";
-import { Pie } from "react-chartjs-2";
-import Map from "../components/MapV2.js";
-import { auto } from "@popperjs/core";
-import { findByLabelText } from "@testing-library/dom";
 
 const mediaQueries = {
   mobile: "@media (max-width: 700px)",
@@ -146,7 +142,6 @@ export default class DataPage extends React.Component {
     var cities = [];
     var count = 0;
     for (var i = 0; i < data.length; i++) {
-      console.log(data[i].comfortablePublish);
       if (data[i].knowPositive === "Yes") {
         count += 1;
       }

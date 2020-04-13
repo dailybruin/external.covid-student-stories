@@ -1,13 +1,10 @@
 import React from "react";
 import { css } from "emotion";
 import styled from "styled-components";
-import { IoIosCheckmarkCircleOutline } from "react-icons/io";
-import { IoIosCheckmarkCircle } from "react-icons/io";
 import { IoIosSquareOutline } from "react-icons/io";
 import { IoIosSquare } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 import { IoIosArrowDown } from "react-icons/io";
-import { SymbolDef, AST_DefClass } from "terser";
 import { colleges } from "../pages/data";
 import CreatableSelect from "react-select/creatable";
 
@@ -45,8 +42,6 @@ export default class FilterDropdown extends React.Component {
   }
 
   handleInputChange = (inputValue, actionMeta) => {
-    console.group("Input Changed");
-    console.log(inputValue);
     if (!inputValue) {
       this.props.onClick(this.props.column, ["All"]);
       return;

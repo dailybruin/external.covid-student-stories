@@ -17,7 +17,7 @@ const style = {
   color: "#fff",
   background: "#1978c8",
   borderRadius: "60px",
-  textAlign: "center"
+  textAlign: "center",
 };
 
 class ClusterMarker extends React.PureComponent {
@@ -52,8 +52,8 @@ class Map extends React.PureComponent {
       viewport: {
         latitude: 37.785164,
         longitude: -100,
-        zoom: 2.8
-      }
+        zoom: 2.8,
+      },
     };
 
     this._cluster = React.createRef();
@@ -72,12 +72,12 @@ class Map extends React.PureComponent {
     const supercluster = this._cluster.current.getCluster();
     const zoom = supercluster.getClusterExpansionZoom(clusterId);
 
-    this.setState(state => {
+    this.setState((state) => {
       const newVewport = {
         ...state.viewport,
         latitude,
         longitude,
-        zoom
+        zoom,
       };
 
       return { ...state, viewport: newVewport };
@@ -89,16 +89,14 @@ class Map extends React.PureComponent {
   }
 
   matchLocation(locations) {
-    console.log("THIS IS LOCATIOns ", locations);
     var location = locations.split(",");
     var output = null;
-    console.log("THIS IS LOCATION1OFARRYA ", location[1]);
     var city = states.abbr(location[1].trim());
 
     // var location = ["San Diego, CA"];
 
     return cityPointsUS.features.find(
-      point =>
+      (point) =>
         point.properties.state === city &&
         point.properties.city.toLowerCase().trim() ===
           location[0].toLowerCase().trim()
@@ -110,11 +108,10 @@ class Map extends React.PureComponent {
     let temp = this.props.citiesList;
 
     let raw_points = temp.map(this.matchLocation);
-    var points = raw_points.filter(function(x) {
+    var points = raw_points.filter(function (x) {
       return x !== undefined;
     });
 
-    console.log("THIS IS POINTS ", points);
     points.map((point, index) => (point.id = index));
     return (
       <MapGL
@@ -130,11 +127,11 @@ class Map extends React.PureComponent {
           radius={5}
           extent={512}
           nodeSize={64}
-          component={cluster => (
+          component={(cluster) => (
             <ClusterMarker onClick={this.onClick} {...cluster} />
           )}
         >
-          {points.map(point => (
+          {points.map((point) => (
             <Marker
               key={point.id}
               longitude={point.geometry.coordinates[0]}

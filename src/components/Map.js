@@ -15,8 +15,8 @@ class Map extends Component {
     viewport: {
       latitude: 37.7577,
       longitude: -122.4376,
-      zoom: 8,
-    },
+      zoom: 8
+    }
   };
 
   render() {
@@ -31,7 +31,7 @@ class Map extends Component {
           longitude={viewport.longitude}
           mapStyle="mapbox://styles/mapbox/dark-v9"
           zoom={viewport.zoom}
-          onViewportChange={(viewport) => this.setState({ viewport })}
+          onViewportChange={viewport => this.setState({ viewport })}
           mapboxApiAccessToken={MAPBOX_TOKEN}
         />
       </MapboxStyled>

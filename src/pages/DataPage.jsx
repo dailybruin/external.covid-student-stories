@@ -10,6 +10,15 @@ import Map from "../components/MapV2.js";
 import { auto } from "@popperjs/core";
 import { findByLabelText } from "@testing-library/dom";
 
+const mediaQueries = {
+  mobile: "@media (max-width: 700px)",
+  notMobile: "@media (min-width: 701px)",
+  tablet: "@media (max-width: 1100px)"
+};
+
+const { mobile } = mediaQueries;
+const { tablet } = mediaQueries;
+
 const ScrollContainer = styled("div")`
   height: 94.5vh;
   width: 100%;
@@ -20,30 +29,69 @@ const ScrollContainer = styled("div")`
 `;
 
 const NumberContainer = styled("div")`
-  width: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 17.5%;
   color: #5e6363;
-  font-size: 15px;
-  background-color: #b7c0c0;
+  font-size: 20px;
   background-color: white;
   text-align: center;
-  padding: 30px;
   border: 2px solid #c3c9c9;
   border-radius: 10px;
+  padding: 15px;
+
+  ${tablet} {
+    width: 45%;
+    margin: 2.5%;
+  }
+
+  ${mobile} {
+    width: 95%;
+    margin: 2.5%;
+  }
 `;
 
 const GraphContainer = styled("div")`
-  width: 35%;
+  width: 27.5%;
   height: 400px;
   padding: 30px;
   background-color: #b7c0c0;
   background-color: white;
   border: 2px solid #c3c9c9;
   border-radius: 10px;
+
+  ${tablet} {
+    width: 45%;
+    margin: 2.5%;
+  }
+
+  ${mobile} {
+    width: 95%;
+    margin: 2.5%;
+  }
+`;
+
+const StatsContainer = styled("div")`
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 5vh 5% 5vh 5%;
+
+  ${mobile} {
+    flex-direction: column;
+    align-items: center;
+    padding: 5vh 5vw;
+  }
+`;
+
+const MapContainer = styled("div")`
+  padding: 0 5% 5% 5%;
 `;
 
 const filterFields = [
   { field: "School", categories: ["All", "UCLA", "USC"] },
-  { field: "Major", categories: ["All", "CS", "Math", "we should bin these"] },
+  { field: "Major", categories: ["All", "CS", "Math", "we should bin these"] }
 ];
 
 function showData(selectedFields, row) {
@@ -64,9 +112,9 @@ export default class DataPage extends React.Component {
         field: element.field,
         selection: "All",
         key: key,
-        isLoading: true,
+        isLoading: true
       })),
-      data: {},
+      data: {}
     };
   }
 
@@ -78,16 +126,16 @@ export default class DataPage extends React.Component {
   loadStories() {
     this.setState({ isLoading: true }, () => {
       axios(`https://covidstories.dailybruin.com/stories/stats`)
-        .then((results) => {
+        .then(results => {
           const newStories = results.data;
           this.setState({
-            data: newStories,
+            data: newStories
           });
           this.setState({
-            isLoading: false,
+            isLoading: false
           });
         })
-        .catch((err) => {
+        .catch(err => {
           this.setState({});
         });
     });
@@ -95,6 +143,7 @@ export default class DataPage extends React.Component {
 
   render() {
     const { data } = this.state;
+    const { blue } = "blue";
     var cities = [];
     var count = 0;
     for (var i = 0; i < data.length; i++) {
@@ -115,44 +164,51 @@ export default class DataPage extends React.Component {
             <div
               style={{
                 height: "100%",
-                overflow: "auto",
+                overflow: "auto"
               }}
             >
-              <div
-                style={{
-                  width: "100%",
-                  textAlign: "center",
-                  fontSize: "30px",
-                  fontWeight: "bold",
-                  color: "#5e6363",
-                }}
-              >
-                Number of Responses: {this.state.data.count}
+              <div style={{ padding: "5vh 5vw 0 5vw" }}>
+                <WordCloud />
               </div>
-              <div
-                className={css`
-                  display: flex;
-                  justify-content: space-between;
-                  padding: 0 10% 0 10%;
-                  margin: 5vh 5vw 5vh 5vw;
-                  flex-wrap: wrap;
-                `}
-              >
+              <StatsContainer>
+                <NumberContainer>
+                  <div
+                    className={css`
+                      font-size: ${this.state.data.count <= 99999
+                        ? "calc(10vmin + 10px)"
+                        : "calc(7.5vmin)"};
+                      font-weight: "bold";
+                    `}
+                  >
+                    {this.state.data.count}
+                  </div>
+                  students have shared their stories
+                </NumberContainer>
+                <NumberContainer>
+                  <div
+                    className={css`
+                      font-size: ${this.state.data.numKnowPositives <= 99999
+                        ? "calc(10vmin + 10px)"
+                        : "calc(7.5vmin)"};
+                      font-weight: "bold";
+                    `}
+                  >
+                    {this.state.data.numKnowPositives}
+                  </div>
+                  know someone who has tested positive for Covid-19
+                </NumberContainer>
+
                 <GraphContainer>
                   <PieChart data={this.state.data.curr_location_breakdown} />
                 </GraphContainer>
+
                 <GraphContainer>
                   <StackedBar data={this.state.data.feelings}></StackedBar>
                 </GraphContainer>
-                <NumberContainer>
-                  <div style={{ fontSize: 100, fontWeight: "bold" }}>
-                    {this.state.data.numKnowPositives}
-                  </div>
-                  students know someone who has tested positive for Covid-19.
-                </NumberContainer>
-              </div>
-              <Map component={Map} count={count} citiesList={cities} />
-              <WordCloud />
+              </StatsContainer>
+              <MapContainer>
+                <Map component={Map} count={count} citiesList={cities} />
+              </MapContainer>
             </div>
           )}
         </ScrollContainer>

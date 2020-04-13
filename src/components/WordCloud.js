@@ -16,12 +16,12 @@ const options = {
   fontSizes: [5, 60],
   fontStyle: "normal",
   fontWeight: "normal",
-  padding: 1,
+  padding: 0,
   rotations: 3,
   rotationAngles: [0],
   scale: "sqrt",
   spiral: "archimedean",
-  transitionDuration: 1000,
+  transitionDuration: 1000
 };
 
 function WordCloud() {

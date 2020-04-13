@@ -474,6 +474,11 @@ class FormPage extends React.Component {
   getValue = (val) => {
     return val;
   };
+  submitForm = function (e) {
+    e.preventDefault();
+    this.setState({ formSubmitted: true });
+    return;
+  };
   render() {
     const questions = ques.map((question) => {
       const title = <div>{question.question}</div>;
@@ -704,7 +709,7 @@ class FormPage extends React.Component {
           action="https://covidstories.dailybruin.com/stories/create/"
           method="POST"
           target="blackhole"
-          onSubmit={() => this.setState({ formSubmitted: true })}
+          onSubmit={(e) => this.submitForm(e)}
         >
           {questions}
           <input

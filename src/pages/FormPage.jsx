@@ -711,11 +711,7 @@ class FormPage extends React.Component {
           onSubmit={(e) => this.submitForm(e)}
         >
           {questions}
-          <input
-            type="submit"
-            value="Submit"
-            disabled={this.state.formSubmitted}
-          />
+          <input type="submit" value="Submit" />
         </form>
         <iframe name="blackhole" style={{ display: "none" }}></iframe>
         {this.state.formSubmitted && (

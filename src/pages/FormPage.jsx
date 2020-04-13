@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { colleges, states, state_abbreviations, countries } from "./data";
 import { css } from "emotion";
 import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
+import { useHistory } from "react-router-dom";
 
 const mediaQueries = {
   mobile: "@media (max-width: 700px)",
@@ -456,6 +457,13 @@ const ques = [
     name: "comfortablePublish",
   },
 ];
+function DummySubmit(props) {
+  const history = useHistory();
+  useEffect(() => {
+    if (props.formSubmitted == true) history.push("/formsubmitted");
+  });
+  return <></>;
+}
 class FormPage extends React.Component {
   constructor(props) {
     super(props);
@@ -714,20 +722,7 @@ class FormPage extends React.Component {
           <input type="submit" value="Submit" />
         </form>
         <iframe name="blackhole" style={{ display: "none" }}></iframe>
-        {this.state.formSubmitted && (
-          <div
-            className={css`
-              padding: 40px 0;
-              font-size: 20px;
-            `}
-          >
-            Thanks for sharing!
-            <br />
-            <br />
-            We have recorded your response. Navigate to the <b>Stories</b> tab
-            to see what others have shared.
-          </div>
-        )}
+        <DummySubmit formSubmitted={this.state.formSubmitted} />
       </Background>
     );
   }

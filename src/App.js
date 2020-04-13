@@ -6,12 +6,14 @@ import {
   Switch,
   useHistory,
   useLocation,
+  Link,
 } from "react-router-dom";
 // import ReactGA from "react-ga";
 // import { createBrowserHistory } from "history";
 import Navbar from "./components/Navbar";
 import Title from "./components/Title";
 import debounce from "lodash.debounce";
+import { css } from "emotion";
 
 // const history = createBrowserHistory();
 
@@ -73,6 +75,34 @@ function App() {
           <Route exact path="/form">
             <Navbar highlighted="form" />
             <FormPage></FormPage>
+          </Route>
+          <Route exact path="/formsubmitted">
+            <Navbar highlighted="form" />
+            <div
+              className={css`
+                padding: 120px 20%;
+                font-size: 20px;
+              `}
+            >
+              Thanks for sharing!
+              <br />
+              <br />
+              We have recorded your response. Navigate to the{" "}
+              <Link
+                to="/stories"
+                className={css`
+                  text-decoration: underline !important;
+                  font-weight: bold;
+                  color: #586572 !important;
+                  &:hover {
+                  }
+                `}
+              >
+                Stories
+              </Link>{" "}
+              tab to see what others have shared.
+            </div>
+            )
           </Route>
         </Switch>
       </Router>

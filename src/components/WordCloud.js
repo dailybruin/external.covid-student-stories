@@ -16,7 +16,7 @@ const options = {
   colors: ["#B5CACA", "#96B6D5", "#8084AE", "#5B7995", "#6D6B67", "#BE9188"],
   enableTooltip: true,
   deterministic: false,
-  fontFamily: "impact",
+  fontFamily: "Avenir",
   fontSizes: [18, 60],
   fontStyle: "normal",
   fontWeight: "normal",

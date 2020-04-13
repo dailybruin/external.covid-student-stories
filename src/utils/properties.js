@@ -31,11 +31,11 @@ export const filterfieldNames = [
       "Graduate",
     ],
   },
-  {
-    fieldName: "Hometown",
-    column: "home",
-    categories: ["All", "California", "Out of State", "International"],
-  },
+  // {
+  //   fieldName: "Hometown",
+  //   column: "home",
+  //   categories: ["All", "California", "Out of State", "International"],
+  // },
 ];
 
 /*

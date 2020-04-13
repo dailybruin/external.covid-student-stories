@@ -256,7 +256,6 @@ export default class StoriesPage extends React.Component {
               top: 0;
               transition: all 300ms ease-in-out;
               border-right: 1px solid #d3d3d3;
-
               ${mobile} {
                 padding-top: 0;
                 padding-left: 0.8em;

@@ -8,6 +8,8 @@ import { IoIosSquare } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 import { IoIosArrowDown } from "react-icons/io";
 import { SymbolDef, AST_DefClass } from "terser";
+import { colleges } from "../pages/data";
+import CreatableSelect from "react-select/creatable";
 
 /*
 fieldName: string
@@ -21,7 +23,7 @@ export default class FilterDropdown extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      expanded: true,
+      expanded: this.props.column == "school" ? true : false,
       selected: ["All"],
     };
   }
@@ -41,6 +43,16 @@ export default class FilterDropdown extends React.Component {
       return <IoIosArrowForward> </IoIosArrowForward>;
     }
   }
+
+  handleInputChange = (inputValue, actionMeta) => {
+    console.group("Input Changed");
+    console.log(inputValue);
+    if (!inputValue) {
+      this.props.onClick(this.props.column, ["All"]);
+      return;
+    }
+    this.props.onClick(this.props.column, [inputValue.value]);
+  };
 
   render() {
     const { expanded, selected } = this.state;
@@ -66,45 +78,64 @@ export default class FilterDropdown extends React.Component {
           </FilterField>
         </div>
         {expanded &&
-          categories.map((category, idx) => (
-            <div key={idx}>
-              <div
-                onClick={() => {
-                  if (category === "All") {
-                    this.setState({ selected: ["All"] });
-                    onClick(column, ["All"]);
-                  } else if (!selected.includes(category)) {
-                    if (selected.includes("All")) {
-                      this.setState({ selected: [category] });
-                      onClick(column, [category]);
-                    } else {
-                      var joined = selected.concat(category);
-                      this.setState({ selected: joined });
-                      onClick(column, joined);
-                    }
-                  } else {
-                    var newState = selected.filter((x) => x != category);
-                    this.setState({ selected: newState });
-                    onClick(column, newState);
-                  }
-                }}
-                className={css`
-                  padding-left: 25px;
-                  display: flex;
-                  align-items: center;
-                  cursor: pointer;
-                `}
-              >
+          (column == "school" ? (
+            <div
+              className={css`
+                padding: 5px 0;
+                padding-left: 20px;
+              `}
+            >
+              <CreatableSelect
+                isClearable
+                onChange={this.handleInputChange}
+                options={colleges.map((option, index) => ({
+                  label: option,
+                  value: option,
+                }))}
+                placeholder="Your college"
+              />
+            </div>
+          ) : (
+            categories.map((category, idx) => (
+              <div key={idx}>
                 <div
+                  onClick={() => {
+                    if (category === "All") {
+                      this.setState({ selected: ["All"] });
+                      onClick(column, ["All"]);
+                    } else if (!selected.includes(category)) {
+                      if (selected.includes("All")) {
+                        this.setState({ selected: [category] });
+                        onClick(column, [category]);
+                      } else {
+                        var joined = selected.concat(category);
+                        this.setState({ selected: joined });
+                        onClick(column, joined);
+                      }
+                    } else {
+                      var newState = selected.filter((x) => x != category);
+                      this.setState({ selected: newState });
+                      onClick(column, newState);
+                    }
+                  }}
                   className={css`
-                    padding-right: 10px;
+                    padding-left: 25px;
+                    display: flex;
+                    align-items: center;
+                    cursor: pointer;
                   `}
                 >
-                  {this.setIcon(category, selected)}
+                  <div
+                    className={css`
+                      padding-right: 10px;
+                    `}
+                  >
+                    {this.setIcon(category, selected)}
+                  </div>
+                  <div>{category}</div>
                 </div>
-                <div>{category}</div>
               </div>
-            </div>
+            ))
           ))}
       </>
     );

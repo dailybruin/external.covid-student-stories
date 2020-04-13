@@ -76,17 +76,23 @@ export function getQueryString(
   if (yearObject.selections[0] != "All") {
     queryString +=
       "year=" +
-      yearObject.selections.map((sel) => MAP_SELECTION_YEAR[sel]).join("+");
+      yearObject.selections
+        .map((sel) => MAP_SELECTION_YEAR[sel])
+        .join("+")
+        .split(" ")
+        .join("_");
   }
 
   if (schoolObject.selections[0] != "All") {
     if (queryString != "") {
       queryString += "&";
     }
-    queryString += "school=" + schoolObject.selections.join("+");
+    queryString +=
+      "school=" + schoolObject.selections.join("+").split(" ").join("_");
   }
 
   if (queryString != "") queryString += "&";
   queryString += `sort=${selectedSort}&reax=${selectedReactSort}`;
+  console.log(queryString);
   return queryString;
 }

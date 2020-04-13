@@ -414,7 +414,7 @@ const ques = [
     comment: "",
     required: true,
     id: 14,
-    name: "publish",
+    name: "comfortablePublish",
   },
 ];
 class FormPage extends React.Component {

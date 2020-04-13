@@ -4,6 +4,8 @@ import { css } from "emotion";
 import { Bar } from "react-chartjs-2";
 
 function StackedBar(props) {
+  const green = "green";
+
   return (
     <Bar
       data={{
@@ -17,13 +19,7 @@ function StackedBar(props) {
         datasets: [
           {
             label: "Not worried",
-            backgroundColor: [
-              "#657778",
-              "#657778",
-              "#657778",
-              "#657778",
-              "#657778"
-            ],
+            backgroundColor: "#5ac476",
             data: [
               props.data.finance["Not worried"],
               props.data.housing["Not worried"],
@@ -34,13 +30,7 @@ function StackedBar(props) {
           },
           {
             label: "Somewhat worried",
-            backgroundColor: [
-              "#a1afbc",
-              "#a1afbc",
-              "#a1afbc",
-              "#a1afbc",
-              "#a1afbc"
-            ],
+            backgroundColor: "#F0E68C",
             data: [
               props.data.finance["Somwhat worried"],
               props.data.housing["Somewhat worried"],
@@ -51,13 +41,7 @@ function StackedBar(props) {
           },
           {
             label: "Very worried",
-            backgroundColor: [
-              "#D0D8D9",
-              "#D0D8D9",
-              "#D0D8D9",
-              "#D0D8D9",
-              "#D0D8D9"
-            ],
+            backgroundColor: "#e69595",
             data: [
               props.data.finance["Very Worried"],
               props.data.housing["Very Worried"],

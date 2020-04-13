@@ -378,6 +378,7 @@ const ques = [
       "Also, feel free to drop any links to photos, videos, or art that could help tell your story.",
     required: false,
     id: 11,
+    name: "responseElse",
   },
   {
     question:
@@ -389,6 +390,7 @@ const ques = [
       "Other art forms are welcome and appreciated, too! Just make sure what you're submitting has permissions to be shared and utilized on this platform.",
     required: false,
     id: 12,
+    name: "mediaLinks",
   },
   {
     question:
@@ -400,6 +402,7 @@ const ques = [
       "First name, last name, age. If you would like to remain anonymous with your work, let us know here.",
     required: false,
     id: 13,
+    name: "artCredit",
   },
   {
     question:
@@ -411,6 +414,7 @@ const ques = [
     comment: "",
     required: true,
     id: 14,
+    name: "comfortablePublish",
   },
 ];
 class FormPage extends React.Component {

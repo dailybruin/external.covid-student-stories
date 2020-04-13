@@ -74,9 +74,7 @@ export function getQueryString(
   const schoolObject = responseSelections.find((e) => e.column == "school");
 
   if (yearObject.selections[0] != "All") {
-    const yearObjectSelectionsEncoded = yearObject.selections.map((obj) =>
-      encodeURIComponent(obj.split(" ").join("_"))
-    );
+    const yearObjectSelectionsEncoded = yearObject.selections.map((obj) => obj);
     queryString +=
       "year=" +
       yearObjectSelectionsEncoded
@@ -96,6 +94,5 @@ export function getQueryString(
 
   if (queryString != "") queryString += "&";
   queryString += `sort=${selectedSort}&reax=${selectedReactSort}`;
-  console.log(queryString);
   return queryString;
 }

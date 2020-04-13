@@ -13,7 +13,7 @@ import { findByLabelText } from "@testing-library/dom";
 const mediaQueries = {
   mobile: "@media (max-width: 700px)",
   notMobile: "@media (min-width: 701px)",
-  tablet: "@media (max-width: 1100px)"
+  tablet: "@media (max-width: 1100px)",
 };
 
 const { mobile } = mediaQueries;
@@ -90,7 +90,7 @@ const MapContainer = styled("div")`
 
 const filterFields = [
   { field: "School", categories: ["All", "UCLA", "USC"] },
-  { field: "Major", categories: ["All", "CS", "Math", "we should bin these"] }
+  { field: "Major", categories: ["All", "CS", "Math", "we should bin these"] },
 ];
 
 function showData(selectedFields, row) {
@@ -111,9 +111,9 @@ export default class DataPage extends React.Component {
         field: element.field,
         selection: "All",
         key: key,
-        isLoading: true
+        isLoading: true,
       })),
-      data: {}
+      data: {},
     };
   }
 
@@ -125,16 +125,16 @@ export default class DataPage extends React.Component {
   loadStories() {
     this.setState({ isLoading: true }, () => {
       axios(`https://covidstories.dailybruin.com/stories/stats`)
-        .then(results => {
+        .then((results) => {
           const newStories = results.data;
           this.setState({
-            data: newStories
+            data: newStories,
           });
           this.setState({
-            isLoading: false
+            isLoading: false,
           });
         })
-        .catch(err => {
+        .catch((err) => {
           this.setState({});
         });
     });
@@ -163,11 +163,28 @@ export default class DataPage extends React.Component {
             <div
               style={{
                 height: "100%",
-                overflow: "auto"
+                overflow: "auto",
               }}
             >
-              <div style={{ padding: "5vh 5vw 0 5vw" }}>
-                <WordCloud />
+              <div
+                className={css`
+                  font-size: 30px;
+                  text-align: center;
+                  padding-top: 30px;
+                  padding-bottom: 10px;
+                  ${mobile} {
+                    font-size: 24px;
+                  }
+                `}
+              >
+                Here are the trends lying beneath the stories shared.
+              </div>
+              <div
+                style={{
+                  padding: "5vh 5vw 0 5vw",
+                }}
+              >
+                <WordCloud words={this.state.data.words} />
               </div>
               <StatsContainer>
                 <NumberContainer>
@@ -202,7 +219,7 @@ export default class DataPage extends React.Component {
                   >
                     {this.state.data.numKnowPositives}
                   </div>
-                  know someone who has tested positive for Covid-19
+                  know someone who has tested positive for COVID-19
                 </NumberContainer>
 
                 <GraphContainer>
@@ -213,9 +230,9 @@ export default class DataPage extends React.Component {
                   <StackedBar data={this.state.data.feelings}></StackedBar>
                 </GraphContainer>
               </StatsContainer>
-              <MapContainer>
+              {/* <MapContainer>
                 <Map component={Map} count={count} citiesList={cities} />
-              </MapContainer>
+              </MapContainer> */}
             </div>
           )}
         </ScrollContainer>

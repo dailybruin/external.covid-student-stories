@@ -1,11 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import ReactWordcloud from "react-wordcloud";
+import { css } from "emotion";
 import words from "./words";
 
 const Wrapper = styled("div")`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 20px;
 `;
 
 const options = {
@@ -21,13 +25,20 @@ const options = {
   rotationAngles: [0],
   scale: "sqrt",
   spiral: "archimedean",
-  transitionDuration: 1000
+  transitionDuration: 1000,
 };
 
-function WordCloud() {
+function WordCloud(props) {
   return (
     <Wrapper>
-      <ReactWordcloud options={options} words={words} />
+      <div
+        className={css`
+          text-align: center;
+        `}
+      >
+        These are the words most often used in your stories.
+      </div>
+      <ReactWordcloud options={options} words={props.words} />
     </Wrapper>
   );
 }

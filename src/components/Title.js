@@ -24,7 +24,8 @@ const AddStoryLink = styled(Link)`
   padding: 10px 20px;
   border-radius: 5px;
   /* box-shadow: 0px 5px 5px gray solid; */
-  margin: 20px;
+  margin: 30px;
+  margin-bottom: 10px;
   outline: none;
   text-decoration: none;
   :hover {
@@ -95,6 +96,22 @@ const Caption = styled("div")`
   }
 `;
 
+const CaptionBottom = styled("div")`
+  overflow: hidden;
+  position: absolute;
+  filter: brightness(80%);
+  text-align: center;
+  bottom: 80px;
+  font-size: 18px;
+  color: white;
+  ${mobile} {
+    font-size: 12px;
+    padding: 1px;
+    bottom: 60px;
+    width: 80%;
+  }
+`;
+
 const Coloring = styled("div")`
   overflow: hidden;
   background-color: black;
@@ -102,7 +119,7 @@ const Coloring = styled("div")`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  opacity: 0.7;
+  opacity: 0.75;
   width: 800px;
   padding: 30px;
   top: 0px;
@@ -122,7 +139,10 @@ export default class Title extends React.Component {
         <Coloring>
           <Typewriter />
           <Caption>
-            students' experiences about how Covid-19 has affected their lives
+            This new normal has not been easy. The COVID-19 pandemic has
+            uprooted students’ everyday lives as they once knew them. Research
+            presentations, senior showcases and sports games remain imaginings
+            of a lifetime ago.
           </Caption>
           <AddStoryLink
             to="/form"
@@ -136,7 +156,6 @@ export default class Title extends React.Component {
           >
             SHARE YOUR STORY
           </AddStoryLink>
-          <Caption>or scroll down to see others'</Caption>
         </Coloring>
         <div
           className={css`
@@ -145,6 +164,9 @@ export default class Title extends React.Component {
         >
           <Slideshow />
         </div>
+        <CaptionBottom>
+          Read how the novel coronavirus pandemic has affected students’ lives.
+        </CaptionBottom>
         <ScrollMessage>
           <img
             src={Button}

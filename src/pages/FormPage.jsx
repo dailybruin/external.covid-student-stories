@@ -5,6 +5,14 @@ import { css } from "emotion";
 import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
 
+const mediaQueries = {
+  mobile: "@media (max-width: 700px)",
+  notMobile: "@media (min-width: 701px)",
+  tablet: "@media (max-width: 1100px)",
+};
+
+const { mobile } = mediaQueries;
+
 const desktopSizes = {
   question: "21px",
   comment: "16px",
@@ -14,6 +22,17 @@ const desktopSizes = {
   requirement: "14px",
   choices_header: "18px",
   other_option: "16px",
+};
+
+const mobileSizes = {
+  question: "18px",
+  comment: "14px",
+  choice: "16px",
+  short_response: "16px",
+  long_response: "13px",
+  requirement: "13px",
+  choices_header: "12px",
+  other_option: "14px",
 };
 
 const Top = styled("div")`
@@ -29,6 +48,9 @@ const Title = styled("div")`
 const Requirement = styled("span")`
   color: red;
   font-size: ${desktopSizes.requirement};
+  ${mobile} {
+    font-size: ${mobileSizes.requirement};
+  }
   line-height: 24px;
 `;
 const Background = styled("div")`
@@ -44,6 +66,9 @@ const Background = styled("div")`
     border: 0.5px solid #ddd;
     margin: 25px auto;
   }
+  ${mobile} {
+    padding: 60px 10px;
+  }
 `;
 
 const Question = styled("div")`
@@ -57,10 +82,16 @@ const Header = styled("div")`
   width: 100%;
   font-weight: bold;
   font-size: ${desktopSizes.question};
+  ${mobile} {
+    font-size: ${mobileSizes.question};
+  }
 `;
 
 const Comment = styled("div")`
   font-size: ${desktopSizes.comment};
+  ${mobile} {
+    font-size: ${mobileSizes.comment};
+  }
   margin-top: 3px;
   margin-bottom: 15px;
 `;
@@ -69,6 +100,9 @@ const SearchableDropDown = styled("div")``;
 
 const ShortResponse = styled("input")`
   font-size: ${desktopSizes.short_response};
+  ${mobile} {
+    font-size: ${mobileSizes.short_response};
+  }
   -webkit-appearance: none;
   outline: none;
   border: none;
@@ -92,6 +126,9 @@ const Choice = styled("div")`
   flex-direction: row;
   margin: 3px 0;
   font-size: ${desktopSizes.choice};
+  ${mobile} {
+    font-size: ${mobileSizes.choice};
+  }
   line-height: 20px;
   height: 20px;
   > input {
@@ -102,6 +139,9 @@ const Choice = styled("div")`
   label > input {
     margin-left: 5px;
     font-size: ${desktopSizes.other_option};
+    ${mobile} {
+      font-size: ${mobileSizes.other_option};
+    }
     -webkit-appearance: none;
     outline: none;
     border: none;
@@ -125,6 +165,9 @@ const SubQuestionCell = styled("div")`
   width: 17.5%;
   display: inline-block;
   font-size: ${desktopSizes.choices_header};
+  ${mobile} {
+    font-size: ${mobileSizes.choices_header};
+  }
   text-align: center;
   input {
     margin: 0;
@@ -137,6 +180,9 @@ const SubQuestionHeader = styled("div")`
   width: 30%;
   display: inline-block;
   font-size: ${desktopSizes.choices_header};
+  ${mobile} {
+    font-size: ${mobileSizes.choices_header};
+  }
 `;
 
 const LongResponse = styled("textarea")`
@@ -149,6 +195,9 @@ const LongResponse = styled("textarea")`
   width: 100%;
   height: 200px;
   font-size: ${desktopSizes.long_response};
+  ${mobile} {
+    font-size: ${mobileSizes.long_response};
+  }
   padding: 5px;
   :focus {
     border: 2px solid #4185f7;
@@ -168,6 +217,9 @@ const Field = styled("div")`
   }
   width: 30%;
   font-size: ${desktopSizes.short_response};
+  ${mobile} {
+    font-size: ${mobileSizes.short_response};
+  }
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -211,8 +263,8 @@ const ques = [
       "First Year",
       "Second Year",
       "Third Year",
-      "Fourth Year",
-      "Grad Student",
+      "Fourth Year and Above",
+      "Graduate Student",
     ],
     values: ["HS", "FR", "SO", "JR", "SR", "GR"],
     values: ["HS", "FR", "SO", "JR", "SR", "GR"],
@@ -251,8 +303,7 @@ const ques = [
       },
     ],
     other_option: false,
-    comment:
-      'City, State. If your hometown is not in the USA, type in "City, Country"',
+
     required: true,
     id: 3,
     name: "hometown",
@@ -271,10 +322,10 @@ const ques = [
     question: "Where are you staying right now?",
     type: MCQ,
     choices: [
-      "School (On-campus)",
-      "School (Off-campus)",
+      "School (On campus)",
+      "School (Off campus)",
       "Home",
-      "Friend's place",
+      "A Friend's place",
       "Prefer not to answer",
     ],
     values: [
@@ -341,19 +392,19 @@ const ques = [
     charLimit: 1000,
     choices: [],
     comment:
-      "This is unlike anything we've experienced before. Tell us about anything and everything. How has your life, or the lives of people around you, changed due to the novel coronavirus pandemic? How has the world changed? 1,000 character limit.",
+      "This is unlike anything we've experienced before. Tell us about anything and everything. How has your life, or the lives of people around you, changed because of the novel coronavirus pandemic? How has the world changed? 1,250 character limit.",
     required: false,
     id: 8,
   },
   {
     name: "responseCommunity",
     question:
-      "(Optional) How has your community responded to the Covid-19 pandemic?",
+      "(Optional) How has your community responded to the COVID-19 pandemic?",
     type: LONG_RESPONSE,
     charLimit: 500,
     choices: [],
     comment:
-      "You can tell us about your local officials’ responses to the crisis, how your university addresses social distancing concerns or even how residents of your community have been helping each other through this time. 500 character limit.",
+      "You can tell us about your local officials’ responses to the crisis, how your university addresses social distancing concerns or even how residents of your community have been helping one another through this time. 500 character limit.",
     required: false,
     id: 9,
   },
@@ -375,26 +426,14 @@ const ques = [
     choices: [],
     other_option: false,
     comment:
-      "Also, feel free to drop any links to photos, videos, or art that could help tell your story.",
+      "Also, feel free to drop any links to photos, videos or art that could help tell your story.",
     required: false,
     id: 11,
     name: "responseElse",
   },
   {
     question:
-      "(Optional) Do you have any photos or videos that you captured that could helps us tell your story? Share the links here.",
-    type: LONG_RESPONSE,
-    choices: [],
-    other_option: false,
-    comment:
-      "Other art forms are welcome and appreciated, too! Just make sure what you're submitting has permissions to be shared and utilized on this platform.",
-    required: false,
-    id: 12,
-    name: "mediaLinks",
-  },
-  {
-    question:
-      "(Optional) If you shared art with us, please let us know how to attribute your work!",
+      "(Optional) If you shared art with us, please let us know how to attribute your work.",
     type: SHORT_RESPONSE,
     choices: [],
     other_option: false,
@@ -428,9 +467,7 @@ class FormPage extends React.Component {
     };
   }
 
-  handleChange = (selectedOption) => {
-    console.log(selectedOption);
-  };
+  handleChange = (selectedOption) => {};
   setValue = (value) => {
     return value;
   };
@@ -653,13 +690,8 @@ class FormPage extends React.Component {
         <Top>
           <h1>Covid-19 Student Stories</h1>
           <p>
-            Before you leave, this will only take a minute! The form consists of
-            mostly multiple choice questions with a few optional free responses
-            down below.
-            <br />
-            <br />
             The Daily Bruin is collecting student stories related to the
-            Covid-19 pandemic to help students learn more about each others'
+            COVID-19 pandemic to help students learn more about one another’s '
             experiences.
             <br />
             <br />

@@ -16,26 +16,26 @@ function PieChart(props) {
               props.data.onCampus,
               props.data.offCampus,
               props.data.home,
-              props.data.other
-            ]
-          }
-        ]
+              props.data.other,
+            ],
+          },
+        ],
       }}
       options={{
         maintainAspectRatio: false,
         title: {
           display: true,
           text: "Where are students?",
-          fontFamily: "Calibri",
+          fontFamily: "Avenir",
           fontSize: 30,
-          fontColor: "#5e6363"
+          fontColor: "#5e6363",
         },
         legend: {
           position: "bottom",
           labels: {
-            fontColor: "#5e6363"
-          }
-        }
+            fontColor: "#5e6363",
+          },
+        },
       }}
     />
   );

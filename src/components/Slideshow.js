@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useTransition, animated, config } from "react-spring";
 import { css } from "emotion";
 
+import cover0 from "../images/covidstories_cover0.jpg";
 import cover1 from "../images/covidstories_cover1.jpg";
 import cover2 from "../images/covidstories_cover2.jpg";
 import cover3 from "../images/covidstories_cover3.jpg";
-import cover4 from "../images/covidstories_cover4.jpg";
-import cover5 from "../images/covidstories_cover5.jpg";
+import cover4 from "../images/covidstories_cover4.png";
+import cover5 from "../images/covidstories_cover5.png";
+import cover6 from "../images/covidstories_cover6.jpg";
 
 const mediaQueries = {
   mobile: "@media (max-width: 700px)",
@@ -18,33 +20,38 @@ const { mobile, notMobile, tablet } = mediaQueries;
 const slides = [
   {
     id: 0,
-    img: cover1,
-    text: "ONE",
-    credit: "Courtney Quirmbach",
+    img: cover0,
+    credit: "Liz Ketcham",
   },
   {
     id: 1,
-    img: cover2,
-    text: "TWO",
-    credit: "Liz Ketcham",
+    img: cover1,
+    credit: "Courtney Quirmbach",
   },
   {
     id: 2,
-    img: cover3,
-    text: "THREE",
-    credit: "Courtney Quirmbach",
+    img: cover2,
+    credit: "Liz Ketcham",
   },
   {
     id: 3,
-    img: cover4,
-    text: "FOUR",
-    credit: "Courtney Quirmbach",
+    img: cover3,
+    credit: "Liz Ketcham",
   },
   {
     id: 4,
-    img: cover5,
-    text: "FIVE",
+    img: cover4,
     credit: "Liz Ketcham",
+  },
+  {
+    id: 5,
+    img: cover5,
+    credit: "Jintak Han",
+  },
+  {
+    id: 6,
+    img: cover6,
+    credit: "David Rimer",
   },
 ];
 
@@ -57,7 +64,7 @@ const Slideshow = () => {
     config: config.molasses,
   });
   useEffect(
-    () => void setInterval(() => set((state) => (state + 1) % 5), 6000),
+    () => void setInterval(() => set((state) => (state + 1) % 6), 6000),
     []
   );
   return transitions.map(({ item, props, key }) => (
@@ -95,6 +102,10 @@ const Slideshow = () => {
             bottom: 0;
             right: 0;
             color: white;
+            ${mobile} {
+              font-size: 10px;
+              padding: 5px;
+            }
           `}
         >
           courtesy of {item.credit}

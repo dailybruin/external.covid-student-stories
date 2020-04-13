@@ -25,20 +25,14 @@ comfortablePublish	knowPositive	currentLocation
 function Bottom() {
   let history = useHistory();
   let location = useLocation();
-  console.log(history);
-  console.log("Fuck");
-  console.log(location.pathname);
   useEffect(() => {
     window.addEventListener("scroll", handleStoriesScroll);
   });
   const handleStoriesScroll = debounce((e) => {
-    console.log(e);
     if (
-      window.innerHeight + window.scrollY + 100 >= document.body.offsetHeight &&
+      window.innerHeight + window.scrollY + 40 >= document.body.offsetHeight &&
       location.pathname == "/" &&
-      location.pathname != "/stories" &&
-      location.pathname != "/data" &&
-      location.pathname != "/form"
+      document.getElementById("lolcanufindme")
     ) {
       window.removeEventListener("scroll", handleStoriesScroll);
       setTimeout(function () {
@@ -48,6 +42,7 @@ function Bottom() {
   }, 50);
   return <div></div>;
 }
+
 function App() {
   return (
     <div className="App">
@@ -58,6 +53,7 @@ function App() {
             <Navbar highlighted="stories" />
             <StoriesPage></StoriesPage>
             <Bottom />
+            <div id="lolcanufindme" />
           </Route>
           <Route exact path="/stories">
             <Navbar highlighted="stories" />

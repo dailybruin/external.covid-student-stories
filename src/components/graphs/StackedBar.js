@@ -57,7 +57,7 @@ function StackedBar(props) {
         title: {
           display: true,
           text: "How are students feeling?",
-          fontFamily: "Calibri",
+          fontFamily: "Avenir",
           fontSize: 30,
           fontColor: "#5e6363"
         },

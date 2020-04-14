@@ -114,7 +114,7 @@ export default class Navbar extends React.Component {
                   : "none !important"};
               `}
             >
-              form
+              share
             </StyledLink>
           </div>
         </NavbarStyled>

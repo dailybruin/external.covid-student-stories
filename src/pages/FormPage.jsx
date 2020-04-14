@@ -690,7 +690,7 @@ class FormPage extends React.Component {
     return (
       <Background>
         <Top>
-          <h1>Covid-19 Student Stories</h1>
+          <h1>COVID-19 Student Stories</h1>
           <p>
             The Daily Bruin is collecting student stories related to the
             COVID-19 pandemic to help students learn more about one another’s '

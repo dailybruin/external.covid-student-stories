@@ -46,11 +46,11 @@ export const filterfieldNames = [
 export const responseColumns = [
   {
     column: "responseAffected",
-    question: "How has Covid-19 affected you?",
+    question: "How has COVID-19 affected you?",
   },
   {
     column: "responseCommunity",
-    question: "How has your community responded to the Covid-19 pandemic?",
+    question: "How has your community responded to the COVID-19 pandemic?",
   },
   {
     column: "responseDoneDifferently",

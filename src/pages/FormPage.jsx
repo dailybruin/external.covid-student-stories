@@ -5,6 +5,9 @@ import { css } from "emotion";
 import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
 import { useHistory } from "react-router-dom";
+import Cookies from "universal-cookie";
+
+const cookies = new Cookies();
 
 const mediaQueries = {
   mobile: "@media (max-width: 700px)",
@@ -474,6 +477,7 @@ class FormPage extends React.Component {
   };
   submitForm = function (e) {
     this.setState({ formSubmitted: true });
+    cookies.set("submittedCovidStory", "true");
     return;
   };
   render() {

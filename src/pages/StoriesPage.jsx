@@ -19,6 +19,7 @@ import axios from "axios";
 import anon_profile from "../images/anon.jpg";
 import "./masonry.css";
 import SharePost from "../components/SharePost";
+import Cookies from "universal-cookie";
 
 const mediaQueries = {
   mobile: "@media (max-width: 700px)",
@@ -98,6 +99,9 @@ const Hdr = styled("div")`
     font-size: 16px;
   }
 `;
+
+const cookies = new Cookies();
+
 export default class StoriesPage extends React.Component {
   constructor(props) {
     super(props);
@@ -172,8 +176,8 @@ export default class StoriesPage extends React.Component {
     if (error || isLoading || !hasMore) return;
     const element = this.refs.scrollview;
     if (
-      element.scrollHeight - element.scrollTop - 3000 <=
-      element.clientHeight
+      element != undefined &&
+      element.scrollHeight - element.scrollTop - 3000 <= element.clientHeight
     ) {
       loadStories(
         getQueryString(
@@ -464,6 +468,35 @@ export default class StoriesPage extends React.Component {
             </div>
           </ResponsesContainer>
         </Container>
+        {window.location.pathname == "/stories" &&
+        cookies.get("submittedCovidStory") == undefined ? (
+          <a
+            href="/form"
+            className={css`
+              padding: 10px 20px;
+              box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16),
+                0 3px 6px rgba(0, 0, 0, 0.23);
+              position: absolute;
+              bottom: 20px;
+              right: 20px;
+              text-decoration: none;
+              background-color: #6d6b67;
+              color: #fff;
+              border-radius: 4px;
+              transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+              &:hover {
+                color: #fff;
+                text-decoration: none;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19),
+                  0 6px 6px rgba(0, 0, 0, 0.23);
+              }
+            `}
+          >
+            Share Your Story
+          </a>
+        ) : (
+          <></>
+        )}
       </>
     );
   }

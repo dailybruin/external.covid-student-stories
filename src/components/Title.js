@@ -158,7 +158,8 @@ export default class Title extends React.Component {
           </AddStoryLink>
           <Caption>
             <b>
-              All students, no matter your story, are welcome and encouraged!
+              No matter what you're going through—you're not alone. Submit your
+              reflections anonymously.
             </b>
           </Caption>
         </Coloring>

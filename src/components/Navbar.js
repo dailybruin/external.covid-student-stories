@@ -41,8 +41,9 @@ const StyledLink = styled(Link)`
 `;
 
 const Header = styled(Link)`
-  font-size: 24px;
+  font-size: 18px;
   text-decoration: none;
+  box-sizing: border-box;
   color: white;
   &:hover {
     color: white !important;
@@ -50,7 +51,7 @@ const Header = styled(Link)`
   }
   font-weight: 400;
   ${mobile} {
-    font-size: 16px;
+    font-size: 14px;
   }
 `;
 
@@ -69,7 +70,7 @@ export default class Navbar extends React.Component {
         `}
       >
         <NavbarStyled>
-          <Header to="/">Unfinished Stories</Header>
+          <Header to="/">go back</Header>
           <div
             className={css`
               @keyframes bnc {
@@ -114,7 +115,7 @@ export default class Navbar extends React.Component {
                   : "none !important"};
               `}
             >
-              share
+              share your story
             </StyledLink>
           </div>
         </NavbarStyled>

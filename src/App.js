@@ -88,7 +88,8 @@ function App() {
               Thanks for sharing!
               <br />
               <br />
-              We have recorded your response. Navigate to the{" "}
+              We have recorded your response. We will review it and you should
+              see it on the page shortly! Navigate to the{" "}
               <Link
                 to="/stories"
                 className={css`

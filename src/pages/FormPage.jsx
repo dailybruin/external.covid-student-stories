@@ -383,7 +383,7 @@ const ques = [
     charLimit: 1000,
     choices: [],
     comment:
-      "This is unlike anything we've experienced before. Tell us about anything and everything. How has your life, or the lives of people around you, changed because of the novel coronavirus pandemic? How has the world changed? 1,250 character limit.",
+      "This is unlike anything we've experienced before. Tell us about anything and everything. How has your life, or the lives of people around you, changed because of the novel coronavirus pandemic? How has the world changed? 1,000 character limit.",
     required: false,
     id: 8,
   },

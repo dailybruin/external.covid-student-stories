@@ -14,7 +14,7 @@ function StackedBar(props) {
           "Housing",
           "Academics",
           "Physical Health",
-          "Mental Health"
+          "Mental Health",
         ],
         datasets: [
           {
@@ -25,19 +25,19 @@ function StackedBar(props) {
               props.data.housing["Not worried"],
               props.data.academic["Not worried"],
               props.data.physical["Not worried"],
-              props.data.mental["Not worried"]
-            ]
+              props.data.mental["Not worried"],
+            ],
           },
           {
             label: "Somewhat worried",
             backgroundColor: "#F0E68C",
             data: [
-              props.data.finance["Somwhat worried"],
+              props.data.finance["Somewhat worried"],
               props.data.housing["Somewhat worried"],
               props.data.academic["Somewhat worried"],
               props.data.physical["Somewhat worried"],
-              props.data.mental["Somewhat worried"]
-            ]
+              props.data.mental["Somewhat worried"],
+            ],
           },
           {
             label: "Very worried",
@@ -47,10 +47,10 @@ function StackedBar(props) {
               props.data.housing["Very Worried"],
               props.data.academic["Very Worried"],
               props.data.physical["Very Worried"],
-              props.data.mental["Very Worried"]
-            ]
-          }
-        ]
+              props.data.mental["Very Worried"],
+            ],
+          },
+        ],
       }}
       options={{
         maintainAspectRatio: false,
@@ -59,26 +59,26 @@ function StackedBar(props) {
           text: "How are students feeling?",
           fontFamily: "Avenir",
           fontSize: 30,
-          fontColor: "#5e6363"
+          fontColor: "#5e6363",
         },
         legend: {
           position: "bottom",
           labels: {
-            fontColor: "#5e6363"
-          }
+            fontColor: "#5e6363",
+          },
         },
         scales: {
           xAxes: [
             {
-              stacked: true
-            }
+              stacked: true,
+            },
           ],
           yAxes: [
             {
-              stacked: true
-            }
-          ]
-        }
+              stacked: true,
+            },
+          ],
+        },
       }}
     />
   );

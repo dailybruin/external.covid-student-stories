@@ -425,7 +425,7 @@ export default class StoriesPage extends React.Component {
                                   }
                                 `}
                               >
-                                at {row.school}
+                                {row.school && `at ${row.school}`}
                               </div>
                             </div>
                           </div>

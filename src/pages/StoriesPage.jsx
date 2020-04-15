@@ -413,6 +413,8 @@ export default class StoriesPage extends React.Component {
                                 `}
                               >
                                 {MAP_year_to_yearName[row.year]}{" "}
+                                {MAP_year_to_yearName[row.year] ==
+                                  "High School" && "Student"}
                                 {row.major != "N/A" && `${row.major} major`}
                               </b>
                               <div

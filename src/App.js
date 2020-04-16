@@ -61,13 +61,13 @@ function App() {
           <Route exact path="/">
             <Title />
             <Navbar highlighted="stories" />
-            <StoriesPage></StoriesPage>
+            <StoriesPage canScroll={false}></StoriesPage>
             <Bottom />
             <div id="lolcanufindme" />
           </Route>
           <Route exact path="/stories">
             <Navbar highlighted="stories" />
-            <StoriesPage></StoriesPage>
+            <StoriesPage canScroll={true}></StoriesPage>
           </Route>
           <Route exact path="/data">
             <Navbar highlighted="data" />

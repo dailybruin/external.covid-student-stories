@@ -344,130 +344,129 @@ export default class StoriesPage extends React.Component {
               ))}
             </div>
           </FiltersContainer>
-          <ResponsesContainer>
-            <div
-              className={css`
-                height: 100%;
-                width: 100%;
-                overflow: auto;
-                padding: 20px;
-                ${mobile} {
-                  padding: 0px;
-                }
-              `}
-              onScroll={this.handleStoriesScroll}
-              ref="scrollview"
-            >
-              {stories.length == 0 && (
-                <div
-                  className={css`
-                    align-self: center;
-                    text-align: center;
-                    font-size: 18px;
-                  `}
-                >
-                  No results
-                </div>
-              )}
-              <Masonry
-                breakpointCols={this.breakpointCols}
-                className="my-masonry-grid"
-                columnClassName="my-masonry-grid_column"
+          <ResponsesContainer
+            className={css`
+              height: 100%;
+              width: 100%;
+              overflow: auto;
+              padding: 20px;
+              ${mobile} {
+                padding: 0px;
+              }
+              ${!this.props.canScroll && "overflow-y: hidden;"}
+            `}
+            onScroll={this.handleStoriesScroll}
+            ref="scrollview"
+          >
+            {stories.length == 0 && (
+              <div
+                className={css`
+                  align-self: center;
+                  text-align: center;
+                  font-size: 18px;
+                `}
               >
-                {stories.map(
-                  (row) =>
-                    row.year && (
-                      <div
-                        className={css`
-                          display: flex;
-                          flex-direction: column;
-                          width: 100%;
-                        `}
-                      >
-                        <PersonEntry>
-                          <div
+                No results
+              </div>
+            )}
+            <Masonry
+              breakpointCols={this.breakpointCols}
+              className="my-masonry-grid"
+              columnClassName="my-masonry-grid_column"
+            >
+              {stories.map(
+                (row) =>
+                  row.year && (
+                    <div
+                      className={css`
+                        display: flex;
+                        flex-direction: column;
+                        width: 100%;
+                      `}
+                    >
+                      <PersonEntry>
+                        <div
+                          className={css`
+                            display: flex;
+                            align-items: middle;
+                            height: auto;
+                          `}
+                        >
+                          <img
                             className={css`
-                              display: flex;
-                              align-items: middle;
-                              height: auto;
+                              height: 45px;
+                              margin-left: -5px;
+                              margin-right: 8px;
+                              margin-top: 4px;
                             `}
-                          >
-                            <img
+                            src={anon_profile}
+                          />
+                          <div>
+                            <b
                               className={css`
-                                height: 45px;
-                                margin-left: -5px;
-                                margin-right: 8px;
-                                margin-top: 4px;
+                                font-size: 20px;
+                                color: #5e6363;
+                                font-weight: 700;
+                                ${mobile} {
+                                  font-size: 17px;
+                                }
                               `}
-                              src={anon_profile}
-                            />
-                            <div>
-                              <b
-                                className={css`
-                                  font-size: 20px;
-                                  color: #5e6363;
-                                  font-weight: 700;
-                                  ${mobile} {
-                                    font-size: 17px;
-                                  }
-                                `}
-                              >
-                                {MAP_year_to_yearName[row.year]}{" "}
-                                {MAP_year_to_yearName[row.year] ==
-                                  "High School" && "Student"}
-                                {row.major != "N/A" && `${row.major} major`}
-                              </b>
-                              <div
-                                className={css`
-                                  margin-top: -4px;
-                                  font-size: 14px;
-                                  ${mobile} {
-                                    font-size: 13px;
-                                    margin-top: 0;
-                                  }
-                                `}
-                              >
-                                {row.school && `at ${row.school}`}
-                              </div>
+                            >
+                              {MAP_year_to_yearName[row.year]}{" "}
+                              {MAP_year_to_yearName[row.year] ==
+                                "High School" && "Student"}
+                              {row.major != "N/A" && `${row.major} major`}
+                            </b>
+                            <div
+                              className={css`
+                                margin-top: -4px;
+                                font-size: 14px;
+                                ${mobile} {
+                                  font-size: 13px;
+                                  margin-top: 0;
+                                }
+                              `}
+                            >
+                              {row.school && `at ${row.school}`}
                             </div>
                           </div>
+                        </div>
 
-                          {responseColumns.map(
-                            (response) =>
-                              row[response.column] != "" && (
-                                <ResponseEntry>
-                                  <div>
-                                    <div
-                                      className={css`
-                                        font-weight: 400;
-                                        margin-bottom: 4px;
-                                        color: #586572;
-                                      `}
-                                    >
-                                      <b>{response.question}</b>
-                                    </div>
+                        {responseColumns.map(
+                          (response) =>
+                            row[response.column] != "" && (
+                              <ResponseEntry>
+                                <div>
+                                  <div
+                                    className={css`
+                                      font-weight: 400;
+                                      margin-bottom: 4px;
+                                      color: #586572;
+                                    `}
+                                  >
+                                    <b>{response.question}</b>
                                   </div>
-                                  <div>{row[response.column]}</div>
-                                </ResponseEntry>
-                              )
-                          )}
-                          <InteractionContainer>
-                            <Upvote
-                              id={row.pk}
-                              love={row.reactLove}
-                              sad={row.reactSad}
-                              like={row.reactUp}
-                              angry={row.reactAngry}
-                              total={row.reactTotal}
-                            ></Upvote>
-                            <SharePost row={row} />
-                          </InteractionContainer>
-                        </PersonEntry>
-                      </div>
-                    )
-                )}
-              </Masonry>
-            </div>
+                                </div>
+                                <div>{row[response.column]}</div>
+                              </ResponseEntry>
+                            )
+                        )}
+                        <InteractionContainer>
+                          <Upvote
+                            id={row.pk}
+                            love={row.reactLove}
+                            sad={row.reactSad}
+                            like={row.reactUp}
+                            angry={row.reactAngry}
+                            total={row.reactTotal}
+                          ></Upvote>
+                          <SharePost row={row} />
+                        </InteractionContainer>
+                      </PersonEntry>
+                    </div>
+                  )
+              )}
+            </Masonry>
           </ResponsesContainer>
         </Container>
         {window.location.pathname == "/stories" &&

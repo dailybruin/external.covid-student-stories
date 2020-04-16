@@ -18,14 +18,14 @@ function StackedBar(props) {
         ],
         datasets: [
           {
-            label: "Not worried",
-            backgroundColor: "#5ac476",
+            label: "Very worried",
+            backgroundColor: "#e69595",
             data: [
-              props.data.finance["Not worried"],
-              props.data.housing["Not worried"],
-              props.data.academic["Not worried"],
-              props.data.physical["Not worried"],
-              props.data.mental["Not worried"],
+              props.data.finance["Very Worried"],
+              props.data.housing["Very Worried"],
+              props.data.academic["Very Worried"],
+              props.data.physical["Very Worried"],
+              props.data.mental["Very Worried"],
             ],
           },
           {
@@ -40,14 +40,14 @@ function StackedBar(props) {
             ],
           },
           {
-            label: "Very worried",
-            backgroundColor: "#e69595",
+            label: "Not worried",
+            backgroundColor: "#5ac476",
             data: [
-              props.data.finance["Very Worried"],
-              props.data.housing["Very Worried"],
-              props.data.academic["Very Worried"],
-              props.data.physical["Very Worried"],
-              props.data.mental["Very Worried"],
+              props.data.finance["Not worried"],
+              props.data.housing["Not worried"],
+              props.data.academic["Not worried"],
+              props.data.physical["Not worried"],
+              props.data.mental["Not worried"],
             ],
           },
         ],

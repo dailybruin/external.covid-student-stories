@@ -5,6 +5,7 @@ import axios from "axios";
 import PieChart from "../components/graphs/Pie";
 import WordCloud from "../components/WordCloud";
 import StackedBar from "../components/graphs/StackedBar";
+import Map from "../components/MapV2";
 
 const mediaQueries = {
   mobile: "@media (max-width: 700px)",
@@ -81,7 +82,10 @@ const StatsContainer = styled("div")`
 `;
 
 const MapContainer = styled("div")`
-  padding: 0 5% 5% 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 `;
 
 const filterFields = [
@@ -180,6 +184,9 @@ export default class DataPage extends React.Component {
                 }}
               >
                 <WordCloud words={this.state.data.words} />
+                <MapContainer>
+                  <Map component={Map} count={count} citiesList={cities} />
+                </MapContainer>
               </div>
               <StatsContainer>
                 <NumberContainer>
@@ -225,9 +232,6 @@ export default class DataPage extends React.Component {
                   <StackedBar data={this.state.data.feelings}></StackedBar>
                 </GraphContainer>
               </StatsContainer>
-              {/* <MapContainer>
-                <Map component={Map} count={count} citiesList={cities} />
-              </MapContainer> */}
             </div>
           )}
         </ScrollContainer>

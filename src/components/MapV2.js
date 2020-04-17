@@ -1,146 +1,104 @@
-import React from "react";
+import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { randomPoint } from "@turf/random";
-import MapGL, { Marker } from "@urbica/react-map-gl";
+
 import Cluster from "@urbica/react-map-gl-cluster";
 import "mapbox-gl/dist/mapbox-gl.css";
 import cityPointsUS from "city-points-us";
 import states from "us-state-converter";
 
-const bbox = [-160, -70, 160, 70];
+import data from "./test.geojson";
+import MapGL, { Source, Layer } from "react-map-gl";
+import {
+  clusterLayer,
+  clusterCountLayer,
+  unclusteredPointLayer,
+} from "./layers";
+import citystates from "./city_state.json";
 
 const MAPBOX_TOKEN =
   "pk.eyJ1IjoiaHVhbmdrYTk3IiwiYSI6ImNrMmw4c2V2YzA0bWUzZG83M2EzN2NjZ2wifQ.ICymOqR-bnQFjDcFtS3xCA"; // Set your mapbox token here
-const style = {
-  width: "60px",
-  height: "60px",
-  color: "#fff",
-  background: "#1978c8",
-  borderRadius: "60px",
-  textAlign: "center",
-};
-
-class ClusterMarker extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.onClick = this.onClick.bind(this);
-  }
-
-  onClick() {
-    const { onClick, ...cluster } = this.props;
-    onClick(cluster);
-  }
-
-  render() {
-    const { longitude, latitude, pointCount } = this.props;
-
-    return (
-      <Marker longitude={longitude} latitude={latitude}>
-        <div onClick={this.onClick} style={{ ...style, background: "#f28a25" }}>
-          {pointCount}
-        </div>
-      </Marker>
-    );
-  }
-}
 
 class Map extends React.PureComponent {
-  constructor(props) {
-    super(props);
+  state = {
+    viewport: {
+      latitude: 40.67,
+      longitude: -103.59,
+      zoom: 3,
+      bearing: 0,
+      pitch: 0,
+    },
+    
+  };
 
-    this.state = {
-      viewport: {
-        latitude: 37.785164,
-        longitude: -100,
-        zoom: 2.8,
-      },
-    };
+  _sourceRef = React.createRef();
 
-    this._cluster = React.createRef();
+  _onViewportChange = (viewport) => this.setState({ viewport });
 
-    this.onClick = this.onClick.bind(this);
-    this.onViewportChange = this.onViewportChange.bind(this);
-  }
+  _onClick = (event) => {
+    const feature = event.features[0];
+    const clusterId = feature.properties.cluster_id;
 
-  onViewportChange(viewport) {
-    this.setState({ viewport });
-  }
+    const mapboxSource = this._sourceRef.current.getSource();
 
-  onClick(cluster) {
-    const { clusterId, longitude, latitude } = cluster;
+    mapboxSource.getClusterExpansionZoom(clusterId, (err, zoom) => {
+      if (err) {
+        return;
+      }
 
-    const supercluster = this._cluster.current.getCluster();
-    const zoom = supercluster.getClusterExpansionZoom(clusterId);
-
-    this.setState((state) => {
-      const newVewport = {
-        ...state.viewport,
-        latitude,
-        longitude,
+      this._onViewportChange({
+        ...this.state.viewport,
+        longitude: feature.geometry.coordinates[0],
+        latitude: feature.geometry.coordinates[1],
         zoom,
-      };
-
-      return { ...state, viewport: newVewport };
+        transitionDuration: 500,
+      });
     });
-  }
-
-  getStateTwoDigitCode(stateFullName) {
-    return states.fullName(stateFullName);
-  }
-
+  };
   matchLocation(locations) {
-    var location = locations.split(",");
-    var output = null;
-    var city = states.abbr(location[1].trim());
+    
 
-    // var location = ["San Diego, CA"];
+    var state = locations[0]
+    var city=locations[1]
 
     return cityPointsUS.features.find(
       (point) =>
-        point.properties.state === city &&
+        point.properties.state === state &&
         point.properties.city.toLowerCase().trim() ===
-          location[0].toLowerCase().trim()
+          city.toLowerCase().trim()
     );
   }
+      
+      
 
   render() {
     const { viewport } = this.state;
-    let temp = this.props.citiesList;
+    console.log("this is data ", data);
 
-    let raw_points = temp.map(this.matchLocation);
-    var points = raw_points.filter(function (x) {
-      return x !== undefined;
-    });
 
-    points.map((point, index) => (point.id = index));
     return (
       <MapGL
-        style={{ width: "100%", height: "70vh" }}
-        mapStyle="mapbox://styles/mapbox/light-v9"
-        accessToken={MAPBOX_TOKEN}
-        onViewportChange={this.onViewportChange}
-        captureScroll="false"
         {...viewport}
+        width="80%"
+        height="400px"
+        mapStyle="mapbox://styles/mapbox/dark-v9"
+        onViewportChange={this._onViewportChange}
+        mapboxApiAccessToken={MAPBOX_TOKEN}
+        interactiveLayerIds={[clusterLayer.id]}
+        onClick={this._onClick}
       >
-        <Cluster
-          ref={this._cluster}
-          radius={5}
-          extent={512}
-          nodeSize={64}
-          component={(cluster) => (
-            <ClusterMarker onClick={this.onClick} {...cluster} />
-          )}
+        <Source
+          type="geojson"
+          data={"./test.geoson"}
+          cluster={true}
+          clusterMaxZoom={14}
+          clusterRadius={50}
+          ref={this._sourceRef}
         >
-          {points.map((point) => (
-            <Marker
-              key={point.id}
-              longitude={point.geometry.coordinates[0]}
-              latitude={point.geometry.coordinates[1]}
-            >
-              <div style={style} />
-            </Marker>
-          ))}
-        </Cluster>
+          <Layer {...clusterLayer} />
+          <Layer {...clusterCountLayer} />
+          <Layer {...unclusteredPointLayer} />
+        </Source>
       </MapGL>
     );
   }

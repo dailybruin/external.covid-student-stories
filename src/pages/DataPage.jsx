@@ -124,7 +124,11 @@ export default class DataPage extends React.Component {
 
   loadStories() {
     this.setState({ isLoading: true }, () => {
+<<<<<<< HEAD
       axios(`https://covidstudents.dailybruin.com/api/stories/stats`)
+=======
+      axios(`https://covidstories.dailybruin.com/stories/stats`)
+>>>>>>> 38a51eb9e0a60dbcb93aa8a2b8fc6ada7d96d92b
         .then((results) => {
           const newStories = results.data;
           this.setState({
@@ -150,11 +154,7 @@ export default class DataPage extends React.Component {
         count += 1;
       }
     }
-    for (var i = 0; i < data.length; i++) {
-      if (data[i].hometown.indexOf(",") > -1) {
-        cities.push(data[i].hometown);
-      }
-    }
+
     return (
       <>
         <ScrollContainer>
@@ -166,6 +166,7 @@ export default class DataPage extends React.Component {
               }}
             >
               <div
+<<<<<<< HEAD
                 className={css`
                   font-size: 30px;
                   text-align: center;
@@ -175,6 +176,15 @@ export default class DataPage extends React.Component {
                     font-size: 24px;
                   }
                 `}
+=======
+                style={{
+                  width: "100%",
+                  textAlign: "center",
+                  fontSize: "30px",
+                  fontWeight: "bold",
+                  color: "#5e6363",
+                }}
+>>>>>>> 38a51eb9e0a60dbcb93aa8a2b8fc6ada7d96d92b
               >
                 Here are the trends underlying the stories shared.
               </div>
@@ -231,7 +241,29 @@ export default class DataPage extends React.Component {
                 <GraphContainer>
                   <StackedBar data={this.state.data.feelings}></StackedBar>
                 </GraphContainer>
+<<<<<<< HEAD
               </StatsContainer>
+=======
+                <NumberContainer>
+                  <div style={{ fontSize: 100, fontWeight: "bold" }}>
+                    {this.state.data.numKnowPositives}
+                  </div>
+                  students know someone who has tested positive for Covid-19.
+                </NumberContainer>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "100vh",
+                }}
+              >
+                <Map component={Map} />
+              </div>
+
+              <WordCloud />
+>>>>>>> 38a51eb9e0a60dbcb93aa8a2b8fc6ada7d96d92b
             </div>
           )}
         </ScrollContainer>

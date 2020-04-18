@@ -89,7 +89,7 @@ class Map extends React.PureComponent {
       >
         <Source
           type="geojson"
-          data={"./test.geoson"}
+          data="https://huangka97.github.io/test.geojson"
           cluster={true}
           clusterMaxZoom={14}
           clusterRadius={50}

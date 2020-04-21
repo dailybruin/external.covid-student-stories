@@ -5,7 +5,6 @@ import { css } from "emotion";
 
 import "mapbox-gl/dist/mapbox-gl.css";
 import cityPointsUS from "city-points-us";
-import states from "us-state-converter";
 
 import data from "./test.geojson";
 import MapGL, { Source, Layer } from "react-map-gl";
@@ -14,7 +13,6 @@ import {
   clusterCountLayer,
   unclusteredPointLayer,
 } from "./layers";
-import citystates from "./city_state.json";
 
 const MAPBOX_TOKEN =
   "pk.eyJ1IjoiaHVhbmdrYTk3IiwiYSI6ImNrMmw4c2V2YzA0bWUzZG83M2EzN2NjZ2wifQ.ICymOqR-bnQFjDcFtS3xCA"; // Set your mapbox token here

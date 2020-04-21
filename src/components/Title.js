@@ -102,7 +102,7 @@ const TitlePage = styled("div")`
 
 const Caption = styled("div")`
   overflow: hidden;
-  font-size: 18px;
+  font-size: 16px;
   color: white;
   ${mobile} {
     font-size: 12px;
@@ -122,7 +122,7 @@ const CaptionBottom = styled("div")`
   ${mobile} {
     font-size: 12px;
     padding: 1px;
-    bottom: 60px;
+    bottom: 80px;
     width: 80%;
   }
 `;
@@ -173,7 +173,8 @@ export default class Title extends React.Component {
           <Typewriter />
           <Caption>
             This new normal has not been easy. The COVID-19 pandemic has
-            uprooted students’ everyday lives as they once knew them.
+            uprooted students’ everyday lives as they once knew them. No matter
+            what you're going through—you're not alone.
           </Caption>
           <AddStoryLink
             to="/form"
@@ -189,22 +190,18 @@ export default class Title extends React.Component {
           </AddStoryLink>
           <Caption>
             <b>{this.state.numResponses ? this.state.numResponses : "--"}</b>{" "}
-            students worldwide have shared.
+            students worldwide have shared their stories.
           </Caption>
         </Coloring>
 
         <div
           className={css`
-            background: linear-gradient(
-              180deg,
-              rgba(0, 0, 0, 0) 0%,
-              rgba(0, 0, 0, 0.3) 80%,
-              rgba(0, 0, 0, 0.85) 95%
-            );
-            height: 100%;
+            background: rgba(0, 0, 0, 0.3) 80%;
+            height: 150px;
+            bottom: 0;
+            position: absolute;
             width: 100%;
             z-index: 10;
-            pointer-events: none;
           `}
         ></div>
         <MapContainer>

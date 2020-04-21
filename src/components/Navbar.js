@@ -70,7 +70,7 @@ export default class Navbar extends React.Component {
         `}
       >
         <NavbarStyled>
-          <Header to="/">go back</Header>
+          <Header to="/">back to map</Header>
           <div
             className={css`
               @keyframes bnc {

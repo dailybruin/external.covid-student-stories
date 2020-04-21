@@ -84,7 +84,7 @@ class Map extends React.PureComponent {
           data="https://covidstudents.dailybruin.com/api/stories/features/"
           cluster={true}
           clusterMaxZoom={14}
-          clusterRadius={50}
+          clusterRadius={30}
           ref={this._sourceRef}
         >
           <Layer {...clusterLayer} />

@@ -81,12 +81,6 @@ const StatsContainer = styled("div")`
   }
 `;
 
-const MapContainer = styled("div")`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 const filterFields = [
   { field: "School", categories: ["All", "UCLA", "USC"] },
   { field: "Major", categories: ["All", "CS", "Math", "we should bin these"] },
@@ -173,9 +167,6 @@ export default class DataPage extends React.Component {
               >
                 Here are the trends underlying the stories shared.
               </div>
-              <MapContainer>
-                <Map component={Map} />
-              </MapContainer>
               <div
                 style={{
                   padding: "5vh 5vw 0 5vw",

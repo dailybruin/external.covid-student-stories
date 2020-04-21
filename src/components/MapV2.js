@@ -23,8 +23,8 @@ class Map extends React.PureComponent {
   state = {
     viewport: {
       latitude: 40.67,
-      longitude: -103.59,
-      zoom: 3,
+      longitude: -98.59,
+      zoom: 1.7,
       bearing: 0,
       pitch: 0,
     },
@@ -73,7 +73,7 @@ class Map extends React.PureComponent {
       <MapGL
         {...viewport}
         width="100%"
-        height="600px"
+        height="100%"
         mapStyle="mapbox://styles/mapbox/dark-v9"
         onViewportChange={this._onViewportChange}
         mapboxApiAccessToken={MAPBOX_TOKEN}

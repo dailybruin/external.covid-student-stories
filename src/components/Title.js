@@ -6,6 +6,16 @@ import { Link as ScrollLink, scroller } from "react-scroll";
 import Slideshow from "./Slideshow";
 import Button from "../button.svg";
 import Typewriter from "./Typewriter";
+import Map from "../components/MapV2";
+
+const MapContainer = styled("div")`
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const mediaQueries = {
   mobile: "@media (max-width: 700px)",
@@ -23,8 +33,7 @@ const AddStoryLink = styled(Link)`
   padding: 10px 20px;
   border-radius: 5px;
   /* box-shadow: 0px 5px 5px gray solid; */
-  margin: 30px;
-  margin-bottom: 10px;
+  margin: 20px;
   outline: none;
   text-decoration: none;
   :hover {
@@ -49,6 +58,8 @@ const AddStoryLink = styled(Link)`
 const ScrollMessage = styled("div")`
   cursor: pointer;
   position: absolute;
+  z-index: 11;
+
   bottom: 30px;
   /* @keyframes shadow-pulse {
     0% {
@@ -99,6 +110,7 @@ const Caption = styled("div")`
 const CaptionBottom = styled("div")`
   overflow: hidden;
   position: absolute;
+  z-index: 11;
   filter: brightness(80%);
   text-align: center;
   bottom: 80px;
@@ -140,9 +152,7 @@ export default class Title extends React.Component {
           <Typewriter />
           <Caption>
             This new normal has not been easy. The COVID-19 pandemic has
-            uprooted students’ everyday lives as they once knew them. Research
-            presentations, senior showcases and sports games remain imaginings
-            of a lifetime ago.
+            uprooted students’ everyday lives as they once knew them.
           </Caption>
           <AddStoryLink
             to="/form"
@@ -157,19 +167,28 @@ export default class Title extends React.Component {
             SHARE YOUR STORY
           </AddStoryLink>
           <Caption>
-            <b>
-              No matter what you're going through—you're not alone. Submit your
-              reflections anonymously.
-            </b>
+            <b>anonymously, along with 100 others</b>
           </Caption>
         </Coloring>
+
         <div
           className={css`
-            overflow: auto;
+            background: linear-gradient(
+              180deg,
+              rgba(0, 0, 0, 0) 0%,
+              rgba(0, 0, 0, 0.3) 80%,
+              rgba(0, 0, 0, 0.85) 95%
+            );
+            height: 100%;
+            width: 100%;
+            z-index: 10;
+            pointer-events: none;
           `}
-        >
-          <Slideshow />
-        </div>
+        ></div>
+        <MapContainer>
+          <Map component={Map} />
+        </MapContainer>
+
         <CaptionBottom>
           Read how the novel coronavirus pandemic has affected students’ lives.
         </CaptionBottom>

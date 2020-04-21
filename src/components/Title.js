@@ -22,8 +22,9 @@ const mediaQueries = {
   mobile: "@media (max-width: 700px)",
   notMobile: "@media (min-width: 701px)",
   tablet: "@media (max-width: 900px)",
+  flatScreen: "@media (max-height: 800px)",
 };
-const { mobile, notMobile, tablet } = mediaQueries;
+const { mobile, flatScreen, notMobile, tablet } = mediaQueries;
 
 const AddStoryLink = styled(Link)`
   font-size: 24px;
@@ -49,9 +50,14 @@ const AddStoryLink = styled(Link)`
   :visited {
     color: inherit;
   }
+  ${flatScreen} {
+    font-size: 18px;
+    padding: 8px 15px;
+    margin: 5px;
+  }
   ${mobile} {
     font-size: 16px;
-    padding: 5px;
+    padding: 5px 10px;
     margin: 5px;
   }
 `;
@@ -104,6 +110,9 @@ const Caption = styled("div")`
   overflow: hidden;
   font-size: 16px;
   color: white;
+  ${flatScreen} {
+    padding: 5px;
+  }
   ${mobile} {
     font-size: 12px;
     padding: 1px;
@@ -125,6 +134,9 @@ const CaptionBottom = styled("div")`
     bottom: 80px;
     width: 80%;
   }
+  ${flatScreen} {
+    padding: 16px;
+  }
 `;
 
 const Coloring = styled("div")`
@@ -144,6 +156,9 @@ const Coloring = styled("div")`
   ${mobile} {
     width: 100%;
     padding: 10px;
+  }
+  ${flatScreen} {
+    padding: 15px;
   }
 `;
 

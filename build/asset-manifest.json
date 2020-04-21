@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/static/css/main.c300e767.chunk.css",
-    "main.js": "/static/js/main.8a9bbb38.chunk.js",
-    "main.js.map": "/static/js/main.8a9bbb38.chunk.js.map",
+    "main.css": "/static/css/main.819c441d.chunk.css",
+    "main.js": "/static/js/main.8cfbaa6a.chunk.js",
+    "main.js.map": "/static/js/main.8cfbaa6a.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.384fcbfd.js",
     "runtime-main.js.map": "/static/js/runtime-main.384fcbfd.js.map",
-    "static/css/2.7eafee84.chunk.css": "/static/css/2.7eafee84.chunk.css",
-    "static/js/2.9e1b8b6b.chunk.js": "/static/js/2.9e1b8b6b.chunk.js",
-    "static/js/2.9e1b8b6b.chunk.js.map": "/static/js/2.9e1b8b6b.chunk.js.map",
+    "static/css/2.34724d07.chunk.css": "/static/css/2.34724d07.chunk.css",
+    "static/js/2.3dd455ed.chunk.js": "/static/js/2.3dd455ed.chunk.js",
+    "static/js/2.3dd455ed.chunk.js.map": "/static/js/2.3dd455ed.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.1efca6bd7930ac3ad30e3ad6a09deb9c.js": "/precache-manifest.1efca6bd7930ac3ad30e3ad6a09deb9c.js",
+    "precache-manifest.52457e822d0a066be59f0d00b46ee508.js": "/precache-manifest.52457e822d0a066be59f0d00b46ee508.js",
     "service-worker.js": "/service-worker.js",
-    "static/css/2.7eafee84.chunk.css.map": "/static/css/2.7eafee84.chunk.css.map",
-    "static/css/main.c300e767.chunk.css.map": "/static/css/main.c300e767.chunk.css.map",
-    "static/js/2.9e1b8b6b.chunk.js.LICENSE.txt": "/static/js/2.9e1b8b6b.chunk.js.LICENSE.txt",
+    "static/css/2.34724d07.chunk.css.map": "/static/css/2.34724d07.chunk.css.map",
+    "static/css/main.819c441d.chunk.css.map": "/static/css/main.819c441d.chunk.css.map",
+    "static/js/2.3dd455ed.chunk.js.LICENSE.txt": "/static/js/2.3dd455ed.chunk.js.LICENSE.txt",
     "static/media/AvenirLTStd-Book.otf": "/static/media/AvenirLTStd-Book.ecb0c2ae.otf",
     "static/media/Roboto-Regular.ttf": "/static/media/Roboto-Regular.11eabca2.ttf",
     "static/media/amgery.png": "/static/media/amgery.9dc4cdcd.png",
@@ -26,13 +26,14 @@
     "static/media/covidstories_cover5.png": "/static/media/covidstories_cover5.d5264269.png",
     "static/media/covidstories_cover6.jpg": "/static/media/covidstories_cover6.3442ce86.jpg",
     "static/media/haha.png": "/static/media/haha.4b0534b6.png",
+    "static/media/test.geojson": "/static/media/test.dcdb6a81.geojson",
     "static/media/waow.png": "/static/media/waow.87901b09.png"
   },
   "entrypoints": [
     "static/js/runtime-main.384fcbfd.js",
-    "static/css/2.7eafee84.chunk.css",
-    "static/js/2.9e1b8b6b.chunk.js",
-    "static/css/main.c300e767.chunk.css",
-    "static/js/main.8a9bbb38.chunk.js"
+    "static/css/2.34724d07.chunk.css",
+    "static/js/2.3dd455ed.chunk.js",
+    "static/css/main.819c441d.chunk.css",
+    "static/js/main.8cfbaa6a.chunk.js"
   ]
 }

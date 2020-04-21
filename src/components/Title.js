@@ -7,6 +7,7 @@ import Slideshow from "./Slideshow";
 import Button from "../button.svg";
 import Typewriter from "./Typewriter";
 import Map from "../components/MapV2";
+import axios from "axios";
 
 const MapContainer = styled("div")`
   position: absolute;
@@ -33,7 +34,7 @@ const AddStoryLink = styled(Link)`
   padding: 10px 20px;
   border-radius: 5px;
   /* box-shadow: 0px 5px 5px gray solid; */
-  margin: 20px;
+  margin: 15px;
   outline: none;
   text-decoration: none;
   :hover {
@@ -69,21 +70,23 @@ const ScrollMessage = styled("div")`
       box-shadow: 0 0 0 35px rgba(0, 0, 0, 0);
     }
   } */
+  filter: brightness(110%);
   &:hover {
     filter: brightness(130%);
   }
+
   @keyframes bounce {
     100% {
-      transform: translateY(0);
+      transform: translateY(2px);
     }
     50% {
-      transform: translateY(-5px);
+      transform: translateY(-10px);
     }
     0% {
-      transform: translateY(0);
+      transform: translateY(2px);
     }
   }
-  animation: bounce 2s infinite;
+  animation: bounce 1.5s infinite;
 `;
 
 const TitlePage = styled("div")`
@@ -145,6 +148,24 @@ const Coloring = styled("div")`
 `;
 
 export default class Title extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: null,
+    };
+  }
+  componentDidMount() {
+    this.setState({ isLoading: true }, () => {
+      axios(`https://covidstudents.dailybruin.com/api/stories/stats`)
+        .then((results) => {
+          const newStories = results.data;
+          this.setState({
+            numResponses: newStories.count,
+          });
+        })
+        .catch((err) => {});
+    });
+  }
   render() {
     return (
       <TitlePage>
@@ -167,7 +188,8 @@ export default class Title extends React.Component {
             SHARE YOUR STORY
           </AddStoryLink>
           <Caption>
-            <b>anonymously, along with 100 others</b>
+            <b>{this.state.numResponses ? this.state.numResponses : "--"}</b>{" "}
+            students worldwide have shared.
           </Caption>
         </Coloring>
 

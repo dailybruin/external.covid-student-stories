@@ -11,7 +11,7 @@ const { mobile, notMobile, tablet } = mediaQueries;
 
 const BigTitle = styled("div")`
   overflow: hidden;
-  font-size: 65px;
+  font-size: 50px;
   font-weight: 900;
   color: white;
   ${mobile} {

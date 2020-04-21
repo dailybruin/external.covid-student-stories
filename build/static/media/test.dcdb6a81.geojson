@@ -1,0 +1,770 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -122.044956,
+        37.319398
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "Cupertino"
+    },
+    "id": 48
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -121.954352,
+        37.280232
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "Campbell"
+    },
+    "id": 11
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -117.725648,
+        33.942969
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "Chino Hills"
+    },
+    "id": 26
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -121.818909,
+        37.296739
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "San Jose"
+    },
+    "id": 13
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -117.810603,
+        33.730908
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "Tustin"
+    },
+    "id": 4
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -122.123217,
+        37.845693
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "Moraga"
+    },
+    "id": 5
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -121.818909,
+        37.296739
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "San Jose"
+    },
+    "id": 13
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -117.134993,
+        32.8153
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "San Diego"
+    },
+    "id": 44
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -121.818909,
+        37.296739
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "San Jose"
+    },
+    "id": 13
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -121.818909,
+        37.296739
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "San Jose"
+    },
+    "id": 13
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -121.818909,
+        37.296739
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "San Jose"
+    },
+    "id": 13
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -121.954352,
+        37.280232
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "Campbell"
+    },
+    "id": 11
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -95.902316,
+        36.127949
+      ]
+    },
+    "properties": {
+      "state": "OK",
+      "city": "Tulsa"
+    },
+    "id": 12
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -121.818909,
+        37.296739
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "San Jose"
+    },
+    "id": 13
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -121.94115,
+        37.494461
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "Fremont"
+    },
+    "id": 15
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -121.94115,
+        37.494461
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "Fremont"
+    },
+    "id": 15
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -117.282835,
+        33.123909
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "Carlsbad"
+    },
+    "id": 16
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -85.229267,
+        42.299176
+      ]
+    },
+    "properties": {
+      "state": "MI",
+      "city": "Battle Creek"
+    },
+    "id": 17
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -121.64103,
+        37.132436
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "Morgan Hill"
+    },
+    "id": 18
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -118.504166,
+        34.402997
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "Santa Clarita"
+    },
+    "id": 19
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -122.288929,
+        38.021427
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "Hercules"
+    },
+    "id": 20
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -118.410825,
+        34.019394
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "Los Angeles"
+    },
+    "id": 38
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -117.134993,
+        32.8153
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "San Diego"
+    },
+    "id": 44
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -117.134993,
+        32.8153
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "San Diego"
+    },
+    "id": 44
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -117.134993,
+        32.8153
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "San Diego"
+    },
+    "id": 44
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -117.134993,
+        32.8153
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "San Diego"
+    },
+    "id": 44
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -117.725648,
+        33.942969
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "Chino Hills"
+    },
+    "id": 26
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -117.928025,
+        33.885714
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "Fullerton"
+    },
+    "id": 37
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -74.032297,
+        40.767466
+      ]
+    },
+    "properties": {
+      "state": "NJ",
+      "city": "Union"
+    },
+    "id": 28
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -117.728915,
+        33.579219
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "Aliso Viejo"
+    },
+    "id": 29
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -118.036347,
+        34.132689
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "Arcadia"
+    },
+    "id": 30
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -118.249574,
+        33.840367
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "Carson"
+    },
+    "id": 31
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -117.950528,
+        34.160911
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "Duarte"
+    },
+    "id": 32
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -118.410825,
+        34.019394
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "Los Angeles"
+    },
+    "id": 38
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -110.871064,
+        32.153695
+      ]
+    },
+    "properties": {
+      "state": "AZ",
+      "city": "Tucson"
+    },
+    "id": 34
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -81.29899,
+        28.415581
+      ]
+    },
+    "properties": {
+      "state": "FL",
+      "city": "Orlando"
+    },
+    "id": 35
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -118.481666,
+        34.023413
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "Santa Monica"
+    },
+    "id": 36
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -117.928025,
+        33.885714
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "Fullerton"
+    },
+    "id": 37
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -118.410825,
+        34.019394
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "Los Angeles"
+    },
+    "id": 38
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -71.248401,
+        42.064024
+      ]
+    },
+    "properties": {
+      "state": "MA",
+      "city": "Foxborough"
+    },
+    "id": 39
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -122.299147,
+        37.866972
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "Berkeley"
+    },
+    "id": 40
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -117.771254,
+        33.678399
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "Irvine"
+    },
+    "id": 41
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -84.590706,
+        38.674316
+      ]
+    },
+    "properties": {
+      "state": "KY",
+      "city": "Dry Ridge"
+    },
+    "id": 42
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -118.15529,
+        33.809179
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "Long Beach"
+    },
+    "id": 43
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -117.134993,
+        32.8153
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "San Diego"
+    },
+    "id": 44
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -117.657841,
+        33.974474
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "Chino"
+    },
+    "id": 45
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -123.032229,
+        37.727239
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "San Francisco"
+    },
+    "id": 46
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -118.341431,
+        33.834966
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "Torrance"
+    },
+    "id": 47
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -122.044956,
+        37.319398
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "Cupertino"
+    },
+    "id": 48
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -122.032916,
+        37.504514
+      ]
+    },
+    "properties": {
+      "state": "CA",
+      "city": "Newark"
+    },
+    "id": 49
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -74.658201,
+        40.851023
+      ]
+    },
+    "properties": {
+      "state": "NJ",
+      "city": "Succasunna"
+    },
+    "id": 50
+  }
+  ]
+  }

@@ -24,7 +24,7 @@ class Map extends React.PureComponent {
     viewport: {
       latitude: 40.67,
       longitude: -98.59,
-      zoom: 1.7,
+      zoom: 2,
       bearing: 0,
       pitch: 0,
     },
@@ -36,6 +36,7 @@ class Map extends React.PureComponent {
 
   _onClick = (event) => {
     const feature = event.features[0];
+    if (!feature) return;
     const clusterId = feature.properties.cluster_id;
 
     const mapboxSource = this._sourceRef.current.getSource();

@@ -1,19 +1,23 @@
 export const clusterLayer = {
   id: "clusters",
   type: "circle",
-  
+
   filter: ["has", "point_count"],
   paint: {
     "circle-color": [
       "step",
       ["get", "point_count"],
-      "#51bbd6",
-      100,
-      "#f1f075",
-      750,
-      "#f28cb1",
+      "#F5FCFF",
+      10,
+      "#DBF3FA",
+      20,
+      "#B7E9F7",
+      30,
+      "#92DFF3",
+      50,
+      "#7AD7F0",
     ],
-    "circle-radius": ["step", ["get", "point_count"], 20, 100, 30, 750, 40],
+    "circle-radius": ["step", ["get", "point_count"], 16, 20, 22, 50, 30],
   },
 };
 
@@ -36,8 +40,8 @@ export const unclusteredPointLayer = {
   filter: ["!", ["has", "point_count"]],
   paint: {
     "circle-color": "#11b4da",
-    "circle-radius": 4,
-    "circle-stroke-width": 1,
+    "circle-radius": 5,
+    "circle-stroke-width": 0,
     "circle-stroke-color": "#fff",
   },
 };
